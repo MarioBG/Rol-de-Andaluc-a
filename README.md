@@ -11,6 +11,7 @@ TODO: Describe the installation process
 - [Bootstrap login page](https://startbootstrap.com/snippets/sign-in-split/)
 - [Beautiful paging](https://codepen.io/miaoduanwang/pen/myamxx)
 - [Treant.js example](https://codepen.io/shoyan/pen/qNOMoN)
+- [Facebook-like chat box (for dice)](https://codepen.io/anwar0x09/pen/OaQdNY)
 
 ## Usage
 
