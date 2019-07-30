@@ -8,7 +8,9 @@ TODO: Describe the installation process
 
 - [Tippy.js](https://atomiks.github.io/tippyjs)
 - [Bizcraft Bootstrap template](https://themefisher.com/products/bizcraft-multipurpose-business-template/)
-- []()
+- [Bootstrap login page](https://startbootstrap.com/snippets/sign-in-split/)
+- [Beautiful paging](https://codepen.io/miaoduanwang/pen/myamxx)
+- [Treant.js example](https://codepen.io/shoyan/pen/qNOMoN)
 
 ## Usage
 
