@@ -1,0 +1,38 @@
+
+
+#myTable{
+    background-color: aqua;
+}
+
+.chat.card{
+    padding: -10em;
+}
+.card .card-content {
+    padding: 0.5em;
+}
+main {
+    flex: 1 0 auto;
+}
+
+.overflowhidden{
+    overflow: hidden !important;
+}
+
+button{
+    min-height: 3em;
+    height: auto;
+    min-width: 3em;
+
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+.color3b{
+    background-color:  rgba(0, 150, 0, 1);
+}
+.color1b{
+    background-color:  rgba(41, 45, 180, 1);
+}

@@ -1,0 +1,180 @@
+
+
+#centrado{
+    text-align: center;
+}
+
+
+
+.flow-text{
+    padding: 0px 20px 0px;
+}
+
+
+img{
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.fix-secondary-content{
+    margin-left: 10px;
+}
+
+.labelxd{
+    text-align: left;
+}
+@media (min-width: 600px) {
+.letrasHeader{
+    font-weight: 900;
+    padding-left: 2em;
+    }
+}
+.collection a.collection-item{
+    color: rgba(41, 45, 180, 1);
+}
+.colorBlanco{
+    color:white
+}
+.center{
+    text-align: center;
+    align-content: center;
+    align-items: center;
+}
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+/*FIX botones cortando texto*/
+.btn{
+    min-height: 3em;
+    height: auto;
+    min-width: 3em;
+}
+button{
+    min-height: 3em;
+    height: auto;
+    min-width: 3em;
+
+}
+.overflowhidden{
+    overflow: hidden !important;
+}
+main {
+    flex: 1 0 auto;
+}
+.card{
+    padding: 2em;
+}
+.colorEnlace{
+    color:  rgb(18, 20, 77);
+}
+.color1{
+    background-color:  rgba(41, 45, 180, 1);
+}
+.color1b{
+    background-color:  rgba(177, 178, 227, 1);
+}
+.color1b2{
+    background-color: #D4D5EF !important;
+}
+.color1c{
+    color:  rgba(41, 45, 180, 1);
+}
+.color2{
+    background-color:  rgba(255, 23, 23, 1);
+}
+.color2b{
+    background-color: rgba(255, 46, 46, 1);
+}
+.color3{
+    background-color:  rgba(0, 150, 0, 1);
+}
+.color3b{
+    background-color: rgba(162, 216, 162, 1);
+}
+@media (min-width: 600px) {
+
+.botonesLogin{
+    min-height: 5em !important;
+    text-align: center;
+}
+}
+.targetaDentroDeTargetaxd{
+   padding:3em;
+}
+
+.xd{
+    height: 100px;
+    width: 100%;
+}
+
+.chatbtn{
+    position: fixed !important;
+    right: 5% !important;
+    bottom: 77% !important;
+}
+@media (max-width: 1300px) {
+
+.headerenlace{
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+    font-size: 90%;
+}
+}
+
+.broadcastbtn{
+    margin-top: 10px;
+}
+.mecagoenivan{
+    height: 100px;
+    line-height: 1px;
+}
+
+
+
+@media (min-width: 600px) {
+ 
+    .parallax > img{
+        object-fit: none;
+        max-width: none;
+        max-height: none;
+    }
+}
+
+.margin-top{
+    margin-top: 2%;
+}
+
+.margin-bottom{
+    margin-bottom: 2%;
+}
+.margintop{
+    margin-top: 1em;
+}
+@media (max-width: 600px) {
+.carouseldethreaddetail  {
+    
+        height: 200px  !important;
+
+    }
+    .carousel-item img{
+        height: 100%;
+        width: 100%;
+        }
+        
+}
+
+.listItem{
+    color: rgba(0, 0, 0, 0.87);
+}
+.listItem:hover{
+    background-color:rgb(224, 224, 224);
+}
+
+.listItem:hover:not(.active){
+    transition-duration: 0.5s;
+    transition-property: all;
+    transition-timing-function: ease;
+}

@@ -1,0 +1,100 @@
+
+
+#centrado{
+    text-align: center;
+}
+
+
+
+.flow-text{
+    padding: 0px 20px 0px;
+}
+
+
+img{
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.fix-secondary-content{
+    margin-left: 10px;
+}
+
+.labelxd{
+    text-align: left;
+}
+@media (min-width: 600px) {
+.letrasHeader{
+    font-weight: 900;
+    padding-left: 2em;
+    }
+}
+.collection a.collection-item{
+    color: rgba(41, 45, 180, 1);
+}
+.colorBlanco{
+    color:white
+}
+.center{
+    text-align: center;
+    align-content: center;
+    align-items: center;
+}
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+/*FIX botones cortando texto*/
+.btn{
+    min-height: 3em;
+    height: auto;
+    min-width: 3em;
+}
+button{
+    min-height: 3em;
+    height: auto;
+    min-width: 3em;
+
+}
+.overflowhidden{
+    overflow: hidden !important;
+}
+main {
+    flex: 1 0 auto;
+}
+.card{
+    padding: 2em;
+}
+.colorEnlace{
+    color:  rgb(18, 20, 77);
+}
+.color1{
+    background-color:  rgba(41, 45, 180, 1);
+}
+.color1b{
+    background-color:  rgba(177, 178, 227, 1);
+}
+.color1b2{
+    background-color: #D4D5EF !important;
+}
+.color1c{
+    color:  rgba(41, 45, 180, 1);
+}
+.color2{
+    background-color:  rgba(255, 23, 23, 1);
+}
+.color2b{
+    background-color: rgba(255, 46, 46, 1);
+}
+.color3{
+    background-color:  rgba(0, 150, 0, 1);
+}
+.color3b{
+    background-color: rgba(162, 216, 162, 1);
+}
+
+.targetaDentroDeTargetaxd{
+   padding:3em;
+}

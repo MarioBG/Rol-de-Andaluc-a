@@ -79,6 +79,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'RolAndalucia.wsgi.application'
 
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases

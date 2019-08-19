@@ -1,0 +1,27 @@
+#centrado{
+    text-align: center;
+}
+
+#boton{
+    background-color: red;
+}
+
+.flow-text{
+    padding: 0px 20px 0px;
+}
+
+#respuestas{
+  box-shadow: 3px 5px 6px rgba(0,0,0,0.25);
+  padding-bottom: 0.25em;
+  background-color: red;
+}
+
+img{
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.fix-secondary-content{
+    margin-left: 10px;
+}
