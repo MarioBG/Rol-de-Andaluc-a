@@ -21,7 +21,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'kf3pbtu^18pn1g*dbu@0d9tet$7jzj$m7p3(m%=p#9pq)ifs4$'
-
+if 'DYNO' in os.environ:
+    BASEURL = 'https://rol-de-andalucia.herokuapp.com/'
 # SECURITY WARNING: don't run with debug turned on in production!
 if 'DYNO' in os.environ:
     DEBUG = False
