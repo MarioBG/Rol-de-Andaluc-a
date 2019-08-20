@@ -1657,8 +1657,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 }
 @font-face {
 	font-family:'Glyphicons Halflings';
-	src:url('../fonts/glyphicons-halflings-regular.html');
-	src:url('../fonts/glyphicons-halflings-regulard41d.html?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular-2.html') format('woff'), url('../fonts/glyphicons-halflings-regular-3.html') format('truetype'), url('../fonts/glyphicons-halflings-regular-4.html#glyphicons-halflingsregular') format('svg')
+	src:url('../fonts/glyphicons-halflings-regular.svg');
 }
 .glyphicon {
 	position:relative;
