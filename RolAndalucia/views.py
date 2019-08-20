@@ -30,7 +30,7 @@ def index(request):
     except:
         request.session['currentUser'] ='none'
 
-    return render(request, 'index.html', {'spells':Spell.objects.all().count(), 'craftables':Craftable.objects.all().count()})
+    return render(request, 'index.html', {'spells':Spell.objects.all().count(), 'craftables':Craftable.objects.all().count(), 'items':Item.objects.all().count()})
 
 def error404(request):
     return render(request, '404.html')

@@ -21,7 +21,7 @@ class SpellAdmin(NumericFilterModelAdmin):
 
 
 class CraftableAdmin(NumericFilterModelAdmin):
-    list_display = ('name', 'id', 'programmingCost', 'engineeringCost', 'description')
+    list_display = ('id', 'name', 'programmingCost', 'engineeringCost', 'description')
     list_display_links = ('name', 'id')
     search_fields = ['name', 'effect']
     list_per_page = 25
@@ -30,10 +30,20 @@ class CraftableAdmin(NumericFilterModelAdmin):
         ['engineeringCost', SliderNumericFilter]
     ]
 
+class ItemAdmin(NumericFilterModelAdmin):
+    list_display = ('id', 'name', 'type', 'magic', 'wearable', 'rarity')
+    list_display_links = ('name', 'id')
+    search_fields = ['name', 'effect', 'description']
+    list_per_page = 25
+    list_filter = [
+        'magic', 'wearable', 'type', 'rarity'
+    ]
+
 
 
 admin.site.register(models.Craftable, CraftableAdmin)
 admin.site.register(models.Spell, SpellAdmin)
+admin.site.register(models.Item, ItemAdmin)
 
 models = apps.get_models()
 for model in models:

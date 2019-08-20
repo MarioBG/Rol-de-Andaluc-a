@@ -50,12 +50,30 @@ class Craftable(models.Model):
     description = models.TextField(verbose_name=_("Descripción"))
     programmingCost = models.PositiveIntegerField(verbose_name=_("Coste de programación"))
     engineeringCost = models.PositiveIntegerField(verbose_name=_("Coste de ingeniería"))
-    materialCost = models.TextField(verbose_name=_("Costes en materiales"))
+    materialCost = models.TextField(verbose_name=_("Costes en materiales"), blank=True)
     effect = models.TextField(verbose_name=_("Efectos"))
     requirements = models.TextField(verbose_name=_("Requisitos"), blank=True)
+    photo = models.URLField(verbose_name=_("Imagen"), blank=True)
 
     def __str__(self):
         return self.name
+
+class Item(models.Model):
+    name = models.CharField(verbose_name=_("Nombre de objeto"), max_length=60, blank=False)
+    description = models.TextField(verbose_name=_("Descripción"))
+    type = models.CharField(verbose_name=_("Tipo de objeto"), max_length=30)
+    rarity = models.CharField(verbose_name=_("Rareza"), max_length=20, blank=True)
+    notes = models.CharField(verbose_name=_("Notas"), max_length=100, blank=True)
+    magic = models.BooleanField(verbose_name=_("Magia"), default=False)
+    wearable = models.BooleanField(verbose_name=_("Equipable"), default=False)
+    effects = models.TextField(verbose_name=_("Efectos"), blank=True)
+    characteristics = models.TextField(verbose_name=_("Características"), blank=True, help_text="Genera tablas en https://www.tablesgenerator.com/markdown_tables#")
+    photo = models.URLField(verbose_name=_("Imagen"), blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 
 # class GameMaster(models.Model):
 #
