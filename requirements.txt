@@ -30,3 +30,4 @@ simplejson
 soupsieve
 uritemplate
 urllib3
+django-heroku
