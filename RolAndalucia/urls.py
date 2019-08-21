@@ -20,5 +20,6 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
+    path('login', views.login, name='login'),
     path('404', views.error404, name='404')
 ]

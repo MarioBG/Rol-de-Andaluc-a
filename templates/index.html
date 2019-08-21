@@ -1,105 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends 'base.html' %}
 
-	<!-- Basic Page Needs
-	================================================== -->
-	<meta charset="utf-8">
-    <title>Rol de Andalucía - plataforma web</title>
-    <meta name="description" content="">	
-	<meta name="author" content="">
-
-	<!-- Mobile Specific Metas
-	================================================== -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-	<!-- Favicons
-	================================================== -->
-	<link rel="icon" href="static/img/favicon/favicon-32x32.png" type="image/x-icon" />
-	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="static/img/favicon/favicon-144x144.png">
-	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="static/img/favicon/favicon-72x72.png">
-	<link rel="apple-touch-icon-precomposed" href="static/img/favicon/favicon-54x54.png">
-	
-	<!-- CSS
-	================================================== -->
-	
-	<!-- Bootstrap -->
-	<link rel="stylesheet" href="static/css/bootstrap.min.css">
-	<!-- Template styles-->
-	<link rel="stylesheet" href="static/css/style.css">
-	<!-- Responsive styles-->
-	<link rel="stylesheet" href="static/css/responsive.css">
-	<!-- FontAwesome -->
-	<link rel="stylesheet" href="static/css/font-awesome.min.css">
-	<!-- Animation -->
-	<link rel="stylesheet" href="static/css/animate.css">
-	<!-- Prettyphoto -->
-	<link rel="stylesheet" href="static/css/prettyPhoto.css">
-	<!-- Owl Carousel -->
-	<link rel="stylesheet" href="static/css/owl.carousel.css">
-	<link rel="stylesheet" href="static/css/owl.theme.css">
-	<!-- Flexslider -->
-	<link rel="stylesheet" href="static/css/flexslider.css">
-	<!-- Flexslider -->
-	<link rel="stylesheet" href="static/css/cd-hero.css">
-	<!-- Style Swicther -->
-	<link id="style-switch" href="static/css/presets/preset2.css" media="screen" rel="stylesheet" type="text/css">
-
-	<!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
-    <!--[if lt IE 9]>
-      <script src="static/js/html5shiv.js"></script>
-      <script src="static/js/respond.min.js"></script>
-    <![endif]-->
-
-</head>
-	
-<body>
-
-	<!-- Style switcher start -->
-	<!-- Style switcher end -->
-
-	<div class="body-inner">
-
-	<!-- Header start -->
-	<header id="header" class="navbar-fixed-top header" role="banner">
-		<div class="container">
-			<div class="row">
-				<!-- Logo start -->
-				<div class="navbar-header">
-				   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-				        <span class="sr-only">Toggle navigation</span>
-				        <span class="icon-bar"></span>
-				        <span class="icon-bar"></span>
-				        <span class="icon-bar"></span>
-				    </button>
-				    <div class="navbar-brand navbar-bg">
-					    <a href="">
-					    	<img class="img-responsive" src="static/images/rol_andalucia_logo.png" alt="logo">
-					    </a> 
-				    </div>                   
-				</div><!--/ Logo end -->
-				<nav class="collapse navbar-collapse clearfix" role="navigation">
-					<ul class="nav navbar-nav navbar-right">
-						<li>
-                       		<a href="">Home</a>
-	                    </li>
-						<li class="dropdown">
-                       		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Listados <i class="fa fa-angle-down"></i></a>
-                       		<div class="dropdown-menu">
-								<ul>
-		                            <li><a href="admin/RolAndalucia/spell">Hechizos</a></li>
-		                            <li><a href="admin/RolAndalucia/craftable">Invenciones</a></li>
-		                            <li><a href="">Encuentros</a></li>
-		                            <li><a href="admin/RolAndalucia/item">Objetos</a></li>
-		                        </ul>
-	                    	</div>
-	                    </li>
-            			<li><a href="admin">Admin panel</a></li>
-                    </ul>
-				</nav><!--/ Navigation end -->
-			</div><!--/ Row end -->
-		</div><!--/ Container end -->
-	</header><!--/ Header end -->
+{% block content %}
 
 	<!-- Slider start -->
 	<section id="home" class="no-padding">	
@@ -107,18 +8,21 @@
 			<ul class="cd-hero-slider">
 				<li class="selected">
 					<div class="overlay2">
-						<img class="" src="static/images/slider/bg1.jpg" alt="slider">
+						<img class="" src="static/images/andalucia/torre_oro.jpg" alt="slider">
 					</div>
-					<div class="cd-full-width">
+                    <div class="cd-half-width cd-img-container img-right">
+						<img src="static/images/slider/ironhide.png" alt="">
+					</div>
+					<div class="cd-half-width">
 						<h2>Inventa grandes cosas</h2>
-						<h3>Haz tus sueños ingenieriles posibles en el Rol de Andalucía</h3>
+						<p>Haz tus sueños ingenieriles posibles en el Rol de Andalucía</p>
 						<a href="admin/RolAndalucia/craftable/" class="btn btn-primary solid cd-btn">Ver creables</a>
 						<a href="#0" class="btn btn-primary solid cd-btn">Saber más</a>
 					</div> <!-- .cd-full-width -->
 				</li>
 				<li>
 					<div class="overlay2">
-						<img class="" src="static/images/slider/bg2.jpg" alt="slider">
+						<img class="" src="static/images/andalucia/barrosa.jpg" alt="slider">
 					</div>
 					<div class="cd-half-width">
 						<h2>Encuentra objetos curiosos</h2>
@@ -132,7 +36,7 @@
 				</li>
 				<li>
 					<div class="overlay2">
-						<img class="" src="static/images/slider/bg3.jpg" alt="slider">
+						<img class="" src="static/images/andalucia/cordoba.jpg" alt="slider">
 					</div>
 					<div class="cd-half-width cd-img-container img-right">
 						<img src="static/images/tech-mainimage.png" alt="">
@@ -740,35 +644,35 @@
 			    <div id="testimonial-carousel" class="owl-carousel owl-theme text-center testimonial-slide">
 			        <div class="item">
 			          	<div class="testimonial-thumb">
-			            	<img src="static/images/team/testimonial1.jpg" alt="testimonial">
+			            	<img src="https://www.meme-arsenal.com/memes/4dec1023296303e17085f18fea46e728.jpg" alt="testimonial">
 			          	</div>
 			          	<div class="testimonial-content">
 				            <p class="testimonial-text">
-				              Lorem Ipsum as their default model text, and a search for ‘lorem ipsum’ will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose. Lorem Ipsum is that it as opposed to using.
+				              Antes todo esto era campo
 				            </p>
-			            	<h3 class="name">Sarah Arevik<span>Chief Executive</span></h3>
+			            	<h3 class="name">Señora Random<span>Señora Random</span></h3>
 			          	</div>
 			        </div>
 			        <div class="item">
 			          	<div class="testimonial-thumb">
-			            	<img src="static/images/team/testimonial2.jpg" alt="testimonial">
+			            	<img src="https://1.bp.blogspot.com/-M8fhqlxJgCM/XRkATVBWqZI/AAAAAAAAKrs/zMfOXdbmiPYZKUxg_-kIOaAVIBS0-aOoQCLcBGAs/s1600/2019_07_01_cab.jpg" alt="testimonial">
 			          	</div>
 				        <div class="testimonial-content">
 				            <p class="testimonial-text">
-				              Lorem Ipsum as their default model text, and a search for ‘lorem ipsum’ will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose. Lorem Ipsum is that it as opposed to using.
+				              No sueño con una Andalucía perfecta. No puedo vivir en la irrealidad y la fantasía.
 				            </p>
-				            <h3 class="name">Narek Bedros<span>Sr. Manager</span></h3>
+				            <h3 class="name">Susana Díaz Pacheco<span>Expresidenta del Gobierno Andaluz, ignorando que Andalucía ya es perfecta</span></h3>
 				        </div>
 			        </div>
 			        <div class="item">
 				        <div class="testimonial-thumb">
-				            <img src="static/images/team/testimonial3.jpg" alt="testimonial">
+				            <img src="static/images/thorodinez.png" alt="testimonial">
 				        </div>
 			          	<div class="testimonial-content">
 				            <p class="testimonial-text">
-				              Lorem Ipsum as their default model text, and a search for ‘lorem ipsum’ will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose. Lorem Ipsum is that it as opposed to using.
+				              Solo estoy vivo porque mi destino me quiere vivo.
 				            </p>
-			            	<h3 class="name">Taline Lucine<span>Sales Manager</span></h3>
+			            	<h3 class="name">Antornio Odián<span>Villasguardés en un día bajo</span></h3>
 			          	</div>
 			        </div>
 			    </div><!--/ Testimonial carousel end-->
@@ -830,163 +734,9 @@
 	
 {% endcomment %}
 
-	<!-- Footer start -->
-	<footer id="footer" class="footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 col-sm-12 footer-widget">
-					<h3 class="widget-title">Recent Posts</h3>
-					<div class="latest-post-items media">
-							<div class="latest-post-content media-body">
-								<h4><a href="#">Bulgaria claims to find Europe's 'oldest town'</a></h4>
-								<p class="post-meta">
-									<span class="author">Posted by John Doe</span>
-									<span class="post-meta-cat">in<a href="#"> Blog</a></span>
-								</p>
-							</div>
-						</div><!-- 1st Latest Post end -->
+{% endblock %}
 
-						<div class="latest-post-items media">
-							<div class="latest-post-content media-body">
-								<h4><a href="#">Few Answers in Case of Murdered Law Professor</a></h4>
-								<p class="post-meta">
-									<span class="date"><i class="icon icon-calendar"></i> Mar 15, 2015</span>
-									<span class="post-meta-comments"><i class="icon icon-bubbles4"></i> <a href="#">03</a></span>
-								</p>
-							</div>
-						</div><!-- 2nd Latest Post end -->
-
-						<div class="latest-post-items media">
-							<div class="latest-post-content media-body">
-								<h4><a href="#">Over the year we have lots of experience in our field</a></h4>
-								<p class="post-meta">
-									<span class="date"><i class="icon icon-calendar"></i> Apr 17, 2015</span>
-									<span class="post-meta-comments"><i class="icon icon-bubbles4"></i> <a href="#">14</a></span>
-								</p>
-							</div>
-						</div><!-- 3rd Latest Post end -->
-	
-				</div><!--/ End Recent Posts-->
-				
-
-				{% comment %}<div class="col-md-4 col-sm-12 footer-widget">
-					<h3 class="widget-title">Flickr Photos</h3>
-
-					<div class="img-gallery">
-						<div class="img-container">
-							<a class="thumb-holder" data-rel="prettyPhoto" href="static/images/gallery/1.jpg">
-								<img src="static/images/gallery/1.jpg" alt="">
-							</a>
-							<a class="thumb-holder" data-rel="prettyPhoto" href="static/images/gallery/2.jpg">
-								<img src="static/images/gallery/2.jpg" alt="">
-							</a>
-							<a class="thumb-holder" data-rel="prettyPhoto" href="static/images/gallery/3.jpg">
-								<img src="static/images/gallery/3.jpg" alt="">
-							</a>
-							<a class="thumb-holder" data-rel="prettyPhoto" href="static/images/gallery/4.jpg">
-								<img src="static/images/gallery/4.jpg" alt="">
-							</a>
-							<a class="thumb-holder" data-rel="prettyPhoto" href="static/images/gallery/5.jpg">
-								<img src="static/images/gallery/5.jpg" alt="">
-							</a>
-							<a class="thumb-holder" data-rel="prettyPhoto" href="static/images/gallery/6.jpg">
-								<img src="static/images/gallery/6.jpg" alt="">
-							</a>
-							<a class="thumb-holder" data-rel="prettyPhoto" href="static/images/gallery/6.jpg">
-								<img src="static/images/gallery/7.jpg" alt="">
-							</a>
-							<a class="thumb-holder" data-rel="prettyPhoto" href="static/images/gallery/6.jpg">
-								<img src="static/images/gallery/8.jpg" alt="">
-							</a>
-							<a class="thumb-holder" data-rel="prettyPhoto" href="static/images/gallery/6.jpg">
-								<img src="static/images/gallery/9.jpg" alt="">
-							</a>
-						</div>
-					</div>
-				</div><!--/ end flickr -->{% endcomment %}
-
-				<div class="col-md-6 col-sm-12 footer-widget footer-about-us">
-					<h3 class="widget-title">Sobre el Rol de Andalucía</h3>
-					<p>Este juego de rol es una versión moderna de D&D 5a Edición aplicada concretamente al contexto de Andalucía. El contenido, por tanto, pertenece principalmente a fuentes propias y a Wizards of the Coast, con menciones especiales al cast de Critical Role por sus personajes que han inspirado otra parte del contenido.</p>
-					<h4>Address</h4>
-					<p>1102 Saint Marys, Junction City, KS</p>
-					<div class="row">
-						<div class="col-md-6">
-							<h4>Email:</h4>
-							<p>mario.biz.gon *arroba* gmail . com</p>
-						</div>
-						<div class="col-md-6">
-							<h4>Página web</h4>
-							<p>la estás viendo, peazo tú</p>
-						</div>
-					</div>
-                    {% comment %}<form action="#" role="form">
-                        <div class="input-group subscribe">
-                            <input type="email" class="form-control" placeholder="Email Address" required="">
-                            <span class="input-group-addon">
-                              <button class="btn" type="submit"><i class="fa fa-envelope-o"> </i></button>
-                            </span>                        
-                        </div>
-                    </form>{% endcomment %}
-				</div><!--/ end about us -->
-
-			</div><!-- Row end -->
-		</div><!-- Container end -->
-	</footer><!-- Footer end -->
-	
-
-	<!-- Copyright start -->
-	<section id="copyright" class="copyright angle">
-		<div class="container">
-			{% comment %}<div class="row">
-				<div class="col-md-12 text-center">
-					<ul class="footer-social unstyled">
-						<li>
-							<a title="Twitter" href="#">
-								<span class="icon-pentagon wow bounceIn"><i class="fa fa-twitter"></i></span>
-							</a>
-							<a title="Facebook" href="#">
-								<span class="icon-pentagon wow bounceIn"><i class="fa fa-facebook"></i></span>
-							</a>
-							<a title="Google+" href="#">
-								<span class="icon-pentagon wow bounceIn"><i class="fa fa-google-plus"></i></span>
-							</a>
-							<a title="linkedin" href="#">
-								<span class="icon-pentagon wow bounceIn"><i class="fa fa-linkedin"></i></span>
-							</a>
-							<a title="Pinterest" href="#">
-								<span class="icon-pentagon wow bounceIn"><i class="fa fa-pinterest"></i></span>
-							</a>
-							<a title="Skype" href="#">
-								<span class="icon-pentagon wow bounceIn"><i class="fa fa-skype"></i></span>
-							</a>
-							<a title="Dribble" href="#">
-								<span class="icon-pentagon wow bounceIn"><i class="fa fa-dribbble"></i></span>
-							</a>
-						</li>
-					</ul>
-				</div>
-			</div><!--/ Row end -->
-			<div class="row">
-				<div class="col-md-12 text-center">
-					<div class="copyright-info">
-         			 &copy; Copyright 2019 Themefisher. <span>Designed by <a href="https://themefisher.com">Themefisher.com</a></span>
-        			</div>
-				</div>
-			</div><!--/ Row end -->{% endcomment %}
-		   <div id="back-to-top" data-spy="affix" data-offset-top="10" class="back-to-top affix">
-				<button class="btn btn-primary" title="Back to Top"><i class="fa fa-angle-double-up"></i></button>
-			</div>
-		</div><!--/ Container end -->
-	</section><!--/ Copyright end -->
-
-	<!-- Javascript Files
-	================================================== -->
-
-	<!-- initialize jQuery Library -->
-	<script type="text/javascript" src="static/js/jquery.js"></script>
-	<!-- Bootstrap jQuery -->
-	<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+{% block javascript %}
 	<!-- Style Switcher -->
 	<script type="text/javascript" src="static/js/style-switcher.js"></script>
 	<!-- Owl Carousel -->
@@ -1012,6 +762,4 @@
 	<script type="text/javascript" src="static/js/waypoints.min.js"></script>
 	<!-- Template custom -->
 	<script type="text/javascript" src="static/js/custom.js"></script>
-	</div><!-- Body inner end -->
-</body>
-</html>
+{% endblock %}

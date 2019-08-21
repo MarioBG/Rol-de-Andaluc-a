@@ -22,15 +22,9 @@ import pytz
 from django.utils import timezone
 
 def index(request):
-    # esto es como el controlador/servicios
-    try:
-        l = request.user.groups.values_list('name', flat=True)
-        l_list = list(l)
-
-    except:
-        request.session['currentUser'] ='none'
-
     return render(request, 'index.html', {'spells':Spell.objects.all().count(), 'craftables':Craftable.objects.all().count(), 'items':Item.objects.all().count()})
 
 def error404(request):
     return render(request, '404.html')
+def login(request):
+    return render(request, 'userAccount/login.html')
