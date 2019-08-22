@@ -11,25 +11,33 @@
 						<img class="" src="static/images/andalucia/alhambra.jpg" alt="slider">
 					</div>
 					<div class="cd-full-width">
-						<h2>Inventa grandes cosas</h2>
-						<h3>Haz tus sueños ingenieriles posibles en el Rol de Andalucía</h3>
-						<a href="admin/RolAndalucia/craftable/" class="btn btn-primary solid cd-btn">Ver creables</a>
-						<a href="#0" class="btn btn-primary solid cd-btn">Saber más</a>
+						<h2>Iniciar sesión</h2>
+                        <div class="col-md-6 col-md-offset-3 text-center">
+						<form method="post" action="doLogin">
+                            {% csrf_token %}
+                            <input required="true" class="form-control" name="username" aria-describedby="usernameHelp" placeholder="Nombre de usuario"><br/>
+                            <input type="password" required="true" class="form-control" name="password" aria-describedby="passwordHelp" placeholder="Contraseña">
+                            <br/>
+                            <button type="submit" class="btn btn-primary solid">Iniciar sesión</button>
+                        </form><br/>
+                        {% if thing is not None %}
+                                <div class="alert alert-danger" role="alert">
+                                    <h4>{{ thing }}</h4>
+                                </div>
+                        {% endif %}
+                        </div>
 					</div> <!-- .cd-full-width -->
 				</li>
 				<li>
 					<div class="overlay2">
 						<img class="" src="static/images/andalucia/giralda_alcazar.jpg" alt="slider">
 					</div>
-					<div class="cd-half-width">
-						<h2>Encuentra objetos curiosos</h2>
+					<div class="cd-full-width">
+						<h2>Registrarse en el sistema</h2>
+
 						<p>Durante la partida encontrarás numerosos artefactos, ¿por qué no echarles un vistazo?</p>
 						<a href="admin/RolAndalucia/item/" class="cd-btn btn btn-primary solid">Ver el listado</a>
 					</div> <!-- .cd-half-width -->
-
-					<div class="cd-half-width cd-img-container">
-						<img src="static/images/slider/bag_holding.png" alt="">
-					</div> <!-- .cd-half-width.cd-img-container -->
 				</li>
 				<li>
 					<div class="overlay2">

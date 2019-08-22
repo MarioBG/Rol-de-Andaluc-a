@@ -1,25 +1,11 @@
-from django.conf import settings
-from django.urls import reverse
-from django.shortcuts import render, get_object_or_404
 from django.shortcuts import render, get_list_or_404
-from django.shortcuts import redirect
-from django.views.generic import FormView, CreateView, UpdateView
-from .models import *
-from django.db.models import Q
-from django.contrib.auth.models import User
-from datetime import datetime, timezone
-from django.contrib import auth
-from django.contrib import sessions
-from django.contrib.auth.models import Group
+from .forms import *
 from django.http import Http404,HttpResponse,JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect
-from django.db.models import Avg, Count, Min, Sum, Value, CharField, Aggregate
-import random
-from urllib.parse import urlparse, quote
-from itertools import chain
-import pytz
-from django.utils import timezone
+from django.contrib import auth
+from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     return render(request, 'index.html', {'spells':Spell.objects.all().count(), 'craftables':Craftable.objects.all().count(), 'items':Item.objects.all().count()})
@@ -28,3 +14,54 @@ def error404(request):
     return render(request, '404.html')
 def login(request):
     return render(request, 'userAccount/login.html')
+
+@login_required
+def special(request):
+    return HttpResponse("You are logged in !")
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
+def register(request):
+    registered = False
+    if request.method == 'POST':
+        user_form = UserForm(data=request.POST)
+        profile_form = UserProfileInfoForm(data=request.POST)
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            if 'profile_pic' in request.FILES:
+                print('found it')
+                profile.profile_pic = request.FILES['profile_pic']
+            profile.save()
+            registered = True
+        else:
+            print(user_form.errors,profile_form.errors)
+    else:
+        user_form = UserForm()
+        profile_form = UserProfileInfoForm()
+    return render(request,'dappx/registration.html',
+                          {'user_form':user_form,
+                           'profile_form':profile_form,
+                           'registered':registered})
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                auth.login(request, user)
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                return HttpResponse("Your account was inactive.")
+        else:
+            print("Someone tried to login and failed.")
+            print("They used username: {} and password: {}".format(username,password))
+            return render(request, 'userAccount/login.html',
+                          {'thing': "Credenciales incorrectas"})
+    else:
+        return render(request, 'dappx/login.html', {})

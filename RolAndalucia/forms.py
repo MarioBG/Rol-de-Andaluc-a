@@ -1,4 +1,4 @@
-from django.forms import ModelForm, forms, CharField,URLField, URLInput,Textarea,DateTimeField, ModelMultipleChoiceField,EmailInput, NumberInput, TextInput, MultipleChoiceField,EmailField, ModelMultipleChoiceField,CheckboxSelectMultiple, DateField, DateInput,SelectDateWidget,ChoiceField,RadioSelect,BooleanField, IntegerField
+from django.forms import ModelForm, PasswordInput, forms, CharField,URLField, URLInput,Textarea,DateTimeField, ModelMultipleChoiceField,EmailInput, NumberInput, TextInput, MultipleChoiceField,EmailField, ModelMultipleChoiceField,CheckboxSelectMultiple, DateField, DateInput,SelectDateWidget,ChoiceField,RadioSelect,BooleanField, IntegerField
 from django.contrib.auth.forms import UserCreationForm
 from RolAndalucia.models import *
 from django.contrib.auth.models import User, Group
@@ -9,11 +9,13 @@ from datetime import datetime,timedelta
 import re
 from django.contrib import admin
 
+
 class SpellForm(ModelForm):
 
     class Meta:
         model = Spell
         fields = '__all__'
+
 
 class CharacterClassForm(ModelForm):
 
@@ -22,3 +24,14 @@ class CharacterClassForm(ModelForm):
         fields= '__all__'
 
 
+class UserForm(ModelForm):
+    password = CharField(widget=PasswordInput())
+    class Meta():
+        model = User
+        fields = ('username','password','email')
+
+
+class UserProfileInfoForm(ModelForm):
+     class Meta():
+         model = UserProfileInfo
+         fields = ('profile_pic',)
