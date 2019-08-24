@@ -108,33 +108,33 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-sm-12 footer-widget">
-					<h3 class="widget-title">Recent Posts</h3>
+					<h3 class="widget-title">Entradas seleccionadas</h3>
 					<div class="latest-post-items media">
 							<div class="latest-post-content media-body">
-								<h4><a href="#">Bulgaria claims to find Europe's 'oldest town'</a></h4>
+								<h4><a href="admin/RolAndalucia/item/{{ randItem.id }}">{{ randItem.name }}</a></h4>
 								<p class="post-meta">
-									<span class="author">Posted by John Doe</span>
-									<span class="post-meta-cat">in<a href="#"> Blog</a></span>
+									<span class="description">{{ randItem.type }} de rareza {{ randItem.rarity }}, solo en el Rol de Andalucía</span>
+									<span class="post-meta-cat"><a href="admin/RolAndalucia/item/{{ randItem.id }}"> Aprende más sobre él</a></span>
 								</p>
 							</div>
 						</div><!-- 1st Latest Post end -->
 
 						<div class="latest-post-items media">
 							<div class="latest-post-content media-body">
-								<h4><a href="#">Few Answers in Case of Murdered Law Professor</a></h4>
+								<h4><a href="admin/RolAndalucia/spell/{{ randSpell.id }}">{{ randSpell.name }}</a></h4>
 								<p class="post-meta">
-									<span class="date"><i class="icon icon-calendar"></i> Mar 15, 2015</span>
-									<span class="post-meta-comments"><i class="icon icon-bubbles4"></i> <a href="#">03</a></span>
+									<span class="description">{% if randSpell.level == 0 %}Truco{% else %}Hechizo{% endif %} de {{ randSpell.school }}{% if randSpell.level != 0 %} nivel {{ randSpell.level }}{% endif %}, solo en el Rol de Andalucía</span>
+									<span class="post-meta-cat"><a href="admin/RolAndalucia/spell/{{ randSpell.id }}"> Aprende más sobre él</a></span>
 								</p>
 							</div>
 						</div><!-- 2nd Latest Post end -->
 
 						<div class="latest-post-items media">
 							<div class="latest-post-content media-body">
-								<h4><a href="#">Over the year we have lots of experience in our field</a></h4>
+								<h4><a href="admin/RolAndalucia/craftable/{{ randCraftable.id }}">{{ randCraftable.name }}</a></h4>
 								<p class="post-meta">
-									<span class="date"><i class="icon icon-calendar"></i> Apr 17, 2015</span>
-									<span class="post-meta-comments"><i class="icon icon-bubbles4"></i> <a href="#">14</a></span>
+									<span class="description">Invención de {% if randCraftable.programmingCost > randCraftable.engineeringCost %}programación{% else %}ingeniería{% endif %} de coste {{ randCraftable.engineeringCost }}PI, {{ randCraftable.programmingCost }}PP, solo en el Rol de Andalucía</span>
+									<span class="post-meta-cat"><a href="admin/RolAndalucia/craftable/{{ randCraftable.id }}"> Aprende más sobre ella</a></span>
 								</p>
 							</div>
 						</div><!-- 3rd Latest Post end -->

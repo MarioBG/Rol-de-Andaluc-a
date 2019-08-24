@@ -17,10 +17,14 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
+handler404 = "RolAndalucia.views.handler404"
+handler500 = "RolAndalucia.views.handler500"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('login', views.login, name='login'),
     path('doLogin', views.user_login, name='doLogin'),
-    path('404', views.error404, name='404')
+    path('404', views.error404, name='404'),
+    path('500', views.handler500, name='500')
 ]
