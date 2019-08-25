@@ -3,6 +3,7 @@ from django.contrib.auth.models import Group
 import markdown
 from django import template
 from django.utils.safestring import mark_safe
+from RolAndalucia.Markdown.TablesCool import TableExtension
 
 register = template.Library()
 
@@ -13,4 +14,4 @@ def has_group(user, group_name):
 
 @register.filter('markdown')
 def markdown_format(text):
-    return mark_safe(markdown.markdown(text, extensions=['extra']))
+    return mark_safe(markdown.markdown(text, extensions=['abbr','RolAndalucia.Markdown.TablesCool:TableExtension','attr_list','def_list','fenced_code','footnotes','mdx_wikilink_plus']))

@@ -29,16 +29,16 @@
 							<img src="{{ item.photo }}" class="img-responsive"  alt="" />
 						</div><!-- post image end -->
                     <h5>Descripción</h5>
-						<p>{{ item.description }}</p>
+						<p>{{ item.description|markdown }}</p>
                         {% if request.user|has_group:"Admin" %}
                             <h5>Efectos</h5>
-                            <p>{{ item.effects }}</p>{% endif %}
+                            <p>{{ item.effects|markdown }}</p>{% endif %}
                             <h5>Características</h5>
                             <p>{{ item.characteristics|markdown }}</p>
 
 
 						<div class="gap-20"></div>
-
+{% comment %}
 						<div class="row">
 							<div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
 								<span class="feature-icon pull-left" ><i class="fa fa-heart-o"></i></span>
@@ -76,7 +76,7 @@
 									<p>Consectetur adipisicing elit sed do eiusmod tempor incididunt ut</p>
 								</div>
 							</div><!--/ End 2nd featurebox -->
-						</div>
+						</div>{% endcomment %}
 
 
 					</div><!--/ post content end -->
@@ -97,7 +97,7 @@
 				            </ul>
 						</div><!-- category end -->
 
-						<!-- tags start -->
+						{% comment %}<!-- tags start -->
 						<div class="widget widget-tags">
 							<h3 class="widget-title">Tags</h3>
 							<ul class="unstyled clearfix">
@@ -109,7 +109,7 @@
 				              	<li><a href="#">Cellular</a></li>
 				              	<li><a href="#">Niche</a></li>
 				            </ul>
-						</div><!-- tags end -->
+						</div><!-- tags end -->{% endcomment %}
 
 
 					</div><!--/ Sidebar end -->
