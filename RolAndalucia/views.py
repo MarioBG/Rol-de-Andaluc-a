@@ -74,7 +74,7 @@ def handler500(request, template_name="500.html"):
     return render(request, '500.html', status=500)
 
 
-def handler404(request, template_name="404.html"):
+def handler404(request, atemplate_name="404.html"):
     return render(request, '404.html', status=404)
 
 

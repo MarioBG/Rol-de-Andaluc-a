@@ -34,14 +34,25 @@ class CraftableAdmin(NumericFilterModelAdmin):
     ]
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'type', 'magic', 'wearable', 'rarity', 'item_actions')
-    list_display_links = ('name', 'id')
+
+    def __init__(self, model, admin_site):
+        self.request = None
+        super().__init__(model, admin_site)
+
+    def get_queryset(self, request):
+        self.request = request
+        return super().get_queryset(request)
+
+    list_display = ('vacio','id', 'name', 'type', 'magic', 'wearable', 'rarity', 'item_actions')
+    list_display_links = []
     search_fields = ['name', 'effect', 'description']
     list_per_page = 25
     list_filter = [
         'magic', 'wearable', 'type', 'rarity'
     ]
 
+    def vacio(self, obj):
+        return ''
 
     def process_view(self, request, item_id, *args, **kwargs):
         return views.viewItem(request, item_id)
@@ -59,7 +70,10 @@ class ItemAdmin(admin.ModelAdmin):
     #     return custom_urls + urls
 
     def item_actions(self, obj):
-        return mark_safe('<a class="button" href="/viewItem?itemId='+str(obj.pk)+'">Ver objeto</a>&nbsp;')
+        ans = '<a class="button" href="/viewItem?itemId='+str(obj.pk)+'">Ver</a>&nbsp;'
+        if self.request.user.groups.filter(name="Admin").exists():
+            ans += '<a class="button" href="/admin/RolAndalucia/item/'+str(obj.pk)+'/change">Editar</a>&nbsp;'
+        return mark_safe(ans)
 
     item_actions.short_description = 'Acciones'
     item_actions.allow_tags = True

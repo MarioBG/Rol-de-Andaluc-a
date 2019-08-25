@@ -33,6 +33,7 @@
                         {% if request.user|has_group:"Admin" %}
                             <h5>Efectos</h5>
                             <p>{{ item.effects }}</p>{% endif %}
+                            <h5>Características</h5>
                             <p>{{ item.characteristics|markdown }}</p>
 
 
