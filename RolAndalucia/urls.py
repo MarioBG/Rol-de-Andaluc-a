@@ -25,6 +25,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('login', views.login, name='login'),
     path('doLogin', views.user_login, name='doLogin'),
+    path('viewItem', views.viewItem, name='viewItem'),
     path('404', views.error404, name='404'),
     path('500', views.handler500, name='500')
 ]

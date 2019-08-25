@@ -6,6 +6,7 @@ from django.contrib import auth
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django import template
 
 def index(request):
     return render(request, 'index.html', {'spells':Spell.objects.all().count(), 'craftables':Craftable.objects.all().count(), 'items':Item.objects.all().count()})
@@ -47,6 +48,8 @@ def register(request):
                           {'user_form':user_form,
                            'profile_form':profile_form,
                            'registered':registered})
+
+
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -74,3 +77,8 @@ def handler500(request, exception, template_name="500.html"):
 def handler404(request, exception, template_name="404.html"):
     return render(request, '404.html', status=404)
 
+
+def viewItem(request):
+    itemId = request.GET.get('itemId','')
+    item = Item.objects.get(pk = itemId)
+    return render(request, 'displays/item.html', {'item':item,})

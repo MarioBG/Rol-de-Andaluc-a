@@ -1,7 +1,10 @@
 from django.apps import apps
 from django.contrib import admin
-from RolAndalucia import models
+from RolAndalucia import models, views
 from django.db.models import Q
+from django.utils.html import format_html
+from django.conf.urls import url
+from django.utils.safestring import mark_safe
 from admin_numeric_filter.admin import NumericFilterModelAdmin, SingleNumericFilter, RangeNumericFilter, \
     SliderNumericFilter
 
@@ -30,8 +33,8 @@ class CraftableAdmin(NumericFilterModelAdmin):
         ['engineeringCost', SliderNumericFilter]
     ]
 
-class ItemAdmin(NumericFilterModelAdmin):
-    list_display = ('id', 'name', 'type', 'magic', 'wearable', 'rarity')
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'type', 'magic', 'wearable', 'rarity', 'item_actions')
     list_display_links = ('name', 'id')
     search_fields = ['name', 'effect', 'description']
     list_per_page = 25
@@ -39,6 +42,27 @@ class ItemAdmin(NumericFilterModelAdmin):
         'magic', 'wearable', 'type', 'rarity'
     ]
 
+
+    def process_view(self, request, item_id, *args, **kwargs):
+        return views.viewItem(request, item_id)
+
+
+    # def get_urls(self):
+    #     urls = super().get_urls()
+    #     custom_urls = [
+    #         url(
+    #             r'^(?P<item_id>.+)/view/$',
+    #             self.admin_site.admin_view(self.process_view),
+    #             name='item-view',
+    #         ),
+    #     ]
+    #     return custom_urls + urls
+
+    def item_actions(self, obj):
+        return mark_safe('<a class="button" href="/viewItem?itemId='+str(obj.pk)+'">Ver objeto</a>&nbsp;')
+
+    item_actions.short_description = 'Acciones'
+    item_actions.allow_tags = True
 
 
 admin.site.register(models.Craftable, CraftableAdmin)
