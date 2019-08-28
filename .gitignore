@@ -1,2 +1,14 @@
 
 \.idea/
+
+staticfiles/
+
+db.sqlite3
+
+venv/
+
+RolAndalucia/__pycache__/
+
+*.pyc
+
+*.sqlite3
