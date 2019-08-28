@@ -82,3 +82,10 @@ def viewItem(request):
     itemId = request.GET.get('itemId','')
     item = Item.objects.get(pk = itemId)
     return render(request, 'displays/item.html', {'item':item,})
+
+def searchEntryName(request):
+    name = request.GET.get('q','')
+    name = name.replace("_"," ")
+    if Item.objects.get(name=name) != None:
+        return render(request, 'displays/item.html', {'item':Item.objects.get(name=name)})
+    return render(request, '404.html', status=404)

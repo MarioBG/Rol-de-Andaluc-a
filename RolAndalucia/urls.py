@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
+from django.conf.urls import url, include
+from django.conf.urls.static import static
+from django.conf import settings
 
 handler404 = "RolAndalucia.views.handler404"
 handler500 = "RolAndalucia.views.handler500"
@@ -27,5 +30,8 @@ urlpatterns = [
     path('doLogin', views.user_login, name='doLogin'),
     path('viewItem', views.viewItem, name='viewItem'),
     path('404', views.error404, name='404'),
-    path('500', views.handler500, name='500')
+    path('500', views.handler500, name='500'),
+    path('searchName', views.searchEntryName, name='searchName'),
+    path('martor/', include('martor.urls')),
+    url(r'^treewidget/', include('treewidget.urls')),
 ]

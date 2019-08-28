@@ -5,24 +5,44 @@ from django.urls import reverse
 from django.contrib.auth.hashers import make_password
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
+from martor.models import MartorField
+from ordered_model.models import OrderedModel
+from django.core.exceptions import ValidationError
+from mptt.models import MPTTModel
+import mptt
+from django.db.models import F
+from treewidget.fields import TreeForeignKey
 
 # Create your models here.
 # System objects
 
 
-class Configuration(models.Model):
-    threadPrice = models.IntegerField(verbose_name=_("Thread Price"), null=False, default=0)
-    jobOfferPrice = models.IntegerField(verbose_name=_("Job Offer Price"), null= False, default=0)
-    challengePrice = models.IntegerField(verbose_name=_("Challenge Price"), null=False, default=0)
-    defaultMaxCoins = models.IntegerField(verbose_name=_("Default maximum coins"), null=False, default=10)
-    directPurchaseCoinsPrice = models.FloatField(verbose_name=_("Coins price"), null=False, default=3)
-
-
-class CharacterClass(models.Model):
-    name = models.TextField(verbose_name="Class name")
+class Rule(MPTTModel):
+    name = models.CharField(verbose_name=_("Nombre"), max_length=200)
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+    content = MartorField(verbose_name=_("Content"), default='')
+    order = models.PositiveIntegerField(verbose_name=_("Orden"), default=0)
+    order_with_respect_to = 'parent'
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if Rule.objects.filter(order__gte = self.order):
+            Rule.objects.filter(order__gte =self.order, parent = self.parent).update(order=F('order') + 1)
+        super(Rule, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        super(Rule, self).delete(*args, **kwargs)
+
+
+class CharacterClass(models.Model):
+    name = models.TextField(verbose_name=_("Nombre de clase"))
+    description = MartorField(verbose_name=_("Descripción"), default='')
+
+    def __str__(self):
+        return self.name
+
 
 class Spell(models.Model):
     name = models.CharField(verbose_name=_("Spell name"), max_length=50, blank=False)
@@ -53,10 +73,11 @@ class Craftable(models.Model):
     materialCost = models.TextField(verbose_name=_("Costes en materiales"), blank=True)
     effect = models.TextField(verbose_name=_("Efectos"))
     requirements = models.TextField(verbose_name=_("Requisitos"), blank=True)
-    photo = models.URLField(verbose_name=_("Imagen"), blank=True)
+    photo = models.CharField(verbose_name=_("Imagen"), blank=True, max_length=400)
 
     def __str__(self):
         return self.name
+
 
 class Item(models.Model):
     name = models.CharField(verbose_name=_("Nombre de objeto"), max_length=60, blank=False)
@@ -68,7 +89,7 @@ class Item(models.Model):
     wearable = models.BooleanField(verbose_name=_("Equipable"), default=False)
     effects = models.TextField(verbose_name=_("Efectos"), blank=True)
     characteristics = models.TextField(verbose_name=_("Características"), blank=True, help_text="Genera tablas en https://www.tablesgenerator.com/markdown_tables#")
-    photo = models.URLField(verbose_name=_("Imagen"), blank=True)
+    photo = models.CharField(verbose_name=_("Imagen"), blank=True, max_length=400)
 
     def __str__(self):
         return self.name

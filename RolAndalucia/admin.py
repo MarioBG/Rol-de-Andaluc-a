@@ -9,6 +9,12 @@ from admin_numeric_filter.admin import NumericFilterModelAdmin, SingleNumericFil
     SliderNumericFilter
 
 
+def duplicate_event(modeladmin, request, queryset):
+    for object in queryset:
+        object.id = None
+        object.save()
+duplicate_event.short_description = "Duplicar registro"
+
 class ListAdminMixin(object):
     def __init__(self, model, admin_site):
         self.list_display = [field.name for field in model._meta.fields]
@@ -19,6 +25,7 @@ class SpellAdmin(NumericFilterModelAdmin):
     list_display = ('id', 'name', 'level', 'school', 'castTime', 'duration', 'concentration', 'effect')
     list_display_links = ('name', 'id')
     search_fields = ['name', 'school', 'effect']
+    actions = [duplicate_event]
     list_per_page = 25
     list_filter = [["level", RangeNumericFilter],"school","classes", "verbalComponent", "somaticComponent", "materialComponent","concentration"]
 
@@ -27,6 +34,7 @@ class CraftableAdmin(NumericFilterModelAdmin):
     list_display = ('id', 'name', 'programmingCost', 'engineeringCost', 'description')
     list_display_links = ('name', 'id')
     search_fields = ['name', 'effect']
+    actions = [duplicate_event]
     list_per_page = 25
     list_filter = [
         ['programmingCost', SliderNumericFilter],
@@ -47,6 +55,7 @@ class ItemAdmin(admin.ModelAdmin):
     list_display_links = []
     search_fields = ['name', 'effect', 'description']
     list_per_page = 25
+    actions = [duplicate_event]
     list_filter = [
         'magic', 'wearable', 'type', 'rarity'
     ]
