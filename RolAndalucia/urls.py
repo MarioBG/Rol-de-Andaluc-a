@@ -32,6 +32,7 @@ urlpatterns = [
     path('404', views.error404, name='404'),
     path('500', views.handler500, name='500'),
     path('searchName', views.searchEntryName, name='searchName'),
+    path('viewClass', views.viewClass, name='viewClass'),
     path('martor/', include('martor.urls')),
     url(r'^treewidget/', include('treewidget.urls')),
 ]

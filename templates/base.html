@@ -94,6 +94,16 @@
 		                        </ul>
 	                    	</div>
 	                    </li>
+                        <li class="dropdown">
+                       		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Clases <i class="fa fa-angle-down"></i></a>
+                       		<div class="dropdown-menu">
+								<ul>
+                                    {% for class in classes %}
+		                                <li><a href="/viewClass?classId={{ class.id }}">{{ class.name }}</a></li>
+                                    {% endfor %}
+		                        </ul>
+	                    	</div>
+	                    </li>
             			<li><a href="admin">Panel de control</a></li>
                         <li><a href="/login">Iniciar sesión</a></li>
                     </ul>

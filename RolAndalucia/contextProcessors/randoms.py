@@ -12,4 +12,5 @@ def randoms(request):
     result['randItem'] = Item.objects.order_by("?").first()
     result['randCraftable'] = Craftable.objects.order_by("?").first()
     result['randSpell'] = Spell.objects.order_by("?").first()
+    result['classes'] = CharacterClass.objects.all()
     return result

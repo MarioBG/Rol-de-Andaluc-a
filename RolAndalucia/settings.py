@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'kf3pbtu^18pn1g*dbu@0d9tet$7jzj$m7p3(m%=p#9pq)ifs4$'
 if 'DYNO' in os.environ:
-    BASEURL = 'https://rol-de-andalucia.herokuapp.com/'
+    BASEURL = 'https://rol-andalucia.herokuapp.com/'
 # SECURITY WARNING: don't run with debug turned on in production!
 if 'DYNO' in os.environ:
     DEBUG = False
@@ -150,7 +150,7 @@ MARTOR_ENABLE_CONFIGS = {
     'imgur': 'true',     # to enable/disable imgur/custom uploader.
     'mention': 'false',  # to enable/disable mention
     'jquery': 'true',    # to include/revoke jquery (require for admin default django)
-    'living': 'true',   # to enable/disable live updates in preview
+    'living': 'false',   # to enable/disable live updates in preview
 }
 
 # To setup the martor editor with label or not (default is False)

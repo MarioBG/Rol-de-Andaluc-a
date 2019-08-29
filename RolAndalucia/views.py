@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django import template
+from django.shortcuts import get_object_or_404, get_list_or_404
+from RolAndalucia.models import *
 
 def index(request):
     return render(request, 'index.html', {'spells':Spell.objects.all().count(), 'craftables':Craftable.objects.all().count(), 'items':Item.objects.all().count()})
@@ -83,9 +85,12 @@ def viewItem(request):
     item = Item.objects.get(pk = itemId)
     return render(request, 'displays/item.html', {'item':item,})
 
+def viewClass(request):
+    classId = request.GET.get('classId','')
+    clase = CharacterClass.objects.get(pk = classId)
+    return render(request, 'displays/class.html', {'clase':clase,})
+
 def searchEntryName(request):
     name = request.GET.get('q','')
     name = name.replace("_"," ")
-    if Item.objects.get(name=name) != None:
-        return render(request, 'displays/item.html', {'item':Item.objects.get(name=name)})
-    return render(request, '404.html', status=404)
+    return render(request, 'displays/item.html', {'item':get_object_or_404(Item, name=name)})

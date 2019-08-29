@@ -86,7 +86,7 @@ class TableProcessor(BlockProcessor):
                 align.append(None)
 
         # Build table
-        table = etree.SubElement(parent, 'table', attrib={'class': 'table-striped'})
+        table = etree.SubElement(parent, 'table', attrib={'class': 'table-bordered table-striped'})
         thead = etree.SubElement(table, 'thead')
         self._build_row(header, thead, align)
         tbody = etree.SubElement(table, 'tbody')
