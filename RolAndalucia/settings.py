@@ -24,7 +24,7 @@ if 'DYNO' in os.environ:
     BASEURL = 'https://rol-andalucia.herokuapp.com/'
 # SECURITY WARNING: don't run with debug turned on in production!
 if 'DYNO' in os.environ:
-    DEBUG = True
+    DEBUG = False
 else:
     DEBUG = True
 
@@ -89,6 +89,8 @@ STATICFILES_DIRS = [
 ]
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+
+LOGIN_URL = "/login"
 
 
 # Database

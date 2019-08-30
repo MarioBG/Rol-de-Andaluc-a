@@ -8,13 +8,14 @@
 			<ul class="cd-hero-slider">
 				<li class="selected">
 					<div class="overlay2">
-						<img class="" src="static/images/andalucia/alhambra.jpg" alt="slider">
+						<img class="" src="/static/images/andalucia/alhambra.jpg" alt="slider">
 					</div>
 					<div class="cd-full-width">
 						<h2>Iniciar sesión</h2>
                         <div class="col-md-6 col-md-offset-3 text-center">
-						<form method="post" action="doLogin">
+						<form method="post" action="/doLogin">
                             {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.GET.next }}"/>
                             <input required="true" class="form-control" name="username" aria-describedby="usernameHelp" placeholder="Nombre de usuario"><br/>
                             <input type="password" required="true" class="form-control" name="password" aria-describedby="passwordHelp" placeholder="Contraseña">
                             <br/>
@@ -30,7 +31,7 @@
 				</li>
 				<li>
 					<div class="overlay2">
-						<img class="" src="static/images/andalucia/giralda_alcazar.jpg" alt="slider">
+						<img class="" src="/static/images/andalucia/giralda_alcazar.jpg" alt="slider">
 					</div>
 					<div class="cd-full-width">
 						<h2>Registrarse en el sistema</h2>
@@ -41,7 +42,7 @@
 				</li>
 				<li>
 					<div class="overlay2">
-						<img class="" src="static/images/slider/bg3.jpg" alt="slider">
+						<img class="" src="/static/images/slider/bg3.jpg" alt="slider">
 					</div>
 					<div class="cd-half-width cd-img-container img-right">
 						<img src="static/images/tech-mainimage.png" alt="">
@@ -49,7 +50,7 @@
 					<div class="cd-half-width">
 						<h2>Hechizos para la vida moderna</h2>
 						<p>La magia en el medievo es poderosa, pero ¿hoy en día? Buá, es que ni te lo cuento, míralo tú mismo</p>
-						<a href="admin/RolAndalucia/spell/" class="cd-btn btn btn-primary solid">Ver listado</a>
+						<a href="/admin/RolAndalucia/spell/" class="cd-btn btn btn-primary solid">Ver listado</a>
 						<a href="#0" class="cd-btn btn secondary btn-primary solid">Saber más</a>
 					</div> <!-- .cd-half-width -->
 				</li>
@@ -83,20 +84,20 @@
 {% endblock %}
 {% block javascript %}
     <!-- Style Switcher -->
-	<script type="text/javascript" src="static/js/style-switcher.js"></script>
+	<script type="text/javascript" src="/static/js/style-switcher.js"></script>
 	<!-- Owl Carousel -->
-	<script type="text/javascript" src="static/js/owl.carousel.js"></script>
+	<script type="text/javascript" src="/static/js/owl.carousel.js"></script>
 	<!-- PrettyPhoto -->
-	<script type="text/javascript" src="static/js/jquery.prettyPhoto.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.prettyPhoto.js"></script>
 	<!-- Bxslider -->
-	<script type="text/javascript" src="static/js/jquery.flexslider.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.flexslider.js"></script>
 	<!-- CD Hero slider -->
-	<script type="text/javascript" src="static/js/cd-hero.js"></script>
+	<script type="text/javascript" src="/static/js/cd-hero.js"></script>
 	<!-- Isotope -->
-	<script type="text/javascript" src="static/js/isotope.js"></script>
-	<script type="text/javascript" src="static/js/ini.isotope.js"></script>
+	<script type="text/javascript" src="/static/js/isotope.js"></script>
+	<script type="text/javascript" src="/static/js/ini.isotope.js"></script>
 	<!-- Counter -->
-	<script type="text/javascript" src="static/js/jquery.counterup.min.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.counterup.min.js"></script>
 	<!-- Waypoints -->
-	<script type="text/javascript" src="static/js/waypoints.min.js"></script>
+	<script type="text/javascript" src="/static/js/waypoints.min.js"></script>
 {% endblock %}

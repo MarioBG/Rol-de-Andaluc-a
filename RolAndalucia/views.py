@@ -10,21 +10,30 @@ from django import template
 from django.shortcuts import get_object_or_404, get_list_or_404
 from RolAndalucia.models import *
 
+
 def index(request):
     return render(request, 'index.html', {'spells':Spell.objects.all().count(), 'craftables':Craftable.objects.all().count(), 'items':Item.objects.all().count(), 'clases':CharacterClass.objects.all().count()})
 
+
 def error404(request):
     return render(request, '404.html')
+
+
 def login(request):
     return render(request, 'userAccount/login.html')
+
 
 @login_required
 def special(request):
     return HttpResponse("You are logged in !")
+
+
 @login_required
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+
 def register(request):
     registered = False
     if request.method == 'POST':
@@ -60,7 +69,12 @@ def user_login(request):
         if user:
             if user.is_active:
                 auth.login(request, user)
-                return HttpResponseRedirect(reverse('index'))
+                if request.method == 'POST' and 'next' in request.POST:
+                    q = request.POST['next']
+                    if q is not None and q != '':
+                        return HttpResponseRedirect(q)
+                else:
+                    return HttpResponseRedirect(reverse('index'))
             else:
                 return HttpResponse("Your account was inactive.")
         else:

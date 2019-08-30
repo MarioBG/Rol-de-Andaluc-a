@@ -23,9 +23,15 @@ from django.conf import settings
 handler404 = "RolAndalucia.views.handler404"
 handler500 = "RolAndalucia.views.handler500"
 
+admin.autodiscover()
+admin.site.login = views.login
+admin.site.logout = views.user_logout
+
 urlpatterns = [
+    path(r'^admin/login/', views.login),
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
+    path('logout', views.user_logout, name='logout'),
     path('login', views.login, name='login'),
     path('doLogin', views.user_login, name='doLogin'),
     path('viewItem', views.viewItem, name='viewItem'),
