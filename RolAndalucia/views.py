@@ -11,7 +11,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from RolAndalucia.models import *
 
 def index(request):
-    return render(request, 'index.html', {'spells':Spell.objects.all().count(), 'craftables':Craftable.objects.all().count(), 'items':Item.objects.all().count()})
+    return render(request, 'index.html', {'spells':Spell.objects.all().count(), 'craftables':Craftable.objects.all().count(), 'items':Item.objects.all().count(), 'clases':CharacterClass.objects.all().count()})
 
 def error404(request):
     return render(request, '404.html')

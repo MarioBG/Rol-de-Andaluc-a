@@ -88,9 +88,7 @@
 								<ul>
 		                            <li><a href="admin/RolAndalucia/spell">Hechizos</a></li>
 		                            <li><a href="admin/RolAndalucia/craftable">Invenciones</a></li>
-		                            <li><a href="">Encuentros</a></li>
 		                            <li><a href="admin/RolAndalucia/item">Objetos</a></li>
-		                            <li><a href="admin/RolAndalucia/characterclass">Especializaciones</a></li>
 		                        </ul>
 	                    	</div>
 	                    </li>
@@ -105,6 +103,7 @@
 	                    	</div>
 	                    </li>
             			<li><a href="admin">Panel de control</a></li>
+                        <li><a href="https://1drv.ms/w/s!AhWvlklDDRp-rQq4JqVSBo3mDts2">Libro de juego</a></li>
                         <li><a href="/login">Iniciar sesión</a></li>
                     </ul>
 				</nav><!--/ Navigation end -->
@@ -142,7 +141,7 @@
 
 						<div class="latest-post-items media">
 							<div class="latest-post-content media-body">
-								<h4><a href="admin/RolAndalucia/craftable/{{ randCraftable.id }}">{{ randCraftable.name }}</a></h4>
+								<h4><a href="/viewCraftable?craftableId={{ randCraftable.id }}">{{ randCraftable.name }}</a></h4>
 								<p class="post-meta">
 									<span class="description">Invención de {% if randCraftable.programmingCost > randCraftable.engineeringCost %}programación{% else %}ingeniería{% endif %} de coste {{ randCraftable.engineeringCost }}PI, {{ randCraftable.programmingCost }}PP, solo en el Rol de Andalucía</span>
 									<span class="post-meta-cat"><a href="admin/RolAndalucia/craftable/{{ randCraftable.id }}"> Aprende más sobre ella</a></span>

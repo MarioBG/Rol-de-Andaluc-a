@@ -69,7 +69,7 @@ class CharacterClassAdmin(NumericFilterModelAdmin):
     def class_actions(self, obj):
         ans = '</a><a class="button" href="/viewClass?classId='+str(obj.pk)+'">Ver</a>&nbsp;'
         if self.request.user.groups.filter(name="Admin").exists():
-            ans += '<a class="button" href="/admin/RolAndalucia/spell/'+str(obj.pk)+'/change">Editar</a>&nbsp;'
+            ans += '<a class="button" href="/admin/RolAndalucia/characterclass/'+str(obj.pk)+'/change">Editar</a>&nbsp;'
         return mark_safe(ans)
 
     class_actions.short_description = 'Acciones'
