@@ -73,6 +73,8 @@ def user_login(request):
                     q = request.POST['next']
                     if q is not None and q != '':
                         return HttpResponseRedirect(q)
+                    else:
+                        return HttpResponseRedirect(reverse('index'))
                 else:
                     return HttpResponseRedirect(reverse('index'))
             else:
