@@ -132,7 +132,7 @@
 
 						<div class="latest-post-items media">
 							<div class="latest-post-content media-body">
-								<h4><a href="admin/RolAndalucia/spell/{{ randSpell.id }}">{{ randSpell.name }}</a></h4>
+								<h4><a href="/viewSpell?spellId={{ randSpell.id }}">{{ randSpell.name }}</a></h4>
 								<p class="post-meta">
 									<span class="description">{% if randSpell.level == 0 %}Truco{% else %}Hechizo{% endif %} de {{ randSpell.school }}{% if randSpell.level != 0 %} nivel {{ randSpell.level }}{% endif %}, solo en el Rol de Andalucía</span>
 									<span class="post-meta-cat"><a href="admin/RolAndalucia/spell/{{ randSpell.id }}"> Aprende más sobre él</a></span>

@@ -82,15 +82,43 @@ def handler404(request, atemplate_name="404.html"):
 
 def viewItem(request):
     itemId = request.GET.get('itemId','')
-    item = Item.objects.get(pk = itemId)
-    return render(request, 'displays/item.html', {'item':item,})
+    return render(request, 'displays/item.html', {'item':get_object_or_404(Item, pk = itemId),})
 
 def viewClass(request):
     classId = request.GET.get('classId','')
-    clase = CharacterClass.objects.get(pk = classId)
-    return render(request, 'displays/class.html', {'clase':clase,})
+    return render(request, 'displays/class.html', {'clase':get_object_or_404(CharacterClass, pk = classId),})
+
+def viewCraftable(request):
+    craftableId = request.GET.get('craftableId','')
+    return render(request, 'displays/craftable.html', {'craftable':get_object_or_404(Craftable, pk = craftableId),})
 
 def searchEntryName(request):
     name = request.GET.get('q','')
     name = name.replace("_"," ")
-    return render(request, 'displays/item.html', {'item':get_object_or_404(Item, name=name)})
+    motes = name.split(">")
+    if motes and type(motes)=='list' and len(motes) > 1:
+        if motes[0].lower() == "s":
+            return render(request, 'displays/spell.html', {'spell': get_object_or_404(Spell, name=motes[1])})
+        elif motes[0].lower() == "i":
+            return render(request, 'displays/item.html', {'item': get_object_or_404(Item, name=motes[1])})
+        elif motes[0].lower() == "c":
+            return render(request, 'displays/class.html', {'clase': get_object_or_404(CharacterClass, name=motes[1])})
+        elif motes[0].lower() == "m":
+            return render(request, 'displays/craftable.html', {'craftable': get_object_or_404(Craftable, name=motes[1])})
+    item = Item.objects.filter(name=name).first()
+    craftable = Craftable.objects.filter(name=name).first()
+    clase = CharacterClass.objects.filter(name=name).first()
+    spell = Spell.objects.filter(name=name).first()
+    if spell is not None:
+        return render(request, 'displays/spell.html', {'spell': spell})
+    elif clase is not None:
+        return render(request, 'displays/class.html', {'clase': clase})
+    elif craftable is not None:
+        return render(request, 'displays/craftable.html', {'craftable': craftable})
+    elif item is not None:
+        return render(request, 'displays/item.html', {'item': item})
+
+
+def viewSpell(request):
+    spellId = request.GET.get('spellId', '')
+    return render(request, 'displays/spell.html', {'spell': get_object_or_404(Spell, pk = spellId), })

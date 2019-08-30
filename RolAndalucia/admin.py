@@ -22,17 +22,74 @@ class ListAdminMixin(object):
 
 
 class SpellAdmin(NumericFilterModelAdmin):
-    list_display = ('id', 'name', 'level', 'school', 'castTime', 'duration', 'concentration', 'effect')
-    list_display_links = ('name', 'id')
+    def __init__(self, model, admin_site):
+        self.request = None
+        super().__init__(model, admin_site)
+
+    def process_view(self, request, item_id, *args, **kwargs):
+        return views.viewItem(request, item_id)
+
+    def get_queryset(self, request):
+        self.request = request
+        return super().get_queryset(request)
+
+    list_display = ('spell_actions', 'id', 'name', 'level', 'school', 'castTime', 'duration', 'concentration', 'effect')
     search_fields = ['name', 'school', 'effect']
     actions = [duplicate_event]
     list_per_page = 25
     list_filter = [["level", RangeNumericFilter],"school","classes", "verbalComponent", "somaticComponent", "materialComponent","concentration"]
 
+    def spell_actions(self, obj):
+        ans = '</a><a class="button" href="/viewSpell?spellId='+str(obj.pk)+'">Ver</a>&nbsp;'
+        if self.request.user.groups.filter(name="Admin").exists():
+            ans += '<a class="button" href="/admin/RolAndalucia/spell/'+str(obj.pk)+'/change">Editar</a>&nbsp;'
+        return mark_safe(ans)
+
+    spell_actions.short_description = 'Acciones'
+    spell_actions.allow_tags = True
+
+
+class CharacterClassAdmin(NumericFilterModelAdmin):
+    def __init__(self, model, admin_site):
+        self.request = None
+        super().__init__(model, admin_site)
+
+    def process_view(self, request, item_id, *args, **kwargs):
+        return views.viewItem(request, item_id)
+
+    def get_queryset(self, request):
+        self.request = request
+        return super().get_queryset(request)
+
+    list_display = ('class_actions', 'id', 'name')
+    search_fields = ['name']
+    actions = [duplicate_event]
+    list_per_page = 25
+
+    def class_actions(self, obj):
+        ans = '</a><a class="button" href="/viewClass?classId='+str(obj.pk)+'">Ver</a>&nbsp;'
+        if self.request.user.groups.filter(name="Admin").exists():
+            ans += '<a class="button" href="/admin/RolAndalucia/spell/'+str(obj.pk)+'/change">Editar</a>&nbsp;'
+        return mark_safe(ans)
+
+    class_actions.short_description = 'Acciones'
+    class_actions.allow_tags = True
+
 
 class CraftableAdmin(NumericFilterModelAdmin):
-    list_display = ('id', 'name', 'programmingCost', 'engineeringCost', 'description')
-    list_display_links = ('name', 'id')
+
+    def __init__(self, model, admin_site):
+        self.request = None
+        super().__init__(model, admin_site)
+
+    def process_view(self, request, item_id, *args, **kwargs):
+        return views.viewItem(request, item_id)
+
+    def get_queryset(self, request):
+        self.request = request
+        return super().get_queryset(request)
+
+    list_display = ('craftable_actions', 'id', 'name', 'programmingCost', 'engineeringCost', 'description')
     search_fields = ['name', 'effect']
     actions = [duplicate_event]
     list_per_page = 25
@@ -40,6 +97,15 @@ class CraftableAdmin(NumericFilterModelAdmin):
         ['programmingCost', SliderNumericFilter],
         ['engineeringCost', SliderNumericFilter]
     ]
+
+    def craftable_actions(self, obj):
+        ans = '</a><a class="button" href="/viewCraftable?craftableId='+str(obj.pk)+'">Ver</a>&nbsp;'
+        if self.request.user.groups.filter(name="Admin").exists():
+            ans += '<a class="button" href="/admin/RolAndalucia/craftable/'+str(obj.pk)+'/change">Editar</a>&nbsp;'
+        return mark_safe(ans)
+
+    craftable_actions.short_description = 'Acciones'
+    craftable_actions.allow_tags = True
 
 class ItemAdmin(admin.ModelAdmin):
 
@@ -89,6 +155,7 @@ class ItemAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Craftable, CraftableAdmin)
+admin.site.register(models.CharacterClass, CharacterClassAdmin)
 admin.site.register(models.Spell, SpellAdmin)
 admin.site.register(models.Item, ItemAdmin)
 

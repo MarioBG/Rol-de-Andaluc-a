@@ -9,11 +9,11 @@
 			<!-- Subpage title start -->
 			<div class="banner-title-content">
 	        	<div class="text-center">
-		        	<h2>{{ clase.name }}</h2>
+		        	<h2>{{ spell.name }}</h2>
 		        	<ul class="breadcrumb">
                         <li><a href="/">Inicio</a></li>
-                        <li><a href = "/admin/RolAndalucia/characterclass"> Clases</a></li>
-			            <li> {{ clase.name }}</li>
+                        <li><a href="/admin/RolAndalucia/spell"> Hechizos</a></li>
+			            <li> {{ spell.name }}</li>
 		          	</ul>
 	          	</div>
           	</div><!-- Subpage title end -->
@@ -24,13 +24,88 @@
 	<section id="main-container">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-12 col-md-8 col-sm-12 col-xs-12">
+				<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
 					<div class="post-content">
-						{{ clase.description|markdown }}
+						<div class="post-image-wrapper col-md-6">
+							<img src="{{ item.photo }}" class="img-responsive"  alt="" />
+						</div><!-- post image end -->
+                    <h5>Descripción</h5>
+						<p>{{ spell.description|markdown }}</p>
+						<div class="gap-20"></div>
+
+						<div class="row">
+							<div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
+								<span class="feature-icon pull-left" ><i class="fa fa-magic"></i></span>
+								<div class="feature-content">
+									<h3>Tiempo de casteo</h3>
+									<p>{{ spell.castTime }}</p>
+								</div>
+							</div><!--/ End first featurebox -->
+
+							<div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
+								<span class="feature-icon pull-left" ><i class="fa fa-bullseye"></i></span>
+								<div class="feature-content">
+									<h3>Rango</h3>
+									<p>{{ spell.range }}</p>
+								</div>
+							</div><!--/ End 2nd featurebox -->
+						</div>
+
+						<div class="gap-20"></div>
+
+						<div class="row">
+
+							<div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
+								<span class="feature-icon pull-left" ><i class="fa fa-clock-o"></i></span>
+								<div class="feature-content">
+									<h3>Duración</h3>
+									<p>{{ spell.duration }}</p>
+								</div>
+							</div><!--/ End 1st featurebox -->
+
+							<div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
+								<span class="feature-icon pull-left" ><i class="fa fa-shield"></i></span>
+								<div class="feature-content">
+									<h3>Salvaciones</h3>
+									<p>{{ spell.attack_save }}</p>
+								</div>
+							</div><!--/ End 2nd featurebox -->
+						</div>
+
+
 					</div><!--/ post content end -->
 
 				</div><!--/ Content col end -->
-            </div> <!--/ Row end -->
+
+				<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+					<div class="sidebar sidebar-right">
+						<!-- category start -->
+						<div class="widget widget-categories">
+							<h3 class="widget-title">Atributos</h3>
+							<ul class="category-list clearfix">
+				              <li><a href="#">Escuela de magia</a><span class="posts-count"> {{ spell.school }}</span></li>
+				              <li><a href="#">Nivel</a><span class="posts-count"> {% if spell.level == 0 %}Truco{% else %}{{ spell.level }}{% endif %}</span></li>
+				              <li><a href="#">Componente verbal</a><span class="posts-count"> {% if spell.verbalComponent %}Sí{% else %}No{% endif %}</span></li>
+				              <li><a href="#">Componente somático</a><span class="posts-count"> {% if spell.somaticComponent %}Sí{% else %}No{% endif %}</span></li>
+				              <li><a href="#">Componente material</a><span class="posts-count"> {% if spell.materialComponent %}Sí{% else %}No{% endif %}</span></li>
+				              {% if spell.materialComponent %}<li><a href="#">Requisitos materiales</a><span class="posts-count"> {{ spell.materialRequirements }}</span></li>{% endif %}
+				              <li><a href="#">Requiere concentración</a><span class="posts-count"> {% if spell.concentration %}Sí{% else %}No{% endif %}</span></li>
+				              <li><a href="#">Daño/efecto</a><span class="posts-count"> {{ spell.effect }}</span></li>
+				            </ul>
+						</div><!-- category end -->
+
+						<!-- tags start -->
+						<div class="widget widget-tags">
+							<h3 class="widget-title">Clases</h3>
+							<ul class="unstyled clearfix">
+				              	{% for class in spell.classes.all %}<li><a href="/viewClass?classId={{ class.id }}">{{ class.name }}</a></li>{% endfor %}
+				            </ul>
+						</div><!-- tags end -->
+
+
+					</div><!--/ Sidebar end -->
+				</div><!--/ Sidebar col end -->
+			</div><!--/ row end -->
 		</div><!--/ container end -->
 	</section><!--/ Main container end -->
 
