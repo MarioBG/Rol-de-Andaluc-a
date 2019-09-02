@@ -88,9 +88,9 @@
 				              <li><a href="#">Componente verbal</a><span class="posts-count"> {% if spell.verbalComponent %}Sí{% else %}No{% endif %}</span></li>
 				              <li><a href="#">Componente somático</a><span class="posts-count"> {% if spell.somaticComponent %}Sí{% else %}No{% endif %}</span></li>
 				              <li><a href="#">Componente material</a><span class="posts-count"> {% if spell.materialComponent %}Sí{% else %}No{% endif %}</span></li>
-				              {% if spell.materialComponent %}<li><a href="#">Requisitos materiales</a><span class="posts-count"> {{ spell.materialRequirements }}</span></li>{% endif %}
+				              {% if spell.materialComponent %}<li><a href="#">Requisitos materiales</a><span class="posts-count"> {{ spell.materialRequirements|markdown }}</span></li>{% endif %}
 				              <li><a href="#">Requiere concentración</a><span class="posts-count"> {% if spell.concentration %}Sí{% else %}No{% endif %}</span></li>
-				              <li><a href="#">Daño/efecto</a><span class="posts-count"> {{ spell.effect }}</span></li>
+				              <li><a href="#">Daño/efecto</a><span class="posts-count"> {{ spell.effect|markdown }}</span></li>
 				            </ul>
 						</div><!-- category end -->
 

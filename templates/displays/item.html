@@ -95,7 +95,7 @@
 				              <li><a href="#">Mágico</a><span class="posts-count"> {% if item.magic %}Sí{% else %}No{% endif %}</span></li>
 				              <li><a href="#">Rareza</a><span class="posts-count"> {{ item.rarity }}</span></li>
 				              <li><a href="#">Equipable</a><span class="posts-count"> {% if item.wearable %}Sí{% else %}No{% endif %}</span></li>
-				              <li><a href="#">Notas adicionales</a><span class="posts-count"> {{ item.notes }}</span></li>
+				              <li><a href="#">Notas adicionales</a><span class="posts-count"> {{ item.notes|markdown }}</span></li>
 				            </ul>
 						</div><!-- category end -->
 
