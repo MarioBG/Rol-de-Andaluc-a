@@ -28,7 +28,7 @@ admin.site.login = views.login
 admin.site.logout = views.user_logout
 
 urlpatterns = [
-    path(r'^admin/login/', views.login),
+    path('admin/login/', views.login),
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('logout', views.user_logout, name='logout'),

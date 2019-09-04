@@ -70,10 +70,15 @@ class Craftable(models.Model):
     description = models.TextField(verbose_name=_("Descripción"))
     programmingCost = models.PositiveIntegerField(verbose_name=_("Coste de programación"))
     engineeringCost = models.PositiveIntegerField(verbose_name=_("Coste de ingeniería"))
+    scientificCost = models.PositiveIntegerField(verbose_name=_("Coste científico"), default = 0)
     materialCost = models.TextField(verbose_name=_("Costes en materiales"), blank=True)
     effect = models.TextField(verbose_name=_("Efectos"))
     requirements = models.TextField(verbose_name=_("Requisitos"), blank=True)
     photo = models.CharField(verbose_name=_("Imagen"), blank=True, max_length=400)
+    vehicular = models.BooleanField(verbose_name=_("Para coche"), default=False)
+    biological = models.BooleanField(verbose_name=_("Biológico"), default=False)
+    application = models.BooleanField(verbose_name=_("Aplicación"), default=False)
+    artifact = models.BooleanField(verbose_name=_("Artefacto"), default=False)
 
     def __str__(self):
         return self.name

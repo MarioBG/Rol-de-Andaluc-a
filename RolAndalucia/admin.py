@@ -95,7 +95,7 @@ class CraftableAdmin(NumericFilterModelAdmin):
     list_per_page = 25
     list_filter = [
         ['programmingCost', SliderNumericFilter],
-        ['engineeringCost', SliderNumericFilter]
+        ['engineeringCost', SliderNumericFilter], 'vehicular', 'biological', 'application', 'artifact'
     ]
 
     def craftable_actions(self, obj):

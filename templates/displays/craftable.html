@@ -34,46 +34,46 @@
 
                     <h5>Efectos</h5>
 						<p>{{ craftable.effect|markdown }}</p>
-						{% comment %}<div class="gap-20"></div>
-
+                    <div class="gap-20"></div>
 						<div class="row">
+                        {% if craftable.biological %}
 							<div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
-								<span class="feature-icon pull-left" ><i class="fa fa-magic"></i></span>
+								<span class="feature-icon pull-left" ><i class="fa fa-flask"></i></span>
 								<div class="feature-content">
-									<h3>Tiempo de casteo</h3>
-									<p>{{ spell.castTime }}</p>
+									<h3>Creación biológica</h3>
 								</div>
 							</div><!--/ End first featurebox -->
-
+                        {% endif %}
+                            {% if craftable.vehicular %}
 							<div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
-								<span class="feature-icon pull-left" ><i class="fa fa-bullseye"></i></span>
+								<span class="feature-icon pull-left" ><i class="fa fa-car"></i></span>
 								<div class="feature-content">
-									<h3>Rango</h3>
-									<p>{{ spell.range }}</p>
+									<h3>Creación vehicular</h3>
 								</div>
 							</div><!--/ End 2nd featurebox -->
+                            {% endif %}
 						</div>
 
 						<div class="gap-20"></div>
 
 						<div class="row">
-
+                            {% if craftable.application %}
 							<div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
-								<span class="feature-icon pull-left" ><i class="fa fa-clock-o"></i></span>
+								<span class="feature-icon pull-left" ><i class="fa fa-code"></i></span>
 								<div class="feature-content">
-									<h3>Duración</h3>
-									<p>{{ spell.duration }}</p>
+									<h3>Aplicación</h3>
 								</div>
 							</div><!--/ End 1st featurebox -->
-
+                            {% endif %}
+                            {% if craftable.artifact %}
 							<div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
-								<span class="feature-icon pull-left" ><i class="fa fa-shield"></i></span>
+								<span class="feature-icon pull-left" ><i class="fa fa-gears"></i></span>
 								<div class="feature-content">
-									<h3>Salvaciones</h3>
-									<p>{{ spell.attack_save }}</p>
+									<h3>Artefacto</h3>
 								</div>
 							</div><!--/ End 2nd featurebox -->
-						</div>{% endcomment %}
+                            {% endif %}
+						</div>
 
 
 					</div><!--/ post content end -->
