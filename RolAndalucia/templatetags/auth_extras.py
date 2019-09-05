@@ -57,4 +57,4 @@ def markdown_format(text):
             # all of the above config params are optional
         },
     }
-    return mark_safe(markdown.markdown(text, extensions=['abbr','RolAndalucia.Markdown.TablesCool:TableExtension','attr_list','def_list','fenced_code','footnotes','mdx_wikilink_plus'], extension_configs = md_configs))
+    return mark_safe(markdown.markdown(text, extensions=['extra', 'abbr','RolAndalucia.Markdown.TablesCool:TableExtension','attr_list','def_list','fenced_code','footnotes','mdx_wikilink_plus'], extension_configs = md_configs))
