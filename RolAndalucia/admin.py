@@ -15,6 +15,13 @@ def duplicate_event(modeladmin, request, queryset):
         object.save()
 duplicate_event.short_description = "Duplicar registro"
 
+
+class AddressInline(admin.StackedInline):
+    model = models.PertenenciaClase
+    extra = 0
+
+
+
 class ListAdminMixin(object):
     def __init__(self, model, admin_site):
         self.list_display = [field.name for field in model._meta.fields]
@@ -47,6 +54,25 @@ class SpellAdmin(NumericFilterModelAdmin):
 
     spell_actions.short_description = 'Acciones'
     spell_actions.allow_tags = True
+
+
+class PersonajeAdmin(admin.ModelAdmin):
+    list_display = ['name', 'currentHp']
+    inlines = [AddressInline]
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'hechizos', 'maxHp', 'currentHp', 'photo', 'jugador')
+        }),
+        ('Habilidades', {
+            'classes': ('collapse',),
+            'fields': ('habilidades',),
+        }),
+        ('Descripción', {
+            'classes': ('collapse',),
+            'fields': ('descripcion',),
+        }),
+    )
+    list_per_page = 25
 
 
 class CharacterClassAdmin(NumericFilterModelAdmin):
@@ -156,6 +182,7 @@ class ItemAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Craftable, CraftableAdmin)
 admin.site.register(models.CharacterClass, CharacterClassAdmin)
+admin.site.register(models.Personaje, PersonajeAdmin)
 admin.site.register(models.Spell, SpellAdmin)
 admin.site.register(models.Item, ItemAdmin)
 

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib import admin
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.urls import reverse
@@ -6,6 +7,7 @@ from django.contrib.auth.hashers import make_password
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from martor.models import MartorField
+import django.core.validators
 from ordered_model.models import OrderedModel
 from django.core.exceptions import ValidationError
 from mptt.models import MPTTModel
@@ -45,6 +47,10 @@ class CharacterClass(models.Model):
 
 
 class Spell(models.Model):
+
+    class Meta():
+        ordering=["level", "school", "name"]
+
     name = models.CharField(verbose_name=_("Spell name"), max_length=50, blank=False)
     school = models.CharField(verbose_name=_("School of Magic"), max_length=30, blank=False)
     level = models.PositiveIntegerField(verbose_name=_("Spell level"), null=False)
@@ -62,7 +68,7 @@ class Spell(models.Model):
     classes = models.ManyToManyField(to=CharacterClass, verbose_name=_("Classes that use this spell"))
 
     def __str__(self):
-        return self.name
+        return self.name+" (Nv"+str(self.level)+", "+self.school+")"
 
 
 class Craftable(models.Model):
@@ -98,6 +104,30 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Personaje(models.Model):
+    name = models.CharField(verbose_name=_("Nombre de personaje"), max_length=60, blank=False)
+    hechizos = models.ManyToManyField(to=Spell, verbose_name=_("Hechizos"), blank=True)
+    maxHp = models.IntegerField(verbose_name=_("Salud máxima"), validators=[MinValueValidator(limit_value=0)])
+    currentHp = models.IntegerField(verbose_name=_("Salud actual"), validators=[MinValueValidator(limit_value=0)])
+    habilidades = MartorField(verbose_name=_("Habilidades"), default='', blank=True)
+    descripcion = MartorField(verbose_name=_("Habilidades"), default='', blank=True)
+    photo = models.CharField(verbose_name=_("Imagen"), blank=True, max_length=400)
+    jugador = models.ForeignKey(to=User, on_delete=models.CASCADE, null=True)
+
+
+class Trabajo(models.Model):
+    name = models.CharField(verbose_name=_("Nombre de trabajo"), max_length=60, blank=False)
+    empleador = models.CharField(verbose_name=_("Empleador"), blank=True, max_length=400)
+    salario = models.IntegerField(verbose_name=_("Salario ofrecido"), validators=[MinValueValidator(limit_value=0)])
+    descripcion = MartorField(verbose_name=_("Descripción"), default='')
+
+
+class PertenenciaClase(models.Model):
+    personaje = models.ForeignKey(to=Personaje, related_name='pertenenciasClase', on_delete=models.CASCADE)
+    clase = models.ForeignKey(to=CharacterClass, on_delete=models.CASCADE)
+    nivel = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)], default=0)
 
 
 class UserProfileInfo(models.Model):

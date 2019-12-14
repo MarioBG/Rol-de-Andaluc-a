@@ -1,0 +1,369 @@
+{% extends 'base.html' %}
+{% load auth_extras %}
+
+{% block css_pre %}<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">{% endblock %}
+
+{% block content %}
+
+
+	<div id="banner-area">
+		<img src="static/images/banner/banner2.jpg" alt ="" />
+		<div class="parallax-overlay"></div>
+			<!-- Subpage title start -->
+			<div class="banner-title-content">
+	        	<div class="text-center">
+		        	<h2>{% if personaje is not None %}{{ personaje.name }}{% else %}Personajes{% endif %}</h2>
+		        	<ul class="breadcrumb">
+                        <li><a href="/">Inicio</a></li>
+                        <li><a href="/admin/RolAndalucia/personaje"> Personajes</a></li>
+			            {% if personaje is not None %}<li> {{ personaje.name }}</li>{% endif %}
+		          	</ul>
+	          	</div>
+          	</div><!-- Subpage title end -->
+	</div><!-- Banner area end -->
+
+	<!-- Main container start -->
+    {% if personajes is None %}
+        <section id="main-container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="post-content">
+
+                            <div class="w3-light-grey">
+                              <div id="personaje_{{ personaje.id }}" class="w3-container w3-center" style="width:{% widthratio personaje.currentHp personaje.maxHp 100 %}%">{{ personaje.currentHp }} HP</div>
+                            </div><br>
+
+                            <div class="post-image-wrapper col-md-6">
+                                <img src="{{ personaje.photo }}" class="img-responsive"  alt="" />
+                            </div><!-- post image end -->
+                        <h5>Descripción</h5>
+                            <p>{{ personaje.descripcion|markdown }}</p>
+
+                        <h5>Habilidades</h5>
+                            <p>{{ personaje.habilidades|markdown }}</p>
+
+
+                        <script>
+                            var a = {{ personaje.currentHp }} / {{ personaje.maxHp }} * 100;
+                            if (a>40)
+                                document.getElementById("personaje_{{ personaje.id }}").classList.add("w3-green")
+                            else if(a>20)
+                                document.getElementById("personaje_{{ personaje.id }}").classList.add("w3-yellow")
+                            else
+                                document.getElementById("personaje_{{ personaje.id }}").classList.add("w3-red")
+                        </script>
+                        <div class="gap-20"></div>
+                            <div class="row">
+                                <div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
+                                    <span class="feature-icon pull-left" ><i class="fa fa-user"></i></span>
+                                    <div class="feature-content">
+                                        <h3>Jugador: {{ personaje.jugador.username }}</h3>
+                                    </div>
+                                </div><!--/ End first featurebox -->
+                                {% if craftable.vehicular %}
+                                <div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
+                                    <span class="feature-icon pull-left" ><i class="fa fa-car"></i></span>
+                                    <div class="feature-content">
+                                        <h3>Creación vehicular</h3>
+                                    </div>
+                                </div><!--/ End 2nd featurebox -->
+                                {% endif %}
+                            </div>
+
+                            <div class="gap-20"></div>
+
+                            <div class="row">
+                                {% if craftable.application %}
+                                <div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
+                                    <span class="feature-icon pull-left" ><i class="fa fa-code"></i></span>
+                                    <div class="feature-content">
+                                        <h3>Aplicación</h3>
+                                    </div>
+                                </div><!--/ End 1st featurebox -->
+                                {% endif %}
+                                {% if craftable.artifact %}
+                                <div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
+                                    <span class="feature-icon pull-left" ><i class="fa fa-gears"></i></span>
+                                    <div class="feature-content">
+                                        <h3>Artefacto</h3>
+                                    </div>
+                                </div><!--/ End 2nd featurebox -->
+                                {% endif %}
+                            </div>
+
+
+                        </div><!--/ post content end -->
+
+
+			<div class="row">
+				<div class="col-md-12 heading">
+					<span class="title-icon classic pull-left"><i class="fa fa-magic"></i></span>
+					<h2 class="title classic">Magia y hechizos</h2>
+				</div>
+			</div><!-- Title row end -->
+
+			<h3 class="title-border">Hechizos</h3>
+
+					<div class="panel-group" id="accordion">
+                        {% for s in personaje.hechizos.all|dictsort:"level" %}
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="#collapse{{ s.id }}"><i class="fa
+{% if s.school == "Abjuración" %}
+fa-shield
+{% elif s.school == "Conjuración" %}
+fa-file
+{% elif s.school == "Adivinación" %}
+fa-moon-o
+{% elif s.school == "Encantamiento" %}
+fa-magic
+{% elif s.school == "Evocación" %}
+fa-fire
+{% elif s.school == "Ilusión" %}
+fa-picture-o
+{% elif s.school == "Nigromancia" %}
+fa-snapchat-ghost
+{% elif s.school == "Transmutación" %}
+fa-tint
+{% endif %}
+"></i> {{ s.name }} | <i class="fa fa-book"></i> {{ s.level }} | <i class="fa fa-dot-circle-o"></i> {{ s.range }}</a>
+                                    </h4>
+                                </div>
+                                <div id="collapse{{ s.id }}" class="panel-collapse collapse">
+                                  <div class="panel-body">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                <div class="post-content">
+                                                    <div class="post-image-wrapper col-md-6">
+                                                        <img src="{{ s.photo }}" class="img-responsive"  alt="" />
+                                                    </div><!-- post image end -->
+                                                <h5>Descripción</h5>
+                                                    <p>{{ s.description|markdown }}</p>
+                                                    <div class="gap-20"></div>
+
+                                                    <div class="row">
+                                                        <div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
+                                                            <span class="feature-icon pull-left" ><i class="fa fa-magic"></i></span>
+                                                            <div class="feature-content">
+                                                                <h3>Tiempo de casteo</h3>
+                                                                <p>{{ s.castTime }}</p>
+                                                            </div>
+                                                        </div><!--/ End first featurebox -->
+
+                                                        <div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
+                                                            <span class="feature-icon pull-left" ><i class="fa fa-bullseye"></i></span>
+                                                            <div class="feature-content">
+                                                                <h3>Rango</h3>
+                                                                <p>{{ s.range }}</p>
+                                                            </div>
+                                                        </div><!--/ End 2nd featurebox -->
+                                                    </div>
+
+                                                    <div class="gap-20"></div>
+
+                                                    <div class="row">
+
+                                                        <div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
+                                                            <span class="feature-icon pull-left" ><i class="fa fa-clock-o"></i></span>
+                                                            <div class="feature-content">
+                                                                <h3>Duración</h3>
+                                                                <p>{{ s.duration }}</p>
+                                                            </div>
+                                                        </div><!--/ End 1st featurebox -->
+
+                                                        <div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
+                                                            <span class="feature-icon pull-left" ><i class="fa fa-shield"></i></span>
+                                                            <div class="feature-content">
+                                                                <h3>Salvaciones</h3>
+                                                                <p>{{ s.attack_save }}</p>
+                                                            </div>
+                                                        </div><!--/ End 2nd featurebox -->
+                                                    </div>
+
+
+                                                </div><!--/ post content end -->
+
+                                            </div><!--/ Content col end -->
+
+                                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                <div class="sidebar sidebar-right">
+                                                    <!-- category start -->
+                                                    <div class="widget widget-categories">
+                                                        <h3 class="widget-title">Atributos</h3>
+                                                        <ul class="category-list clearfix">
+                                                          <li><a href="#">Escuela de magia</a><span class="posts-count"> {{ s.school }}</span></li>
+                                                          <li><a href="#">Nivel</a><span class="posts-count"> {% if s.level == 0 %}Truco{% else %}{{ s.level }}{% endif %}</span></li>
+                                                          <li><a href="#">Componente verbal</a><span class="posts-count"> {% if s.verbalComponent %}Sí{% else %}No{% endif %}</span></li>
+                                                          <li><a href="#">Componente somático</a><span class="posts-count"> {% if s.somaticComponent %}Sí{% else %}No{% endif %}</span></li>
+                                                          <li><a href="#">Componente material</a><span class="posts-count"> {% if s.materialComponent %}Sí{% else %}No{% endif %}</span></li>
+                                                          {% if s.materialComponent %}<li><a href="#">Requisitos materiales</a><span class="posts-count"> {{ s.materialRequirements|markdown }}</span></li>{% endif %}
+                                                          <li><a href="#">Requiere concentración</a><span class="posts-count"> {% if s.concentration %}Sí{% else %}No{% endif %}</span></li>
+                                                          <li><a href="#">Daño/efecto</a><span class="posts-count"> {{ s.effect|markdown }}</span></li>
+                                                        </ul>
+                                                    </div><!-- category end -->
+
+                                                    <!-- tags start -->
+                                                    <div class="widget widget-tags">
+                                                        <h3 class="widget-title">Clases</h3>
+                                                        <ul class="unstyled clearfix">
+                                                            {% for class in s.classes.all %}<li><a href="/viewClass?classId={{ class.id }}">{{ class.name }}</a></li>{% endfor %}
+                                                        </ul>
+                                                    </div><!-- tags end -->
+
+
+                                                </div><!--/ Sidebar end -->
+                                            </div><!--/ Sidebar col end -->
+                                        </div><!--/ row end -->
+                                    </div><!--/ container end -->
+                                  </div>
+                                </div>
+                            </div><!--/ Panel 1 end-->
+                        {% endfor%}
+
+		            </div><!--/ Accordion end -->
+
+			<!-- Company Profile -->
+                            </div><!-- category end -->
+
+                            <!-- tags start -->
+                            {% comment %}<div class="widget widget-tags">
+                                <h3 class="widget-title">Clases</h3>
+                                <ul class="unstyled clearfix">
+                                    {% for class in s.classes.all %}<li><a href="/viewClass?classId={{ class.id }}">{{ class.name }}</a></li>{% endfor %}
+                                </ul>
+                            </div><!-- tags end -->{% endcomment %}
+
+
+                        </div><!--/ Content col end -->
+            </div><!--/ container end -->
+        </section><!--/ Main container end -->
+    {% else %}{% endif %}
+    {% for personaje in personajes %}{% endfor %}
+
+
+	{% endblock %}
+
+{% block javascript %}
+<script>
+const INITIAL_CONTENT = '<div style="margin:5px 0;">Loading...</div>'
+
+function applyStyles(popper, tooltip) {
+  // Because the tooltip has `position: absolute`,
+  // it no longer affects the parent popper's layout.
+  // We need to explicitly give it a width.
+  popper.style.width = '200px'
+
+  // Setup transition styles on the tooltip itself
+  tooltip.style.transitionDuration = '0.2s'
+  tooltip.style.transitionProperty = 'visibility, opacity, height'
+}
+
+function animateHeight(instance, instanceContent) {
+  const { popper } = instance
+  const { tooltip, content } = instance.popperChildren
+
+  function onTransitionEnd(event) {
+    if (event.target === event.currentTarget) {
+      content.style.opacity = '1'
+      instance.setContent(instanceContent)
+    }
+  }
+
+  // Wait until the height transition has finished before
+  // fading the content in. Since we have `overflow: hidden`
+  // on the tooltip this isn't actually needed, but if you
+  // have an arrow element it will be.
+  if (!instance._transitionEndListener) {
+    instance._transitionEndListener = onTransitionEnd
+  }
+
+  tooltip.addEventListener('transitionend', onTransitionEnd)
+
+  // Store the base height of the tooltip when it has the
+  // initial Loading... content.
+  if (!instance._baseHeight) {
+    instance._baseHeight = tooltip.clientHeight
+  }
+
+  // Here is where we find out the height of the tooltip
+  // when it has the content. We could technically hardcode
+  // 200px as the value, but it's useful to know how to do
+  // this with dynamic content.
+  content.style.opacity = '0'
+
+  // Temporarily set the image as the tooltip's content
+  // so we can find out the final height of the tooltip.
+  instance.setContent(instanceContent)
+  const height = tooltip.clientHeight
+
+  // Apply the height to the parent popper element.
+  popper.style.height = height + 'px'
+
+  // Reset the tooltip's height to the base height.
+  tooltip.style.height = instance._baseHeight + 'px'
+
+  // Cause reflow so we can start the height transition.
+  void tooltip.offsetHeight
+
+  // Start the transition.
+  tooltip.style.height = height + 'px'
+
+  // Remove the Loading... content and wait until the
+  // transition finishes.
+  instance.setContent('')
+}
+
+tippy('.wikilink', {
+  arrow: true,
+  followCursor: 'horizontal',
+  arrowType: 'round',
+  content: INITIAL_CONTENT,
+  animation: 'fade',
+  animateFill: false,
+  theme: 'ajax',
+  async onShow(instance) {
+    if (instance.state.isFetching === true || instance.state.canFetch === false) {
+      return
+    }
+
+    instance.state.isFetching = true
+    instance.state.canFetch = false
+
+    applyStyles(instance.popper, instance.popperChildren.tooltip)
+
+    try {
+      const response = await fetch('https://unsplash.it/200/?random')
+      const blob = await response.blob()
+      const url = URL.createObjectURL(blob)
+
+      // If the tooltip hid before finishing the request, stop further action
+      if (!instance.state.isVisible) {
+        return
+      }
+
+      const img = new Image()
+      img.width = 200
+      img.height = 200
+      img.src = url
+
+      animateHeight(instance, img)
+    } catch (error) {
+      instance.setContent('An error occurred')
+    } finally {
+      instance.state.isFetching = false
+    }
+  },
+  onHidden(instance) {
+    const { tooltip } = instance.popperChildren
+    instance.state.canFetch = true
+    instance.setContent(INITIAL_CONTENT)
+    tooltip.style.height = null
+    tooltip.removeEventListener('transitionend', instance._transitionEndListener)
+    instance._transitionEndListener = null
+  }
+})
+    </script>
+{% endblock %}
