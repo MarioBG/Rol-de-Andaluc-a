@@ -28,10 +28,10 @@
 		              	<div class="panel panel-default">
 			                <div class="panel-heading">
 				                <h4 class="panel-title">
-				                	<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ p.id }}">{{ p.name }} ({{ p.salario }}€)</a>
+				                	<a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="#collapse{{ p.id }}">{{ p.name }} ({{ p.salario }}€)</a>
 				                </h4>
 			                </div>
-			                <div id="collapseOne" class="panel-collapse collapse in">
+			                <div id="collapseOne" class="panel-collapse collapse">
 			                  <div class="panel-body">
                                   <h4>Empleador: {{ p.empleador }}</h4>
 			                    <p>{{ p.descripcion|markdown }}</p>
