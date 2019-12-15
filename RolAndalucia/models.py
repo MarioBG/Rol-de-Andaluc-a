@@ -122,6 +122,7 @@ class Trabajo(models.Model):
     empleador = models.CharField(verbose_name=_("Empleador"), blank=True, max_length=400)
     salario = models.IntegerField(verbose_name=_("Salario ofrecido"), validators=[MinValueValidator(limit_value=0)])
     descripcion = MartorField(verbose_name=_("Descripción"), default='')
+    visible = models.BooleanField(default=False)
 
 
 class PertenenciaClase(models.Model):

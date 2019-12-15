@@ -25,6 +25,7 @@
 		<div class="container">
 			<div class="panel-group" id="accordion">
                 {% for p in trabajos %}
+                    {% if p.visible %}
 		              	<div class="panel panel-default">
 			                <div class="panel-heading">
 				                <h4 class="panel-title">
@@ -38,6 +39,7 @@
 			                  </div>
 			                </div>
 		              	</div><!--/ Panel 1 end-->
+                    {% endif %}
                 {% endfor %}
 
 		            </div><!--/ Accordion end -->
