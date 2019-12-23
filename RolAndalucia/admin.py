@@ -21,6 +21,11 @@ class AddressInline(admin.StackedInline):
     extra = 0
 
 
+class StatBlockInline(admin.StackedInline):
+    model = models.StatBlock
+    extra = 0
+
+
 
 class ListAdminMixin(object):
     def __init__(self, model, admin_site):
@@ -61,7 +66,7 @@ class PersonajeAdmin(admin.ModelAdmin):
     inlines = [AddressInline]
     fieldsets = (
         (None, {
-            'fields': ('name', 'hechizos', 'maxHp', 'currentHp', 'photo', 'jugador')
+            'fields': ('name', 'hechizos', 'maxHp', 'currentHp', 'photo', 'jugador', 'statBlock')
         }),
         ('Habilidades', {
             'classes': ('collapse',),

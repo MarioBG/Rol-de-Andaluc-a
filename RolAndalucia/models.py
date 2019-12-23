@@ -110,6 +110,17 @@ class Item(models.Model):
         return self.name
 
 
+class StatBlock(models.Model):
+
+    strength = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
+    dexterity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
+    constitution = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
+    intelligence = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
+    wisdom = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
+    charisma = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
+    proficiencyBonus = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
+
+
 class Personaje(models.Model):
 
     def save(self, *args, **kwargs):
@@ -128,18 +139,7 @@ class Personaje(models.Model):
     photo = models.CharField(verbose_name=_("Imagen"), blank=True, max_length=400)
     jugador = models.ForeignKey(to=User, on_delete=models.CASCADE, null=True)
     inspiration = models.BooleanField(default=False)
-
-
-class StatBlock(models.Model):
-
-    strength = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
-    dexterity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
-    constitution = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
-    intelligence = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
-    wisdom = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
-    charisma = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
-    proficiencyBonus = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
-    statBlock = models.ForeignKey(to=Personaje, on_delete=models.CASCADE)
+    statBlock = models.OneToOneField(to=StatBlock, on_delete=models.CASCADE, null=True)
 
 
 class InventoryEntry(models.Model):
