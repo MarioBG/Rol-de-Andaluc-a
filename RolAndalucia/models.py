@@ -20,6 +20,7 @@ from treewidget.fields import TreeForeignKey
 
 
 class Rule(MPTTModel):
+    
     name = models.CharField(verbose_name=_("Nombre"), max_length=200)
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
     content = MartorField(verbose_name=_("Content"), default='')
@@ -39,6 +40,7 @@ class Rule(MPTTModel):
 
 
 class CharacterClass(models.Model):
+
     name = models.TextField(verbose_name=_("Nombre de clase"))
     description = MartorField(verbose_name=_("Descripción"), default='')
 
@@ -72,6 +74,7 @@ class Spell(models.Model):
 
 
 class Craftable(models.Model):
+
     name = models.CharField(verbose_name=_("Nombre de creación"), max_length=50, blank=False)
     description = models.TextField(verbose_name=_("Descripción"))
     programmingCost = models.PositiveIntegerField(verbose_name=_("Coste de programación"))
@@ -91,6 +94,7 @@ class Craftable(models.Model):
 
 
 class Item(models.Model):
+
     name = models.CharField(verbose_name=_("Nombre de objeto"), max_length=60, blank=False)
     description = models.TextField(verbose_name=_("Descripción"))
     type = models.CharField(verbose_name=_("Tipo de objeto"), max_length=30)
@@ -107,17 +111,49 @@ class Item(models.Model):
 
 
 class Personaje(models.Model):
+
+    def save(self, *args, **kwargs):
+        if not self.pk and self.statBlock is None:
+            self.statBlock = StatBlock()
+        super(Personaje, self).save(*args, **kwargs)
+
     name = models.CharField(verbose_name=_("Nombre de personaje"), max_length=60, blank=False)
     hechizos = models.ManyToManyField(to=Spell, verbose_name=_("Hechizos"), blank=True)
     maxHp = models.IntegerField(verbose_name=_("Salud máxima"), validators=[MinValueValidator(limit_value=0)])
+    temporaryHp = models.IntegerField(verbose_name=_("Salud máxima"), validators=[MinValueValidator(limit_value=0)], null=True)
     currentHp = models.IntegerField(verbose_name=_("Salud actual"), validators=[MinValueValidator(limit_value=0)])
+    armorClass = models.IntegerField(verbose_name=_("Clase de armadura"), validators=[MinValueValidator(limit_value=0)], null=True)
     habilidades = MartorField(verbose_name=_("Habilidades"), default='', blank=True)
     descripcion = MartorField(verbose_name=_("Habilidades"), default='', blank=True)
     photo = models.CharField(verbose_name=_("Imagen"), blank=True, max_length=400)
     jugador = models.ForeignKey(to=User, on_delete=models.CASCADE, null=True)
+    inspiration = models.BooleanField(default=False)
+
+
+class StatBlock(models.Model):
+
+    strength = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
+    dexterity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
+    constitution = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
+    intelligence = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
+    wisdom = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
+    charisma = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
+    proficiencyBonus = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
+    statBlock = models.ForeignKey(to=Personaje, on_delete=models.CASCADE)
+
+
+class InventoryEntry(models.Model):
+
+    item = models.ForeignKey(to=Item, on_delete=models.CASCADE, null=True)
+    personaje = models.ForeignKey(to=Personaje, on_delete=models.CASCADE, related_name="inventoryEntries")
+    count = models.DecimalField(default=1, decimal_places=2, max_digits=12)
+    unit = models.CharField(null=True, max_length=20)
+    name = models.CharField(verbose_name=_("Nombre de objeto"), max_length=60, null=True)
+    descripcion = MartorField(verbose_name=_("Descripción"), null=True)
 
 
 class Trabajo(models.Model):
+
     name = models.CharField(verbose_name=_("Nombre de trabajo"), max_length=60, blank=False)
     empleador = models.CharField(verbose_name=_("Empleador"), blank=True, max_length=400)
     salario = models.IntegerField(verbose_name=_("Salario ofrecido"), validators=[MinValueValidator(limit_value=0)])
@@ -126,12 +162,14 @@ class Trabajo(models.Model):
 
 
 class PertenenciaClase(models.Model):
+
     personaje = models.ForeignKey(to=Personaje, related_name='pertenenciasClase', on_delete=models.CASCADE)
     clase = models.ForeignKey(to=CharacterClass, on_delete=models.CASCADE)
     nivel = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)], default=0)
 
 
 class UserProfileInfo(models.Model):
+
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
     def __str__(self):

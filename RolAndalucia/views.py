@@ -98,35 +98,35 @@ def handler404(request, atemplate_name="404.html"):
 
 def viewItem(request):
     itemId = request.GET.get('itemId','')
-    return render(request, 'displays/item.html', {'item':get_object_or_404(Item, pk = itemId),})
+    return render(request, 'displays/item.html', {'item':get_object_or_404(Item, pk = itemId)})
 
 
 def viewClass(request):
     classId = request.GET.get('classId','')
-    return render(request, 'displays/class.html', {'clase':get_object_or_404(CharacterClass, pk = classId),})
+    return render(request, 'displays/class.html', {'clase':get_object_or_404(CharacterClass, pk = classId)})
 
 
 def viewCraftable(request):
     craftableId = request.GET.get('craftableId','')
-    return render(request, 'displays/craftable.html', {'craftable':get_object_or_404(Craftable, pk = craftableId),})
+    return render(request, 'displays/craftable.html', {'craftable':get_object_or_404(Craftable, pk = craftableId)})
 
 
 def viewPersonaje(request):
     craftableId = request.GET.get('personajeId','')
-    return render(request, 'displays/personaje.html', {'personaje':get_object_or_404(Personaje, pk = craftableId),})
+    return render(request, 'displays/personaje.html', {'personaje':get_object_or_404(Personaje, pk = craftableId)})
 
 
 def listPersonaje(request):
-    return render(request, 'displays/personaje.html', {'personajes':Personaje.objects.all(),})
+    return render(request, 'displays/personaje.html', {'personajes':Personaje.objects.all()})
 
 
 def listTrabajo(request):
-    return render(request, 'displays/trabajo.html', {'trabajos':Trabajo.objects.all(),})
+    return render(request, 'displays/trabajo.html', {'trabajos':Trabajo.objects.all()})
 
 
 def viewTrabajo(request):
     craftableId = request.GET.get('trabajoId','')
-    return render(request, 'displays/trabajo.html', {'trabajo':get_object_or_404(Trabajo, pk = craftableId),})
+    return render(request, 'displays/trabajo.html', {'trabajo':get_object_or_404(Trabajo, pk = craftableId)})
 
 def searchEntryName(request):
     name = request.GET.get('q','')
