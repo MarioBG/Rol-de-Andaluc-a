@@ -149,12 +149,12 @@
                     </div>
                 </div><!-- Title row end -->
 
-                        <div class="panel-group" id="accordion">
+                        <div class="panel-group" id="accordion2">
                             {% for s in personaje.hechizos.all|dictsort:"level" %}
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="#collapse{{ s.id }}"><i class="fa
+                                            <a data-toggle="collapse" class="collapsed" data-parent="#accordion2" href="#collapse{{ s.id }}"><i class="fa
                                             {% if s.school == "Abjuración" %}
                                             fa-shield
                                             {% elif s.school == "Conjuración" %}

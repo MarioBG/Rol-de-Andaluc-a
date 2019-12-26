@@ -121,6 +121,13 @@ class StatBlock(models.Model):
     proficiencyBonus = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
 
 
+class Score(models.Model):
+    statBlock=models.ForeignKey(to=StatBlock, on_delete=models.CASCADE, related_name="scores")
+    address = models.CharField(max_length=32)
+    name = models.CharField(max_length=64)
+    enabled = models.BooleanField(default=False)
+
+
 class Personaje(models.Model):
 
     def save(self, *args, **kwargs):

@@ -21,6 +21,11 @@ class AddressInline(admin.StackedInline):
     extra = 0
 
 
+class ScoreInline(admin.StackedInline):
+    model = models.Score
+    extra = 0
+
+
 class StatBlockInline(admin.StackedInline):
     model = models.StatBlock
     extra = 0
@@ -59,6 +64,10 @@ class SpellAdmin(NumericFilterModelAdmin):
 
     spell_actions.short_description = 'Acciones'
     spell_actions.allow_tags = True
+
+
+class StatBlockAdmin(admin.ModelAdmin):
+    inlines = [ScoreInline]
 
 
 class PersonajeAdmin(admin.ModelAdmin):
