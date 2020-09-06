@@ -206,7 +206,7 @@ class Ability(models.Model):
     nombre = models.CharField(verbose_name=_("Nombre de habilidad"), blank=False, max_length=120)
     descripcion = models.TextField(verbose_name=_("Descripción"),default=_("Esta habilidad no tiene descripción"))
     nivel = models.IntegerField(verbose_name=_("Nivel"))
-    desbloqueo = models.TextField(verbose_name=_("Condiciones de desbloqueo"))
+    desbloqueo = models.TextField(verbose_name=_("Condiciones de desbloqueo"), default="N/A")
     isOptional = models.BooleanField(verbose_name=_("Habilidad opcional"), default=False)
     expCost = models.IntegerField(verbose_name=_("Coste en experiencia"), default=0)
 
