@@ -57,7 +57,7 @@
                                 <ul class="nav nav-list nav-menu-list-style">
                                     {% for item in abilityDict %}
                                     <li><label class="tree-toggle nav-header glyphicon-icon-rpad"><span class="glyphicon glyphicon-list m5"></span>Nivel {{ forloop.counter }}
-                                                <span class="menu-collapsible-icon glyphicon glyphicon-chevron-down"></span></label>
+                                                <span class="badge">{{ item|length }}PE</span><span class="menu-collapsible-icon glyphicon glyphicon-chevron-down"></span></label>
                                         <ul class="nav nav-list tree bullets">
                                             {% for ability in item %}
                                                 <li><a href="#" id="ablId_{{ ability.id }}" class="ability-link">{{ ability.nombre }} {% if ability.isOptional %}<span class="badge">{{ ability.expCost }}PE</span><span class="badge">Opc</span>{% endif %}</a></li>
