@@ -45,6 +45,11 @@ def build_url(urlo, base, end, url_whitespace):
     return urlunparse(urlo)
 
 
+@register.filter(name='times')
+def times(number):
+    return range(number)
+
+
 @register.filter('markdown')
 def markdown_format(text):
     md_configs = {

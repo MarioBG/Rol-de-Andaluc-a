@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.urls import reverse
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.hashers import make_password
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
@@ -50,11 +51,15 @@ class CharacterClass(models.Model):
 
 class Spell(models.Model):
 
+    CHOICES=[('Abjuración', 'Abjuración'),('Conjuración', 'Conjuración'),('Adivinación', 'Adivinación'),
+             ('Encantamiento', 'Encantamiento'),('Evocación', 'Evocación'),('Ilusión', 'Ilusión'),
+             ('Nigromancia', 'Nigromancia'),('Transmutación', 'Transmutación')]
+
     class Meta():
         ordering=["level", "school", "name"]
 
     name = models.CharField(verbose_name=_("Spell name"), max_length=50, blank=False)
-    school = models.CharField(verbose_name=_("School of Magic"), max_length=30, blank=False)
+    school = models.CharField(verbose_name=_("School of Magic"), max_length=30, blank=False, choices=CHOICES)
     level = models.PositiveIntegerField(verbose_name=_("Spell level"), null=False)
     verbalComponent = models.BooleanField(verbose_name=_("Verbal Component"), default=False)
     somaticComponent = models.BooleanField(verbose_name=_("Somatic Component"), default=False)
@@ -120,6 +125,12 @@ class StatBlock(models.Model):
     charisma = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
     proficiencyBonus = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(50)], default=10)
 
+    def __str__(self):
+        try:
+            return "Bloque de stats de "+self.personaje.name
+        except ObjectDoesNotExist:
+            return "¡Guarda el personaje!"
+
 
 class Score(models.Model):
     statBlock=models.ForeignKey(to=StatBlock, on_delete=models.CASCADE, related_name="scores")
@@ -148,6 +159,9 @@ class Personaje(models.Model):
     inspiration = models.BooleanField(default=False)
     statBlock = models.OneToOneField(to=StatBlock, on_delete=models.CASCADE, null=True)
 
+    def __str__(self):
+        return self.name
+
 
 class InventoryEntry(models.Model):
 
@@ -158,6 +172,9 @@ class InventoryEntry(models.Model):
     name = models.CharField(verbose_name=_("Nombre de objeto"), max_length=60, null=True)
     descripcion = MartorField(verbose_name=_("Descripción"), null=True)
 
+    def __str__(self):
+        return self.item.name+" ("+self.count+self.unit+")"
+
 
 class Trabajo(models.Model):
 
@@ -167,12 +184,34 @@ class Trabajo(models.Model):
     descripcion = MartorField(verbose_name=_("Descripción"), default='')
     visible = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.name
+
 
 class PertenenciaClase(models.Model):
 
     personaje = models.ForeignKey(to=Personaje, related_name='pertenenciasClase', on_delete=models.CASCADE)
     clase = models.ForeignKey(to=CharacterClass, on_delete=models.CASCADE)
     nivel = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)], default=0)
+
+    def __str__(self):
+        try:
+            return "Clase de "+self.personaje.name
+        except ObjectDoesNotExist:
+            return "¡Guarda el personaje!"
+
+
+class Ability(models.Model):
+    clase = models.ForeignKey(to=CharacterClass, related_name='habilidades', on_delete=models.CASCADE)
+    nombre = models.CharField(verbose_name=_("Nombre de habilidad"), blank=False, max_length=120)
+    descripcion = models.TextField(verbose_name=_("Descripción"),default=_("Esta habilidad no tiene descripción"))
+    nivel = models.IntegerField(verbose_name=_("Nivel"))
+    desbloqueo = models.TextField(verbose_name=_("Condiciones de desbloqueo"))
+    isOptional = models.BooleanField(verbose_name=_("Habilidad opcional"), default=False)
+    expCost = models.IntegerField(verbose_name=_("Coste en experiencia"), default=0)
+
+    def __str__(self):
+        return self.nombre
 
 
 class UserProfileInfo(models.Model):

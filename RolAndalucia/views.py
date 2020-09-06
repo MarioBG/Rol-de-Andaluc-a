@@ -103,7 +103,16 @@ def viewItem(request):
 
 def viewClass(request):
     classId = request.GET.get('classId','')
-    return render(request, 'displays/class.html', {'clase':get_object_or_404(CharacterClass, pk = classId)})
+    clase=CharacterClass.objects.get(pk=classId)
+    if clase is not None:
+        abilityDict=[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
+        for ability in clase.habilidades.all():
+            if ability.nivel <= 20:
+                abilityDict[ability.nivel-1].append(ability)
+    else:
+        abilityDict={}
+    return render(request, 'displays/class.html', {'clase':get_object_or_404(CharacterClass, pk=classId),
+                                                   'abilityDict':abilityDict})
 
 
 def viewCraftable(request):

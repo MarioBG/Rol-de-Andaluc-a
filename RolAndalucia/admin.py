@@ -71,7 +71,19 @@ class StatBlockAdmin(admin.ModelAdmin):
 
 
 class PersonajeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'currentHp']
+
+    def __init__(self, model, admin_site):
+        self.request = None
+        super().__init__(model, admin_site)
+
+    def process_view(self, request, item_id, *args, **kwargs):
+        return views.viewPersonaje(request, item_id)
+
+    def get_queryset(self, request):
+        self.request = request
+        return super().get_queryset(request)
+
+    list_display = ['spell_actions', 'name', 'currentHp']
     inlines = [AddressInline]
     fieldsets = (
         (None, {
@@ -86,7 +98,16 @@ class PersonajeAdmin(admin.ModelAdmin):
             'fields': ('descripcion',),
         }),
     )
+
+    def spell_actions(self, obj):
+        ans = '</a><a class="button" href="/viewPersonaje?personajeId='+str(obj.pk)+'">Ver</a>&nbsp;'
+        if self.request.user.groups.filter(name="Admin").exists():
+            ans += '<a class="button" href="/admin/RolAndalucia/personaje/'+str(obj.pk)+'/change">Editar</a>&nbsp;'
+        return mark_safe(ans)
     list_per_page = 25
+
+    spell_actions.short_description = 'Acciones'
+    spell_actions.allow_tags = True
 
 
 class CharacterClassAdmin(NumericFilterModelAdmin):

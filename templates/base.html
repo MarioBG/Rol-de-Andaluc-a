@@ -23,7 +23,7 @@
     {% block css_pre %}{% endblock %}
 
 	<!-- Bootstrap -->
-	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+	<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
 	<!-- Template styles-->
 	<link rel="stylesheet" href="/static/css/style.css">
 	<!-- Responsive styles-->
@@ -91,6 +91,8 @@
 		                            <li><a href="/admin/RolAndalucia/spell">Hechizos</a></li>
 		                            <li><a href="/admin/RolAndalucia/craftable">Invenciones</a></li>
 		                            <li><a href="/admin/RolAndalucia/item">Objetos</a></li>
+		                            <li><a href="/admin/RolAndalucia/personaje">Personajes</a></li>
+		                            <li><a href="/listTrabajo">Trabajos</a></li>
 		                        </ul>
 	                    	</div>
 	                    </li>
@@ -227,14 +229,14 @@
 	<!-- Copyright start -->
 	<section id="copyright" class="copyright angle">
 		<div class="container">
-			{% comment %}<div class="row">
+			<div class="row">
 				<div class="col-md-12 text-center">
 					<ul class="footer-social unstyled">
 						<li>
-							<a title="Twitter" href="#">
+							<a title="Twitter" href="https://www.twitter.com/mariobg3">
 								<span class="icon-pentagon wow bounceIn"><i class="fa fa-twitter"></i></span>
 							</a>
-							<a title="Facebook" href="#">
+							{% comment %}<a title="Facebook" href="#">
 								<span class="icon-pentagon wow bounceIn"><i class="fa fa-facebook"></i></span>
 							</a>
 							<a title="Google+" href="#">
@@ -251,7 +253,7 @@
 							</a>
 							<a title="Dribble" href="#">
 								<span class="icon-pentagon wow bounceIn"><i class="fa fa-dribbble"></i></span>
-							</a>
+							</a>{% endcomment %}
 						</li>
 					</ul>
 				</div>
@@ -259,10 +261,10 @@
 			<div class="row">
 				<div class="col-md-12 text-center">
 					<div class="copyright-info">
-         			 &copy; Copyright 2019 Themefisher. <span>Designed by <a href="https://themefisher.com">Themefisher.com</a></span>
+         			 Template &copy; Copyright 2019 Themefisher. <span>Designed by <a href="https://themefisher.com">Themefisher.com</a></span>
         			</div>
 				</div>
-			</div><!--/ Row end -->{% endcomment %}
+			</div><!--/ Row end -->
 		   <div id="back-to-top" data-spy="affix" data-offset-top="10" class="back-to-top affix">
 				<button class="btn btn-primary" title="Back to Top"><i class="fa fa-angle-double-up"></i></button>
 			</div>
@@ -276,9 +278,10 @@
     <script src="/static/js/tippy-all.js"></script>
 
     <!-- initialize jQuery Library -->
-	<script type="text/javascript" src="/static/js/jquery.js"></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
     <!-- Bootstrap jQuery -->
-	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'/>
+    <script src='/static/js/dropdown-code.js'/>
     {% block javascript %} {% endblock %}
     <!-- Template custom -->
 	<script type="text/javascript" src="/static/js/custom.js"></script>

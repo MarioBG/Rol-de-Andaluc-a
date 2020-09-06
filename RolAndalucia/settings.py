@@ -32,13 +32,13 @@ if 'DYNO' in os.environ:
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','*']
-VERSION=2
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
+VERSION = 2
 
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_shortcuts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -60,6 +60,67 @@ MIDDLEWARE = [
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+ADMIN_SHORTCUTS = [
+    {
+        'shortcuts': [
+            {
+                'url': '/',
+                'open_new_window': True,
+            },
+            {
+                'url_name': 'admin:logout',
+            },
+            {
+                'title': 'Users',
+                'url_name': 'admin:auth_user_changelist',
+                'count': 'example.utils.count_users',
+            },
+            {
+                'title': 'Groups',
+                'url_name': 'admin:auth_group_changelist',
+                'count': 'example.utils.count_groups',
+            },
+            {
+                'title': 'Add user',
+                'url_name': 'admin:auth_user_add',
+                'has_perms': 'example.utils.has_perms_to_users',
+            },
+        ]
+    },
+    {
+        'title': 'CMS',
+        'shortcuts': [
+            {
+                'title': 'Pages',
+                'url_name': 'admin:index',
+            },
+            {
+                'title': 'Files',
+                'url_name': 'admin:index',
+            },
+            {
+                'title': 'Contact forms',
+                'icon': 'columns',
+                'url_name': 'admin:index',
+                'count_new': '3',
+            },
+            {
+                'title': 'Products',
+                'url_name': 'admin:index',
+            },
+            {
+                'title': 'Orders',
+                'url_name': 'admin:index',
+                'count_new': '12',
+            },
+        ]
+    },
+]
+ADMIN_SHORTCUTS_SETTINGS = {
+    'show_on_all_pages': True,
+    'open_new_window': False,
+}
 
 ROOT_URLCONF = 'RolAndalucia.urls'
 
@@ -92,7 +153,6 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 
 LOGIN_URL = "/login"
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -105,7 +165,6 @@ DATABASES = {
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 MEDIA_URL = '/media/'
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -125,7 +184,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -139,20 +197,20 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 import django_heroku
+
 django_heroku.settings(locals())
 
 # Global martor settings
 # Input: string boolean, `true/false`
 MARTOR_ENABLE_CONFIGS = {
-    'imgur': 'true',     # to enable/disable imgur/custom uploader.
+    'imgur': 'true',  # to enable/disable imgur/custom uploader.
     'mention': 'false',  # to enable/disable mention
-    'jquery': 'true',    # to include/revoke jquery (require for admin default django)
-    'living': 'false',   # to enable/disable live updates in preview
+    'jquery': 'true',  # to include/revoke jquery (require for admin default django)
+    'living': 'false',  # to enable/disable live updates in preview
 }
 
 # To setup the martor editor with label or not (default is False)
@@ -160,14 +218,14 @@ MARTOR_ENABLE_LABEL = False
 
 # Imgur API Keys
 MARTOR_IMGUR_CLIENT_ID = '0de70c653eaf77c'
-MARTOR_IMGUR_API_KEY   = '344b8c01481148013443e98262494b7effc16d00'
+MARTOR_IMGUR_API_KEY = '344b8c01481148013443e98262494b7effc16d00'
 
 # Safe Mode
-MARTOR_MARKDOWN_SAFE_MODE = True # default
+MARTOR_MARKDOWN_SAFE_MODE = True  # default
 
 # Markdownify
-MARTOR_MARKDOWNIFY_FUNCTION = 'martor.utils.markdownify' # default
-MARTOR_MARKDOWNIFY_URL = '/martor/markdownify/' # default
+MARTOR_MARKDOWNIFY_FUNCTION = 'martor.utils.markdownify'  # default
+MARTOR_MARKDOWNIFY_URL = '/martor/markdownify/'  # default
 
 # Markdown extensions (default)
 MARTOR_MARKDOWN_EXTENSIONS = [
@@ -178,9 +236,9 @@ MARTOR_MARKDOWN_EXTENSIONS = [
 
     # Custom markdown extensions.
     'martor.extensions.urlize',
-    'martor.extensions.del_ins',    # ~~strikethrough~~ and ++underscores++
-    'martor.extensions.mention',    # to parse markdown mention
-    'martor.extensions.emoji',      # to parse markdown emoji
+    'martor.extensions.del_ins',  # ~~strikethrough~~ and ++underscores++
+    'martor.extensions.mention',  # to parse markdown mention
+    'martor.extensions.emoji',  # to parse markdown emoji
     'martor.extensions.mdx_video',  # to parse embed/iframe video
 ]
 
@@ -188,10 +246,10 @@ MARTOR_MARKDOWN_EXTENSIONS = [
 MARTOR_MARKDOWN_EXTENSION_CONFIGS = {}
 
 # Markdown urls
-MARTOR_UPLOAD_URL = '/martor/uploader/' # default
-MARTOR_SEARCH_USERS_URL = '/martor/search-user/' # default
+MARTOR_UPLOAD_URL = '/martor/uploader/'  # default
+MARTOR_SEARCH_USERS_URL = '/martor/search-user/'  # default
 
 # Markdown Extensions
 # MARTOR_MARKDOWN_BASE_EMOJI_URL = 'https://www.webfx.com/tools/emoji-cheat-sheet/graphics/emojis/'     # from webfx
-MARTOR_MARKDOWN_BASE_EMOJI_URL = 'https://github.githubassets.com/images/icons/emoji/'                  # default from github
-#MARTOR_MARKDOWN_BASE_MENTION_URL = 'https://python.web.id/author/'                                      # please change this to your domain
+MARTOR_MARKDOWN_BASE_EMOJI_URL = 'https://github.githubassets.com/images/icons/emoji/'  # default from github
+# MARTOR_MARKDOWN_BASE_MENTION_URL = 'https://python.web.id/author/'                                      # please change this to your domain
