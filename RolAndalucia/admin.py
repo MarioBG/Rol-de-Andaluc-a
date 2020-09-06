@@ -31,6 +31,11 @@ class StatBlockInline(admin.StackedInline):
     extra = 0
 
 
+class AbilityInline(admin.StackedInline):
+    model = models.Ability
+    extra = 0
+
+
 
 class ListAdminMixin(object):
     def __init__(self, model, admin_site):
@@ -124,6 +129,7 @@ class CharacterClassAdmin(NumericFilterModelAdmin):
 
     list_display = ('class_actions', 'id', 'name')
     search_fields = ['name']
+    inlines = [AbilityInline]
     actions = [duplicate_event]
     list_per_page = 25
 
