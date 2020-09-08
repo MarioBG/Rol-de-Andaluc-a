@@ -259,7 +259,7 @@
 var id=-1
 var abilities={
     {% for item in abilityDict %}{% for ability in item %}
-            ablId_{{ ability.id }}:{nombre:"{{ ability.nombre }}", descripcion:"{{ ability.descripcion }}", nivel:{{ ability.nivel }}, desbloqueo:"{{ ability.desbloqueo }}", isOptional: {{ ability.isOptional|lower }}, expCost:{{ ability.expCost }} },
+            ablId_{{ ability.id }}:{nombre:"{{ ability.nombre }}", descripcion:"{{ ability.descripcion|markdown|escapejs }}", nivel:{{ ability.nivel }}, desbloqueo:"{{ ability.desbloqueo|escapejs }}", isOptional: {{ ability.isOptional|lower }}, expCost:{{ ability.expCost }} },
         {% endfor %}{% endfor %}
 }
 $('.tree-toggle').click(function () {	$(this).parent().children('ul.tree').toggle(200);

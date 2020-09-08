@@ -204,9 +204,9 @@ class PertenenciaClase(models.Model):
 class Ability(models.Model):
     clase = models.ForeignKey(to=CharacterClass, related_name='habilidades', on_delete=models.CASCADE)
     nombre = models.CharField(verbose_name=_("Nombre de habilidad"), blank=False, max_length=120)
-    descripcion = models.TextField(verbose_name=_("Descripción"),default=_("Esta habilidad no tiene descripción"))
+    descripcion = MartorField(verbose_name=_("Descripción"),default=_("Esta habilidad no tiene descripción"))
     nivel = models.IntegerField(verbose_name=_("Nivel"))
-    desbloqueo = models.TextField(verbose_name=_("Condiciones de desbloqueo"), default="N/A")
+    desbloqueo = MartorField(verbose_name=_("Condiciones de desbloqueo"), default="N/A")
     isOptional = models.BooleanField(verbose_name=_("Habilidad opcional"), default=False)
     expCost = models.IntegerField(verbose_name=_("Coste en experiencia"), default=0)
 
