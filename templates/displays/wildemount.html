@@ -1,0 +1,295 @@
+{% extends 'base.html' %}
+{% block css %}
+    <link rel='stylesheet' href='/static/css/dropdown-abilities.css'>
+    <link rel="stylesheet" href="./static/css/style.css">{% comment %}
+    <style>
+    .row {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display:         flex;
+      flex-wrap: wrap;
+    }
+    .row > [class*='col-'] {
+      display: flex;
+      flex-direction: column;
+    }
+    </style>{% endcomment %}
+{% endblock %}
+{% load auth_extras %}
+{% block content %}
+
+	<div id="banner-area">
+		<img src="static/images/banner/banner2.jpg" alt ="" />
+		<div class="parallax-overlay"></div>
+			<!-- Subpage title start -->
+			<div class="banner-title-content">
+	        	<div class="text-center">
+		        	<h2>Wildemount Tales</h2>
+		        	<ul class="breadcrumb">
+                        <li><a href="/">Inicio</a></li>
+                        <li> Wildemount Tales</li>
+		          	</ul>
+	          	</div>
+          	</div><!-- Subpage title end -->
+	</div><!-- Banner area end -->
+
+	<!-- Main container start -->
+
+	<section id="main-container">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-8 col-sm-12 col-xs-12">
+					<div class="post-content">
+                        <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=2&amp;bgcolor=%23C0CA33&amp;ctz=Europe%2FMadrid&amp;src=bWcwcms2aGFhNWF0Y2ZzcWZidDNmNGRkcjRAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%23F6BF26" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+						{{ clase.description|markdown }}
+					</div><!--/ post content end -->
+                    <div class="container">
+                      <div class="row">
+                        <h1>Habilidades de clase</h1>
+                      </div>
+                    </div>
+                    <div class="container">
+                    <div class="row">
+                      <div class="col-xs-3 col-sm-4">
+                        <div class="well no-padding">
+                            <div>
+                                <ul class="nav nav-list nav-menu-list-style">
+                                    {% for item in abilityDict %}
+                                    <li><label class="tree-toggle nav-header glyphicon-icon-rpad"><span class="glyphicon glyphicon-list m5"></span>Nivel {{ forloop.counter }}
+                                                <span class="badge">{{ item|length }}</span><span class="menu-collapsible-icon glyphicon glyphicon-chevron-down"></span></label>
+                                        <ul class="nav nav-list tree bullets">
+                                            {% for ability in item %}
+                                                <li><a href="#" id="ablId_{{ ability.id }}" class="ability-link">{{ ability.nombre }} {% if ability.isOptional %}<span class="badge">{{ ability.expCost }}PE</span><span class="badge">Opc</span>{% endif %}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="col-xs-9 col-sm-8">
+                            <div id="collapsingPanel" class="collapse">
+                                <div class="well no-padding h-100">
+                                    <div class="row align-items-center justify-content-md-center">
+                                        <div class="col-md-10">
+                                            <h2 id="itemName"></h2>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <div class="post-content">
+                                            <h5>Descripción</h5>
+                                                <p id="itemDescription"></p>
+                                                <div class="gap-20"></div>
+
+                                                <div class="row">
+                                                    <div class="feature-box col-sm-12 wow fadeInDown" data-wow-delay=".5s">
+                                                        <span class="feature-icon pull-left" ><i class="fa fa-key"></i></span>
+                                                        <div class="feature-content">
+                                                            <h3>Condición de desbloqueo</h3>
+                                                            <p id="itemDesbloqueo"></p>
+                                                        </div>
+                                                    </div><!--/ End first featurebox -->
+                                                </div>
+
+
+                                            </div><!--/ post content end -->
+
+                                        </div><!--/ Content col end -->
+
+                                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                            <div class="sidebar sidebar-right">
+                                                <!-- category start -->
+                                                <div class="widget widget-categories">
+                                                    <h3 class="widget-title">Atributos</h3>
+                                                    <ul class="category-list clearfix">
+                                                      <li id="itemUnlockCostGlobal" class="collapse"><a href="#" class="noclick">Coste</a><span class="badge" id="itemUnlockCost"> </span></li>
+                                                      <li><a href="#" class="noclick">Nivel </a><span class="posts-count" id="itemNivel"></span></li>
+                                                    </ul>
+                                                </div><!-- category end -->
+
+
+                                            </div><!--/ Sidebar end -->
+                                        </div><!--/ Sidebar col end -->
+                                    </div><!--/ row end -->
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 heading">
+                            <span class="title-icon classic pull-left"><i class="fa fa-magic"></i></span>
+                                <h2 class="title classic">Magia y hechizos</h2>
+                            </div>
+                        </div><!-- Title row end -->
+
+                        <div class="panel-group" id="accordion2">
+                            {% for s in clase.spell_set.all|dictsort:"level" %}
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" class="collapsed" data-parent="#accordion2" href="#collapse{{ s.id }}"><i class="fa
+                                            {% if s.school == "Abjuración" %}
+                                            fa-shield
+                                            {% elif s.school == "Conjuración" %}
+                                            fa-file
+                                            {% elif s.school == "Adivinación" %}
+                                            fa-moon-o
+                                            {% elif s.school == "Encantamiento" %}
+                                            fa-magic
+                                            {% elif s.school == "Evocación" %}
+                                            fa-fire
+                                            {% elif s.school == "Ilusión" %}
+                                            fa-picture-o
+                                            {% elif s.school == "Nigromancia" %}
+                                            fa-snapchat-ghost
+                                            {% elif s.school == "Transmutación" %}
+                                            fa-tint
+                                            {% endif %}
+                                            "></i> {{ s.name }} | <i class="fa fa-book"></i> {{ s.level }} | <i class="fa fa-dot-circle-o"></i> {{ s.range }}</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse{{ s.id }}" class="panel-collapse collapse">
+                                      <div class="panel-body">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="post-content">
+                                                        <div class="post-image-wrapper col-md-6">
+                                                            <img src="{{ s.photo }}" class="img-responsive"  alt="" />
+                                                        </div><!-- post image end -->
+                                                    <h5>Descripción</h5>
+                                                        <p>{{ s.description|markdown }}</p>
+                                                        <div class="gap-20"></div>
+
+                                                        <div class="row">
+                                                            <div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
+                                                                <span class="feature-icon pull-left" ><i class="fa fa-magic"></i></span>
+                                                                <div class="feature-content">
+                                                                    <h3>Tiempo de casteo</h3>
+                                                                    <p>{{ s.castTime }}</p>
+                                                                </div>
+                                                            </div><!--/ End first featurebox -->
+
+                                                            <div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
+                                                                <span class="feature-icon pull-left" ><i class="fa fa-bullseye"></i></span>
+                                                                <div class="feature-content">
+                                                                    <h3>Rango</h3>
+                                                                    <p>{{ s.range }}</p>
+                                                                </div>
+                                                            </div><!--/ End 2nd featurebox -->
+                                                        </div>
+
+                                                        <div class="gap-20"></div>
+
+                                                        <div class="row">
+
+                                                            <div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
+                                                                <span class="feature-icon pull-left" ><i class="fa fa-clock-o"></i></span>
+                                                                <div class="feature-content">
+                                                                    <h3>Duración</h3>
+                                                                    <p>{{ s.duration }}</p>
+                                                                </div>
+                                                            </div><!--/ End 1st featurebox -->
+
+                                                            <div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
+                                                                <span class="feature-icon pull-left" ><i class="fa fa-shield"></i></span>
+                                                                <div class="feature-content">
+                                                                    <h3>Salvaciones</h3>
+                                                                    <p>{{ s.attack_save }}</p>
+                                                                </div>
+                                                            </div><!--/ End 2nd featurebox -->
+                                                        </div>
+
+
+                                                    </div><!--/ post content end -->
+
+                                                </div><!--/ Content col end -->
+
+                                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="sidebar sidebar-right">
+                                                        <!-- category start -->
+                                                        <div class="widget widget-categories">
+                                                            <h3 class="widget-title">Atributos</h3>
+                                                            <ul class="category-list clearfix">
+                                                              <li><a href="#">Escuela de magia</a><span class="posts-count"> {{ s.school }}</span></li>
+                                                              <li><a href="#">Nivel</a><span class="posts-count"> {% if s.level == 0 %}Truco{% else %}{{ s.level }}{% endif %}</span></li>
+                                                              <li><a href="#">Componente verbal</a><span class="posts-count"> {% if s.verbalComponent %}Sí{% else %}No{% endif %}</span></li>
+                                                              <li><a href="#">Componente somático</a><span class="posts-count"> {% if s.somaticComponent %}Sí{% else %}No{% endif %}</span></li>
+                                                              <li><a href="#">Componente material</a><span class="posts-count"> {% if s.materialComponent %}Sí{% else %}No{% endif %}</span></li>
+                                                              {% if s.materialComponent %}<li><a href="#">Requisitos materiales</a><span class="posts-count"> {{ s.materialRequirements|markdown }}</span></li>{% endif %}
+                                                              <li><a href="#">Requiere concentración</a><span class="posts-count"> {% if s.concentration %}Sí{% else %}No{% endif %}</span></li>
+                                                              <li><a href="#">Daño/efecto</a><span class="posts-count"> {{ s.effect|markdown }}</span></li>
+                                                            </ul>
+                                                        </div><!-- category end -->
+
+                                                        <!-- tags start -->
+                                                        <div class="widget widget-tags">
+                                                            <h3 class="widget-title">Clases</h3>
+                                                            <ul class="unstyled clearfix">
+                                                                {% for class in s.classes.all %}<li><a href="/viewClass?classId={{ class.id }}">{{ class.name }}</a></li>{% endfor %}
+                                                            </ul>
+                                                        </div><!-- tags end -->
+
+
+                                                    </div><!--/ Sidebar end -->
+                                                </div><!--/ Sidebar col end -->
+                                            </div><!--/ row end -->
+                                        </div><!--/ container end -->
+                                      </div>
+                                    </div>
+                                </div><!--/ Panel 1 end-->
+                            {% endfor%}
+
+                        </div><!--/ Accordion end -->
+
+				</div><!--/ Content col end -->
+            </div> <!--/ Row end -->
+		</div><!--/ container end -->
+	</section><!--/ Main container end -->
+	{% endblock %}
+
+{% block javascript %}<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+<script>
+var id=-1
+var abilities={
+    {% for item in abilityDict %}{% for ability in item %}
+            ablId_{{ ability.id }}:{nombre:"{{ ability.nombre }}", descripcion:"{{ ability.descripcion|markdown|escapejs }}", nivel:{{ ability.nivel }}, desbloqueo:"{{ ability.desbloqueo|escapejs }}", isOptional: {{ ability.isOptional|lower }}, expCost:{{ ability.expCost }} },
+        {% endfor %}{% endfor %}
+}
+$('.tree-toggle').click(function () {	$(this).parent().children('ul.tree').toggle(200);
+});
+$(function(){
+$('.tree-toggle').parent().children('ul.tree').toggle(200);
+})
+$('.ability-link').on('click',function (e) {
+    e.preventDefault();
+})
+$('.ability-link').on('click',function (e) {
+    e.preventDefault();
+    if(id != e.target.id) {
+        $("#collapsingPanel").collapse('show')
+        id = e.target.id
+    }else {
+        $("#collapsingPanel").collapse('hide')
+        id=-1
+    }
+    $("#itemName").html(abilities[e.target.id].nombre);
+    $("#itemDescription").html(abilities[e.target.id].descripcion);
+    $("#itemNivel").html(abilities[e.target.id].nivel);
+    if(abilities[e.target.id].isOptional){
+        $("#itemDesbloqueo").html(abilities[e.target.id].desbloqueo);
+        $("#itemUnlockCostGlobal").addClass("in")
+        $("#itemUnlockCost").html(abilities[e.target.id].expCost+"PE");
+    }else{
+        $("#itemDesbloqueo").html("Esta habilidad se desbloquea automáticamente al alcanzar el nivel requerido.");
+        $("#itemUnlockCostGlobal").removeClass("in")
+    }
+})
+</script>
+{% endblock %}
