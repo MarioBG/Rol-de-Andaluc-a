@@ -71,51 +71,51 @@ ADMIN_SHORTCUTS = [
             {
                 'url_name': 'admin:logout',
             },
-            {
-                'title': 'Users',
-                'url_name': 'admin:auth_user_changelist',
-                'count': 'example.utils.count_users',
-            },
-            {
-                'title': 'Groups',
-                'url_name': 'admin:auth_group_changelist',
-                'count': 'example.utils.count_groups',
-            },
-            {
-                'title': 'Add user',
-                'url_name': 'admin:auth_user_add',
-                'has_perms': 'example.utils.has_perms_to_users',
-            },
+            # {
+            #     'title': 'Users',
+            #     'url_name': 'admin:auth_user_changelist',
+            #     'count': 'example.utils.count_users',
+            # },
+            # {
+            #     'title': 'Groups',
+            #     'url_name': 'admin:auth_group_changelist',
+            #     'count': 'example.utils.count_groups',
+            # },
+            # {
+            #     'title': 'Add user',
+            #     'url_name': 'admin:auth_user_add',
+            #     'has_perms': 'example.utils.has_perms_to_users',
+            # },
         ]
     },
-    {
-        'title': 'CMS',
-        'shortcuts': [
-            {
-                'title': 'Pages',
-                'url_name': 'admin:index',
-            },
-            {
-                'title': 'Files',
-                'url_name': 'admin:index',
-            },
-            {
-                'title': 'Contact forms',
-                'icon': 'columns',
-                'url_name': 'admin:index',
-                'count_new': '3',
-            },
-            {
-                'title': 'Products',
-                'url_name': 'admin:index',
-            },
-            {
-                'title': 'Orders',
-                'url_name': 'admin:index',
-                'count_new': '12',
-            },
-        ]
-    },
+    # {
+    #     'title': 'CMS',
+    #     'shortcuts': [
+    #         {
+    #             'title': 'Pages',
+    #             'url_name': 'admin:index',
+    #         },
+    #         {
+    #             'title': 'Files',
+    #             'url_name': 'admin:index',
+    #         },
+    #         {
+    #             'title': 'Contact forms',
+    #             'icon': 'columns',
+    #             'url_name': 'admin:index',
+    #             'count_new': '3',
+    #         },
+    #         {
+    #             'title': 'Products',
+    #             'url_name': 'admin:index',
+    #         },
+    #         {
+    #             'title': 'Orders',
+    #             'url_name': 'admin:index',
+    #             'count_new': '12',
+    #         },
+    #     ]
+    # },
 ]
 ADMIN_SHORTCUTS_SETTINGS = {
     'show_on_all_pages': True,
