@@ -108,7 +108,15 @@
 	                    </li>
             			{% if user.is_superuser %}<li><a href="admin">Panel de control</a></li>{% endif %}
                         <li><a href="https://1drv.ms/w/s!AhWvlklDDRp-rQq4JqVSBo3mDts2">Libro de juego</a></li>
-                        <li><a href="/wildemount">Wildemount Tales</a></li>
+                        <li class="dropdown">
+                       		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Campañas Wildemount<i class="fa fa-angle-down"></i></a>
+                       		<div class="dropdown-menu">
+								<ul>
+                                    <li><a href="/wildemount">Wildemount Tales</a></li>
+                                    <li><a href="/cds">For Whom the Bell Tolls</a></li>
+		                        </ul>
+	                    	</div>
+	                    </li>
                     {% if user.is_authenticated or user.is_superuser %}
                         <li><a href="/logout">Cerrar sesión</a></li>
                     {% else %}

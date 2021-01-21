@@ -39,6 +39,7 @@ urlpatterns = [
     path('viewPersonaje', views.viewPersonaje, name='viewPersonaje'),
     path('listPersonaje', views.listPersonaje, name='listPersonaje'),
     path('wildemount', views.viewWildemount, name='wildemount'),
+    path('cds', views.viewCds, name='cds'),
     path('viewTrabajo', views.viewTrabajo, name='viewTrabajo'),
     path('listTrabajo', views.listTrabajo, name='listTrabajo'),
     path('viewCraftable', views.viewCraftable, name='viewCraftable'),

@@ -137,6 +137,10 @@ def viewWildemount(request):
     return render(request, 'displays/wildemount.html', {'trabajos':Trabajo.objects.all()})
 
 
+def viewCds(request):
+    return render(request, 'displays/belltolls.html', {'trabajos':Trabajo.objects.all()})
+
+
 def viewTrabajo(request):
     craftableId = request.GET.get('trabajoId','')
     return render(request, 'displays/trabajo.html', {'trabajo':get_object_or_404(Trabajo, pk = craftableId)})
