@@ -13,7 +13,7 @@ def duplicate_event(modeladmin, request, queryset):
     for object in queryset:
         object.id = None
         object.save()
-duplicate_event.short_description = "Duplicar registro"
+    duplicate_event.short_description = "Duplicar registro"
 
 
 class AddressInline(admin.StackedInline):
