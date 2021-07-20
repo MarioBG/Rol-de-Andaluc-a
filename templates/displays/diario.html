@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% block css %}
+    <link rel='stylesheet' href='/static/css/dropdown-abilities.css'>
+    <link rel="stylesheet" href="./static/css/style.css">{% comment %}
+    <style>
+    .row {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display:         flex;
+      flex-wrap: wrap;
+    }
+    .row > [class*='col-'] {
+      display: flex;
+      flex-direction: column;
+    }
+    </style>{% endcomment %}
+{% endblock %}
+{% load auth_extras %}
+{% block content %}
+
+	<div id="banner-area">
+		<img src="static/images/banner/banner2.jpg" alt ="" />
+		<div class="parallax-overlay"></div>
+			<!-- Subpage title start -->
+			<div class="banner-title-content">
+	        	<div class="text-center">
+		        	<h2>Rol de Andalucía</h2>
+		        	<ul class="breadcrumb">
+                        <li><a href="/">Inicio</a></li>
+                        <li>Diario de sesiones</li>
+		          	</ul>
+	          	</div>
+          	</div><!-- Subpage title end -->
+	</div><!-- Banner area end -->
+
+	<!-- Main container start -->
+
+	<section id="main-container">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-8 col-sm-12 col-xs-12">
+					<div class="post-content">
+                        <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=2&amp;bgcolor=%23C0CA33&amp;ctz=Europe%2FMadrid&amp;src=ld6trokdvee9nsv0dg2l24avo0%40group.calendar.google.com&amp;color=%23F6BF26" style="border:solid 1px #777" width="100%" height="600" align="center" frameborder="0" scrolling="no"></iframe>
+                        <p>Andalucía, tierra de contrastes. Tierra de trabajadores, tierra de paisajes, crisol de culturas. La Comunidad que sonríe, y en la que en dos horas puedes pasar de montañas nevadas a un desierto y acabar en la llamada huerta de Europa. Una tierra que tantas culturas a lo largo de la Historia han considerado privilegiada, asentándose y dejándonos su poso cultural, que nos define hoy día como pueblo. Una tierra, en resumen, rica en todos los sentidos. </p>
+                        <p>Sin embargo, es una tierra que en los últimos años sin duda ha visto un importantísimo progreso. En la isla de la Cartuja de Sevilla, en lo que fuera la Expo'92, la sede de Industrias Stark, asentada en la capital hispalense en el 94, ha atraído a Sevilla una enorme cantidad de industrias tecnológicas. Las nuevas industrias, que proporcionan trabajo ya a casi medio millón de personas, han hecho que la vida en la ciudad se renueve de una forma sorprendente, y se respira la modernidad y el cambio en el ambiente.</p>
+                        <p>Pero este progreso parece haber dejado atrás en cierta medida al resto de la Comunidad. Málaga intentó seguir la estela de Sevilla con su Polo Digital, pero no parece terminar de despegar y apenas aglutina a unas cuantas empresas del sector de la informática. Huelva ha visto algo revitalizado su polo químico, pero hay quien opina que eso es más una vuelta atrás que otra cosa. Cádiz ha redoblado su industria turística, y ya es más fácil ver a un guiri en Tarifa que a un tarifeño. Y en toda Andalucía oriental, el cambio parece haberse olvidado de ellos totalmente, y a veces miran hacia la capital con cierta inquina por quedarse con todo este progreso y oportunidades.</p>
+                        <p>Y por si fuera poco, además de todo este ambiente de contrastes, Andalucía se guarda otro as bajo la manga. Desconocidos por la mayoría de la población, pero reales a todas luces, en la región existen ciertos elementos que aglutinan poder en torno a sí. Cristales de un meteorito que cayera hace decenas de miles de años que, si se usan de la forma correcta, pueden canalizar energía proviniente de fuentes ignotas. Energía que, en las manos equivocadas, sería auténticamente devastadora. Sus custodios, los Zagale residentes en la Escuela Mágica Pablo de Olavide, velan por su preservación y enseñan su uso mesurado y razonable a sus estudiantes. Y como custodios de este material y este conocimiento, actúan también como árbitros de las posibles malas prácticas que puedan hacerse de ellos, habiendo mantenido el secreto y la convivencia durante toda la Historia.</p>
+                        <p>Todo este maremágnum de factores en conflicto es el caldo de cultivo perfecto para oportunistas, y a medida que la sociedad de la información permea en la tradicionalista ciudad de Sevilla, también parece haberlo hecho una organización con intenciones perniciosas. Desde algo antes de las últimas elecciones andaluzas, en las que ganó la alianza de derechas conocida como Raíces Andaluzas, empezaron a pasar cosas con extrañas relaciones entre sí. Como un atraco a un banco y una explosión en el Centro Nacional de Aceleradores, eventos sucedidos el mismo día y vinculados entre sí por tarjetas de visita semiquemadas que hicieron a José María (Ingeniero, Fran) y a Alman (Hechicero, María) tener visiones que les impelían a no investigar el asunto, pero que obviamente tuvieron el efecto opuesto. Por supuesto, esto no hizo sino comenzar a destapar una de las mayores amenazas que ha sufrido el sur, y que sigue desentramándose a día de hoy.</p>
+                    </div><!--/ post content end -->
+                    <div class="row">
+                        <h1>Resúmenes de sesión</h1>
+                        <div class="col-md-12 heading">
+                            <span class="title-icon classic pull-left"><i class="fa fa-archive"></i></span>
+                                <h2 class="title classic">Sesión X. AVENTÜRÅ</h2>
+                        </div><!-- Title row end -->
+                        <div class="post-content">
+                            <h5>Fecha: 18 de julio de 2021</h5>
+                            <h6>18-19 de septiembre de 2020</h6>
+
+                            <p>Tras ser encantados por Alipa y vagar por el interior de este extraño Ikea inacabable, Alman (hechicero, María), Romi (influencer, Teresa), Macarena (bárbara-PHB, Lucía) y Santiago (magia santa, Luis) llegaron a la ciudad de Vetusta. Este asentamiento, construido a partes iguales con material de construcción tradicional y madera reaprovechada de los muebles ensamblables, parecía ciertamente sorprendente dadas las circunstancias. El asentamiento da cobijo a unas 1500 personas dentro de sus muros, y cuenta incluso con cultivos propios para verduras con las que complementar los platos del restaurante. Juan Gorsson, el Gran Encargado de la ciudad, hizo al grupo un breve recorrido por la ciudad (quedándose Santiago en la capilla), tras lo cual se encaminaron al bistro para conocer a Raen (Bruja-PHB, Asia), quien Juan creía la única usuaria de magia del mundo. Tras charlar un poco, Raen se excusó para recoger a su novia, Fayna, de su trabajo, y fueron a cenar juntas.</p>
+                            <p>A la mañana siguiente, Juan les encarga que se ocupen de cobrar la deuda que se debe a Vetusta en el asentamiento de Eñe, un puesto de avanzada al norte situado en una rara sección de materiales de construcción y herramientas. Antes de salir, el grupo le descubre que todos tienen habilidades mágicas, lo que lo deja visiblemente impactado y, al tiempo de salir del despacho, Macarena aprecia que coge un teléfono y empieza a marcar. No obstante, salen todos de Vetusta (salvo Santiago, que se queda en la capilla), dispuestos a solventar la situación. Antes de salir les hacen entrega de unos mapas, relojes para que no les pille la noche por el camino, y Macarena también solicita unas sandalias, recibiendo unas de velcro. Romi, para su sorpresa, vio que en el móvil que había comprado en Valir sí que tenía cobertura, con lo que les activó el punto wifi a Alman y Macarena para que hablaran con Florentino. Este les comentó sus reservas sobre poder sacarles de allí con éxito, y que investigarían la puerta que les llevó allí para que Populus les pudiera sacar y no se quedaran atrapados allí también los operativos.</p>
+                            <p>Todo este maremágnum de factores en conflicto es el caldo de cultivo perfecto para oportunistas, y a medida que la sociedad de la información permea en la tradicionalista ciudad de Sevilla, también parece haberlo hecho una organización con intenciones perniciosas. Desde algo antes de las últimas elecciones andaluzas, en las que ganó la alianza de derechas conocida como Raíces Andaluzas, empezaron a pasar cosas con extrañas relaciones entre sí. Como un atraco a un banco y una explosión en el Centro Nacional de Aceleradores, eventos sucedidos el mismo día y vinculados entre sí por tarjetas de visita semiquemadas que hicieron a José María (Ingeniero, Fran) y a Alman (Hechicero, María) tener visiones que les impelían a no investigar el asunto, pero que obviamente tuvieron el efecto opuesto.</p>
+                            <p>A la salida de Vetusta, yendo en dirección oeste, se encontraron en una sección de Espacios de trabajo, donde encontraron un cadáver que parecía reciente. Antes de que pudieran darse cuenta, de detrás de un escritorio salió un miembro de la Plantilla, lo que, en este Ikea, significaba la aparición de un monstruo sin cara y de dimensiones deformes que comenzó a atacarles.</p>
+                            <p>Tras derrotar a este monstruo, y a otro como el que salió de detrás de una cesta con soportes para portátil, Raen informó al resto de que era extremadamente inusual que estos seres atacarán de día y, sobre todo, que hubiesen utilizado algún tipo de magia para atacar. Normalmente, de día, estos seres se limitaban a deambular por el establecimiento sin atacar a nadie a no ser que fueran provocados. Este cambio de actitud no podía representar nada bueno, pero debían seguir moviéndose.</p>
+                            <p>Siguiendo en dirección norte llegaron a una sección de cocinas, donde fueron considerablemente más precavidos e intentaron pasar desapercibidos. Tras unas tiradas de sigilo que, generosamente, podríamos denominar mediocres, el grupo consiguió dar esquinazo a otro par de miembros de la Plantilla y llegar a una sección de microondas empotrados. Uno de ellos parecía tener en su interior una batería de coche, así como unos cuantos cubiertos y un transformador de corriente. Una nota pegada a él decía “Para emergencias”. Macarena decidió guardarlo en su Bra of Holding, y siguieron su camino.</p>
+                            <p>La siguiente sección resultó ser el área de oficinas de la Plantilla. Nada más entrar, Alman tropezó con un cable de corriente que surcaba el pasillo e hizo que un monitor de tubo saliera despedido del escritorio sobre el que estaba y le diera a Macarena, Armando entre los dos un gran escándalo. Inmediatamente, los miembros de la Plantilla empezaron a correr hacia la zona en la que estaban, con sus inquietantes voces tan desconcertantemente calmadas indicando que “la tienda está cerrada”. Corriendo como alma que lleva el diablo, el grupo consiguió de nuevo darles esquinazo, acabando escondidos bajo un escritorio y habiendo recorrido, probablemente, más de un kilómetro a gran velocidad. cuando ya iban encaminándose a salir de la zona, escucharon en sus mentes un sollozo lastimero que suplicaba auxilio. Este sollozo resultó provenir de un flumph llamado Blol, que había quedado volteado y les resultaba imposible ponerse en pie él solo. Tras ayudarlo, indicó al grupo que no parecía haber peligro, ya que toda la Plantilla circundante había salido tras ellos cuando hicieron tanto ruido al entrar en la sección. Les pidió por favor ir con ellos, ya que hacía mucho tiempo que no veía a nadie de su congregación.</p>
+                            <p>Con Blol acompañándoles entraron en una sección de Autoservicio, en la cual había multitud de elementos para armarios en cómodas cajas planas fáciles de llevar. Sin embargo, una de ellas estaba abierta, revelando en su interior cuatro colgadores negros de plástico con forma de culo de perro, los cuales, curiosamente, parecían tener símbolos mágicos inscritos. Tras identificarlos, pudieron ver que, de ser lanzados, generarían una nube tóxica a su alrededor. Se llevaron los cuatro y siguieron adelante.</p>
+                            <p>La siguiente sección era de cosas para mascotas, como camitas, cuencos, mantitas y demás. En esta sección, a Romi le llamó especialmente la atención un peluche de gatito y se lo guardó antes de que nadie pudiera identificarlo. Sin más encuentros, siguieron su camino, encontrándose en una sección de armas que, a priori, no parecía tener mucho lugar en este Ikea, pero podría provenir de otra dimensión en la cual Ikea sí vendiera armas. Pasando de largo, tanto de mercancía como de problemas, siguieron adelante.</p>
+                            <p>Al llegar a Eñe, rápidamente se dieron cuenta de que algo iba mal. Raen sabía que en el asentamiento tenían focos de larga distancia apuntando en dirección sur, que es de dónde venían, pero esos focos no se apreciaban a pesar de que ya se iban acercando, lo que no presagiaba nada bueno. En efecto, al llegar al asentamiento, encontraron el muro delantero derribado y algunas de las tiendas de campaña del interior quemadas, encontrando solo cadáveres y, dicho sea de paso, bastantes menos de la población habitual del asentamiento. Además, ya era tarde, así que habrían de hacer noche allí. Decidieron dividirse para reforzar la fortificación, aprovechando que Eñe estaba en una sección de Reformas del hogar que tenía materiales de construcción como ladrillos, cemento, vigas de hierro y otros elementos de gran resistencia. Entre la hora a la que llegaron y la hora de cierre de la tienda, a la que la Plantilla se volvía extremadamente violento, consiguieron cerrar y reforzar el muro delantero, instalar una pasarela en dicho muro con escalera para acceder a ella, reforzar los muros laterales y hacer un inventario rápido de lo que disponían en el asentamiento (lo que también les permitió descubrir un fragmento de un miembro de la Plantilla, que podría haber atraído a un número mayor de estos seres). Con todo preparado, queda por ver si el grupo podrá enfrentarse a la noche en este asentamiento.</p>
+                        </div><!--/ post content end -->
+
+
+				</div><!--/ Content col end -->
+            </div> <!--/ Row end -->
+		</div><!--/ container end -->
+	</section><!--/ Main container end -->
+
+	{% endblock %}
+
+{% block javascript %}<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+<script>
+var id=-1
+var abilities={
+    {% for item in abilityDict %}{% for ability in item %}
+            ablId_{{ ability.id }}:{nombre:"{{ ability.nombre }}", descripcion:"{{ ability.descripcion|markdown|escapejs }}", nivel:{{ ability.nivel }}, desbloqueo:"{{ ability.desbloqueo|escapejs }}", isOptional: {{ ability.isOptional|lower }}, expCost:{{ ability.expCost }} },
+        {% endfor %}{% endfor %}
+}
+$('.tree-toggle').click(function () {	$(this).parent().children('ul.tree').toggle(200);
+});
+$(function(){
+$('.tree-toggle').parent().children('ul.tree').toggle(200);
+})
+$('.ability-link').on('click',function (e) {
+    e.preventDefault();
+})
+$('.ability-link').on('click',function (e) {
+    e.preventDefault();
+    if(id != e.target.id) {
+        $("#collapsingPanel").collapse('show')
+        id = e.target.id
+    }else {
+        $("#collapsingPanel").collapse('hide')
+        id=-1
+    }
+    $("#itemName").html(abilities[e.target.id].nombre);
+    $("#itemDescription").html(abilities[e.target.id].descripcion);
+    $("#itemNivel").html(abilities[e.target.id].nivel);
+    if(abilities[e.target.id].isOptional){
+        $("#itemDesbloqueo").html(abilities[e.target.id].desbloqueo);
+        $("#itemUnlockCostGlobal").addClass("in")
+        $("#itemUnlockCost").html(abilities[e.target.id].expCost+"PE");
+    }else{
+        $("#itemDesbloqueo").html("Esta habilidad se desbloquea automáticamente al alcanzar el nivel requerido.");
+        $("#itemUnlockCostGlobal").removeClass("in")
+    }
+})
+</script>
+{% endblock %}
