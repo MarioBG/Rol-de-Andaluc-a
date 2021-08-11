@@ -221,7 +221,7 @@ class Llamada(models.Model):
     movil = models.ForeignKey(to=Movil, on_delete=models.CASCADE, null=False, related_name="llamadas")
 
     def __str__(self):
-        return self.numero+" ("+self.movil+")"
+        return self.numero+" ("+str(self.movil)+")"
 
 
 class Nota(models.Model):
@@ -239,7 +239,7 @@ class Conversacion(models.Model):
     movil = models.ForeignKey(to=Movil, on_delete=models.CASCADE, null=False, related_name="conversacions")
 
     def __str__(self):
-        return self.destinatario+" desde "+self.movil
+        return self.destinatario+" desde "+str(self.movil)
 
 
 class MensajeMovil(models.Model):
