@@ -40,7 +40,7 @@ class CalendarioJsonSerializer(serializers.ModelSerializer):
 class FotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Foto
-        fields = ['lowRes', 'hiRes']
+        fields = ['lowRes', 'hiRes', 'desc']
 
 
 class NotaSerializer(serializers.ModelSerializer):
