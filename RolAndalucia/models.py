@@ -200,11 +200,17 @@ class Movil(models.Model):
     colorAcento = ColorField(default="#5B7DB3")
     calendarioJson = models.ForeignKey(to=CalendarioJson, on_delete=models.PROTECT)
 
+    def __str__(self):
+        return self.modelo+" de "+self.nombreDueno
+
 
 class Noticia(models.Model):
     titular = models.CharField(verbose_name=_("Titular"), blank=False, max_length=240)
     subtitulo = models.TextField(verbose_name=_("Subítulo"), blank=False, max_length=1024)
     movil = models.ForeignKey(to=Movil, on_delete=models.CASCADE, null=False, related_name="noticias")
+
+    def __str__(self):
+        return self.titular
 
 
 class Llamada(models.Model):
@@ -214,6 +220,9 @@ class Llamada(models.Model):
     tipo = models.CharField(verbose_name=_("Hora"), blank=False, max_length=8, choices=CHOICES)
     movil = models.ForeignKey(to=Movil, on_delete=models.CASCADE, null=False, related_name="llamadas")
 
+    def __str__(self):
+        return self.numero+" ("+self.movil+")"
+
 
 class Nota(models.Model):
     dia = models.DateField()
@@ -221,16 +230,25 @@ class Nota(models.Model):
     subtitulo = models.TextField(verbose_name=_("Subítulo"), blank=False, max_length=480)
     movil = models.ForeignKey(to=Movil, on_delete=models.CASCADE, null=False, related_name="notas")
 
+    def __str__(self):
+        return self.titulo
+
 
 class Conversacion(models.Model):
     destinatario = models.CharField(verbose_name=_("Destinatario"), blank=False, max_length=240)
     movil = models.ForeignKey(to=Movil, on_delete=models.CASCADE, null=False, related_name="conversacions")
+
+    def __str__(self):
+        return self.destinatario+" desde "+self.movil
 
 
 class MensajeMovil(models.Model):
     mio = models.BooleanField(blank=False)
     texto = models.TextField(max_length=2048, blank=False)
     conversacion = models.ForeignKey(to=Conversacion, on_delete=models.CASCADE, null=False, related_name="mensajeMovils")
+
+    def __str__(self):
+        return self.texto[:24]
 
 
 class CorreoMovil(models.Model):
@@ -239,11 +257,18 @@ class CorreoMovil(models.Model):
     cuerpo = models.TextField(verbose_name=_("Cuerpo"), blank=False, max_length=2048)
     movil = models.ForeignKey(to=Movil, on_delete=models.CASCADE, null=False, related_name="correoMovils")
 
+    def __str__(self):
+        return self.asunto+" ("+self.emisor+")"
+
 
 class Foto(models.Model):
+    desc = models.CharField(verbose_name=_("Asunto"), blank=True, max_length=32)
     lowRes = models.CharField(verbose_name=_("Baja resolución"), blank=False, max_length=240)
     hiRes = models.CharField(verbose_name=_("Alta resolución"), blank=False, max_length=240)
     movil = models.ForeignKey(to=Movil, on_delete=models.CASCADE, null=False, related_name="fotos")
+
+    def __str__(self):
+        return self.desc
 
 
 class PertenenciaClase(models.Model):
