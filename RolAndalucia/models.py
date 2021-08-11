@@ -203,7 +203,7 @@ class Movil(models.Model):
 
 class Noticia(models.Model):
     titular = models.CharField(verbose_name=_("Titular"), blank=False, max_length=240)
-    subtitulo = models.CharField(verbose_name=_("Subítulo"), blank=False, max_length=240)
+    subtitulo = models.TextField(verbose_name=_("Subítulo"), blank=False, max_length=1024)
     movil = models.ForeignKey(to=Movil, on_delete=models.CASCADE, null=False, related_name="noticias")
 
 
@@ -218,7 +218,7 @@ class Llamada(models.Model):
 class Nota(models.Model):
     dia = models.DateField()
     titulo = models.CharField(verbose_name=_("Titulo"), blank=False, max_length=240)
-    subtitulo = models.CharField(verbose_name=_("Subítulo"), blank=False, max_length=480)
+    subtitulo = models.TextField(verbose_name=_("Subítulo"), blank=False, max_length=480)
     movil = models.ForeignKey(to=Movil, on_delete=models.CASCADE, null=False, related_name="notas")
 
 
@@ -229,14 +229,14 @@ class Conversacion(models.Model):
 
 class MensajeMovil(models.Model):
     mio = models.BooleanField(blank=False)
-    texto = models.CharField(max_length=2048, blank=False)
+    texto = models.TextField(max_length=2048, blank=False)
     conversacion = models.ForeignKey(to=Conversacion, on_delete=models.CASCADE, null=False, related_name="mensajeMovils")
 
 
 class CorreoMovil(models.Model):
     emisor = models.CharField(verbose_name=_("Emisor"), blank=False, max_length=240)
     asunto = models.CharField(verbose_name=_("Asunto"), blank=False, max_length=240)
-    cuerpo = models.CharField(verbose_name=_("Cuerpo"), blank=False, max_length=2048)
+    cuerpo = models.TextField(verbose_name=_("Cuerpo"), blank=False, max_length=2048)
     movil = models.ForeignKey(to=Movil, on_delete=models.CASCADE, null=False, related_name="correoMovils")
 
 
