@@ -26,6 +26,7 @@ openapi-codec
 pip
 pycryptodome
 pytz
+django-colorfield
 requests
 setuptools
 simplejson
@@ -39,3 +40,4 @@ martor
 django-ordered-model
 django-treewidget
 django-mptt
+djangorestframework

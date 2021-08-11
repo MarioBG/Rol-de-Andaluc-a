@@ -16,12 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
+from rest_framework import routers
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.conf import settings
 
 handler404 = "RolAndalucia.views.handler404"
 handler500 = "RolAndalucia.views.handler500"
+
+router = routers.DefaultRouter()
 
 admin.autodiscover()
 admin.site.login = views.login
@@ -31,6 +34,8 @@ urlpatterns = [
     path('admin/login/', views.login),
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
+    path('', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('logout', views.user_logout, name='logout'),
     path('login', views.login, name='login'),
     path('doLogin', views.user_login, name='doLogin'),
@@ -50,4 +55,5 @@ urlpatterns = [
     path('viewClass', views.viewClass, name='viewClass'),
     path('martor/', include('martor.urls')),
     url(r'^treewidget/', include('treewidget.urls')),
+    url(r'^movilInfo/(?P<uid>[-\d]+)/', views.movilInfo.as_view(), name = 'movilInfo'),
 ]

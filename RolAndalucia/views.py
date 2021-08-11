@@ -1,4 +1,7 @@
 from django.shortcuts import render, get_list_or_404
+from rest_framework import generics, permissions
+from rest_framework.views import APIView
+
 from .forms import *
 from django.http import Http404,HttpResponse,JsonResponse
 from django.http import HttpResponseRedirect
@@ -9,6 +12,9 @@ from django.contrib.auth.decorators import login_required
 from django import template
 from django.shortcuts import get_object_or_404, get_list_or_404
 from RolAndalucia.models import *
+from .serializers import MovilSerializer
+from django.db import connections
+from rest_framework.response import Response
 
 
 def index(request):
@@ -179,3 +185,16 @@ def searchEntryName(request):
 def viewSpell(request):
     spellId = request.GET.get('spellId', '')
     return render(request, 'displays/spell.html', {'spell': get_object_or_404(Spell, pk = spellId), })
+
+
+class movilInfo(APIView):
+    queryset = Movil.objects.none()
+    serializer_class = MovilSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, uid):
+        for conn in connections.all():
+            conn.close()
+        movil = Movil.objects.get(id=uid)
+        serializer = MovilSerializer(movil, context={'request': request})
+        return Response(serializer.data)

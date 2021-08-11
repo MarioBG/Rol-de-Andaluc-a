@@ -45,10 +45,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "colorfield",
+    'rest_framework',
     'RolAndalucia.apps.RolAndaluciaConfig',
     'martor',
     'treewidget',
 ]
+
+USE_TZ = True
+TIMEZONE = 'Europe/Madrid'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

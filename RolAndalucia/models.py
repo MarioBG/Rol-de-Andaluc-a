@@ -1,3 +1,4 @@
+from colorfield.fields import ColorField
 from django.db import models
 from django.contrib import admin
 from django.contrib.auth.models import User
@@ -186,6 +187,63 @@ class Trabajo(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class CalendarioJson(models.Model):
+    content = models.CharField(blank=False, max_length=131072)
+
+
+class Movil(models.Model):
+    nombreDueno = models.CharField(verbose_name=_("Dueño"), blank=False, max_length=60)
+    modelo = models.CharField(verbose_name=_("Modelo"), blank=False, max_length=60)
+    fecha = models.DateTimeField()
+    colorAcento = ColorField(default="#5B7DB3")
+    calendarioJson = models.ForeignKey(to=CalendarioJson, on_delete=models.PROTECT)
+
+
+class Noticia(models.Model):
+    titular = models.CharField(verbose_name=_("Titular"), blank=False, max_length=240)
+    subtitulo = models.CharField(verbose_name=_("Subítulo"), blank=False, max_length=240)
+    movil = models.ForeignKey(to=Movil, on_delete=models.CASCADE, null=False, related_name="noticias")
+
+
+class Llamada(models.Model):
+    CHOICES=[('REC', 'Recibida'), ('ENV', 'Enviada'), ('PER', 'Perdida')]
+    numero = models.CharField(verbose_name=_("Numero"), blank=False, max_length=32)
+    hora = models.CharField(verbose_name=_("Hora"), blank=False, max_length=32)
+    tipo = models.CharField(verbose_name=_("Hora"), blank=False, max_length=8, choices=CHOICES)
+    movil = models.ForeignKey(to=Movil, on_delete=models.CASCADE, null=False, related_name="llamadas")
+
+
+class Nota(models.Model):
+    dia = models.DateField()
+    titulo = models.CharField(verbose_name=_("Titulo"), blank=False, max_length=240)
+    subtitulo = models.CharField(verbose_name=_("Subítulo"), blank=False, max_length=480)
+    movil = models.ForeignKey(to=Movil, on_delete=models.CASCADE, null=False, related_name="notas")
+
+
+class Conversacion(models.Model):
+    destinatario = models.CharField(verbose_name=_("Destinatario"), blank=False, max_length=240)
+    movil = models.ForeignKey(to=Movil, on_delete=models.CASCADE, null=False, related_name="conversacions")
+
+
+class MensajeMovil(models.Model):
+    mio = models.BooleanField(blank=False)
+    texto = models.CharField(max_length=2048, blank=False)
+    conversacion = models.ForeignKey(to=Conversacion, on_delete=models.CASCADE, null=False, related_name="mensajeMovils")
+
+
+class CorreoMovil(models.Model):
+    emisor = models.CharField(verbose_name=_("Emisor"), blank=False, max_length=240)
+    asunto = models.CharField(verbose_name=_("Asunto"), blank=False, max_length=240)
+    cuerpo = models.CharField(verbose_name=_("Cuerpo"), blank=False, max_length=2048)
+    movil = models.ForeignKey(to=Movil, on_delete=models.CASCADE, null=False, related_name="correoMovils")
+
+
+class Foto(models.Model):
+    lowRes = models.CharField(verbose_name=_("Baja resolución"), blank=False, max_length=240)
+    hiRes = models.CharField(verbose_name=_("Alta resolución"), blank=False, max_length=240)
+    movil = models.ForeignKey(to=Movil, on_delete=models.CASCADE, null=False, related_name="fotos")
 
 
 class PertenenciaClase(models.Model):
