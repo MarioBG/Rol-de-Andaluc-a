@@ -36,6 +36,11 @@ class AbilityInline(admin.StackedInline):
     extra = 0
 
 
+class MensajeMovilInline(admin.StackedInline):
+    model = models.MensajeMovil
+    extra = 0
+
+
 
 class ListAdminMixin(object):
     def __init__(self, model, admin_site):
@@ -73,6 +78,22 @@ class SpellAdmin(NumericFilterModelAdmin):
 
 class StatBlockAdmin(admin.ModelAdmin):
     inlines = [ScoreInline]
+
+
+class ConversacionAdmin(admin.ModelAdmin):
+    inlines = [MensajeMovilInline]
+    list_filter = [
+        'movil'
+    ]
+
+
+class CorreoMovilAdmin(admin.ModelAdmin):
+    list_filter = [
+        'movil'
+    ]
+    list_display = ['id', 'emisor', 'asunto', 'movil']
+    list_display_links = ['emisor', 'asunto']
+    search_fields = ['emisor', 'asunto']
 
 
 class PersonajeAdmin(admin.ModelAdmin):
@@ -226,6 +247,8 @@ admin.site.register(models.CharacterClass, CharacterClassAdmin)
 admin.site.register(models.Personaje, PersonajeAdmin)
 admin.site.register(models.Spell, SpellAdmin)
 admin.site.register(models.Item, ItemAdmin)
+admin.site.register(models.CorreoMovil, CorreoMovilAdmin)
+admin.site.register(models.Conversacion, ConversacionAdmin)
 
 models = apps.get_models()
 for model in models:
