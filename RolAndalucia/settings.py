@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import django
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
@@ -34,6 +36,8 @@ if 'DYNO' in os.environ:
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
 VERSION = 2
+
+DEFAULT_AUTO_FIELD = django.db.models.AutoField
 
 # Application definition
 
