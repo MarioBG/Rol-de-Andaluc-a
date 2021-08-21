@@ -11,9 +11,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from django.db.models import AutoField
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import django
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -37,7 +37,7 @@ if 'DYNO' in os.environ:
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
 VERSION = 2
 
-DEFAULT_AUTO_FIELD = django.db.models.AutoField
+DEFAULT_AUTO_FIELD = AutoField
 
 # Application definition
 
