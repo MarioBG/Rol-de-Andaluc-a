@@ -13,3 +13,5 @@ RolAndalucia/__pycache__/
 
 *.sqlite3
 db.sqlite3_rem
+db.json
+db.sqlite3__
