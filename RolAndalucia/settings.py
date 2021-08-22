@@ -166,10 +166,21 @@ LOGIN_URL = "/login"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd6sqvol90idoce',
+        'USER': 'wypnnjmxwlgtfw',
+        'PASSWORD': '26ce190a0bee8b883b17e69c7e1433f8f49e9084343cd34811d08046b8cd1821',
+        'HOST': 'ec2-54-217-235-87.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 DATABASE_ROUTERS = ['RolAndalucia.routers.PrimaryRouter']
 

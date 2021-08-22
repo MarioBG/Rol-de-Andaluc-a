@@ -59,7 +59,7 @@ def replace_linebr(value):
 @register.filter('markdown')
 def markdown_format(text):
     md_configs = {
-        'mdx_wikilink_plus': {
+        'RolAndaluciag.Markdown.mdx_wikilink_plus:WikiLinkPlusExtension': {
             'base_url': '/searchName?q=',
             'url_whitespace': '_',
             'label_case': 'titlecase',
@@ -68,4 +68,4 @@ def markdown_format(text):
             # all of the above config params are optional
         },
     }
-    return mark_safe(markdown.markdown(text, extensions=['extra', 'abbr','RolAndalucia.Markdown.TablesCool:TableExtension','attr_list','def_list','fenced_code','footnotes','mdx_wikilink_plus'], extension_configs = md_configs))
+    return mark_safe(markdown.markdown(text, extensions=['extra', 'abbr','RolAndalucia.Markdown.TablesCool:TableExtension','attr_list','def_list','fenced_code','footnotes','RolAndalucia.Markdown.mdx_wikilink_plus:WikiLinkPlusExtension'], extension_configs = md_configs))

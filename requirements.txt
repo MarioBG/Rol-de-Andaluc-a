@@ -35,7 +35,6 @@ uritemplate
 urllib3
 django-heroku
 Pillow
-mdx_wikilink_plus
 martor
 django-ordered-model
 django-treewidget
