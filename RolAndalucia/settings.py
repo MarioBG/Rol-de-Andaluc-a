@@ -25,10 +25,10 @@ SECRET_KEY = 'kf3pbtu^18pn1g*dbu@0d9tet$7jzj$m7p3(m%=p#9pq)ifs4$'
 if 'DYNO' in os.environ:
     BASEURL = 'https://rol-andalucia.herokuapp.com/'
 # SECURITY WARNING: don't run with debug turned on in production!
-if 'DYNO' in os.environ:
-    DEBUG = False
-else:
-    DEBUG = True
+#if 'DYNO' in os.environ:
+DEBUG = False
+#else:
+DEBUG = True
 
 if 'DYNO' in os.environ:
     SECURE_SSL_REDIRECT = True
