@@ -171,6 +171,8 @@ DATABASES = {
     }
 }
 
+DATABASE_ROUTERS = ['RolAndalucia.routers.PrimaryRouter']
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 MEDIA_URL = '/media/'
 
