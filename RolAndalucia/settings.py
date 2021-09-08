@@ -33,7 +33,7 @@ if 'DYNO' in os.environ:
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
+ALLOWED_HOSTS = ['localhost', '192.168.0.11', '*']
 VERSION = 2
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
@@ -164,23 +164,25 @@ LOGIN_URL = "/login"
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd6sqvol90idoce',
-        'USER': 'wypnnjmxwlgtfw',
-        'PASSWORD': '26ce190a0bee8b883b17e69c7e1433f8f49e9084343cd34811d08046b8cd1821',
-        'HOST': 'ec2-54-217-235-87.eu-west-1.compute.amazonaws.com',
-        'PORT': '5432',
-    }
-}
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
+if 'DYNO' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'd6sqvol90idoce',
+            'USER': 'wypnnjmxwlgtfw',
+            'PASSWORD': '26ce190a0bee8b883b17e69c7e1433f8f49e9084343cd34811d08046b8cd1821',
+            'HOST': 'ec2-54-217-235-87.eu-west-1.compute.amazonaws.com',
+            'PORT': '5432',
+        }
+    }
 
 DATABASE_ROUTERS = ['RolAndalucia.routers.PrimaryRouter']
 

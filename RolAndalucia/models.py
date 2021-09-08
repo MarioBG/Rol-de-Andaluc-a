@@ -41,6 +41,23 @@ class Rule(MPTTModel):
         super(Rule, self).delete(*args, **kwargs)
 
 
+class TagPjMadrid(models.Model):
+    name = models.CharField(verbose_name=_("Nombre de etiqueta"), max_length=50)
+    key = models.CharField(verbose_name=_("Valor de etiqueta"), max_length=16)
+    def __str__(self):
+        return self.name
+
+
+class PjMadrid(models.Model):
+    pic = models.ImageField(upload_to='profile_pics', blank=True)
+    name = models.CharField(verbose_name=_("Nombre"), max_length=100)
+    position = models.CharField(verbose_name=_("Trabajo"), max_length=200)
+    description = models.TextField(verbose_name=_("Descripción"))
+    tags = models.ManyToManyField(to=TagPjMadrid, verbose_name=_("Tags"), related_name="pjs")
+    def __str__(self):
+        return self.name
+
+
 class CharacterClass(models.Model):
 
     name = models.TextField(verbose_name=_("Nombre de clase"))

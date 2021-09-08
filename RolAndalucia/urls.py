@@ -49,6 +49,7 @@ urlpatterns = [
     path('viewTrabajo', views.viewTrabajo, name='viewTrabajo'),
     path('listTrabajo', views.listTrabajo, name='listTrabajo'),
     path('viewCraftable', views.viewCraftable, name='viewCraftable'),
+    path('pjMadrid', views.viewPjsMadrid, name='viewPjsMadrid'),
     path('404', views.error404, name='404'),
     path('500', views.handler500, name='500'),
     path('searchName', views.searchEntryName, name='searchName'),
@@ -56,4 +57,4 @@ urlpatterns = [
     path('martor/', include('martor.urls')),
     url(r'^treewidget/', include('treewidget.urls')),
     url(r'^movilInfo/(?P<uid>[-\d]+)/', views.movilInfo.as_view(), name = 'movilInfo'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

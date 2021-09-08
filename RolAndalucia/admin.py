@@ -80,6 +80,12 @@ class StatBlockAdmin(admin.ModelAdmin):
     inlines = [ScoreInline]
 
 
+class PjMadridAdmin(admin.ModelAdmin):
+    list_filter = [
+        'tags'
+    ]
+
+
 class ConversacionAdmin(admin.ModelAdmin):
     inlines = [MensajeMovilInline]
     list_filter = [
@@ -243,6 +249,7 @@ class ItemAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Craftable, CraftableAdmin)
+admin.site.register(models.PjMadrid, PjMadridAdmin)
 admin.site.register(models.CharacterClass, CharacterClassAdmin)
 admin.site.register(models.Personaje, PersonajeAdmin)
 admin.site.register(models.Spell, SpellAdmin)
