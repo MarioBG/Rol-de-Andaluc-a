@@ -24,10 +24,10 @@ SECRET_KEY = 'kf3pbtu^18pn1g*dbu@0d9tet$7jzj$m7p3(m%=p#9pq)ifs4$'
 if 'DYNO' in os.environ:
     BASEURL = 'https://rol-andalucia.herokuapp.com/'
 # SECURITY WARNING: don't run with debug turned on in production!
-#if 'DYNO' in os.environ:
-DEBUG = False
-#else:
-DEBUG = True
+if 'DYNO' in os.environ:
+    DEBUG = False
+else:
+    DEBUG = True
 
 if 'DYNO' in os.environ:
     SECURE_SSL_REDIRECT = True
@@ -53,7 +53,14 @@ INSTALLED_APPS = [
     'RolAndalucia.apps.RolAndaluciaConfig',
     'martor',
     'treewidget',
+    'django_imgur',
 ]
+
+IMGUR_CONSUMER_ID = "0de70c653eaf77c"
+IMGUR_CONSUMER_SECRET = "344b8c01481148013443e98262494b7effc16d00"
+IMGUR_USERNAME = "MarioBG3"
+IMGUR_ACCESS_TOKEN = "670a5657bc1261379e389b8f4350955b4f78ddcd"
+IMGUR_ACCESS_TOKEN_REFRESH = "6ad08937a244baea45fffc8fce889e0be77825bf"
 
 USE_TZ = True
 TIMEZONE = 'Europe/Madrid'

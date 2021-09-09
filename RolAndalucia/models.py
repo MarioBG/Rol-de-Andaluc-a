@@ -16,9 +16,12 @@ from mptt.models import MPTTModel
 import mptt
 from django.db.models import F
 from treewidget.fields import TreeForeignKey
+from django_imgur.storage import ImgurStorage
 
 # Create your models here.
 # System objects
+
+STORAGE = ImgurStorage()
 
 
 class Rule(MPTTModel):
@@ -49,7 +52,7 @@ class TagPjMadrid(models.Model):
 
 
 class PjMadrid(models.Model):
-    pic = models.ImageField(upload_to='profile_pics', blank=True)
+    pic = models.ImageField(upload_to='profile_pics', blank=True, storage=STORAGE)
     name = models.CharField(verbose_name=_("Nombre"), max_length=100)
     position = models.CharField(verbose_name=_("Trabajo"), max_length=200)
     description = models.TextField(verbose_name=_("Descripción"))

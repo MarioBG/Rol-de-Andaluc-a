@@ -64,3 +64,4 @@ uritemplate==3.0.1
 urllib3==1.25.10
 whitenoise==5.2.0
 Whoosh==2.7.4
+git+http://github.com/preetamherald/django-imgur#egg=django-imgur
