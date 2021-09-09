@@ -29,6 +29,8 @@ if 'DYNO' in os.environ:
 else:
     DEBUG = True
 
+DEBUG = True            ###TODO Eliminar esta vaina, que es pa probar
+
 if 'DYNO' in os.environ:
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
