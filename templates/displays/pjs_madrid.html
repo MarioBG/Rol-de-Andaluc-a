@@ -45,8 +45,8 @@
 					<div class="col-md-6 col-sm-6 {% for t in p.tags.all %} {{ t.key }} {% endfor %} isotope-item">
 						<div class="team team-list-square wow fadeIn">
 							<div class="img-square">
-                                <a class="view" data-rel="prettyPhoto" href="{% if p.pic %}/media/{{ p.pic }}{% else %}https://i.imgur.com/x4LZC6A.png{% endif %}">
-                                    <img src="{% if p.pic %}/media/{{ p.pic }}{% else %}https://i.imgur.com/x4LZC6A.png{% endif %}" alt=""></a>
+                                <a class="view" data-rel="prettyPhoto" href="{% if p.pic %}{{ p.pic.url }}{% else %}https://i.imgur.com/x4LZC6A.png{% endif %}">
+                                    <img src="{% if p.pic %}{{ p.pic.url }}{% else %}https://i.imgur.com/x4LZC6A.png{% endif %}" alt=""></a>
 							</div>
 							<div class="team-content">
 								<h3>{{ p.name }}</h3>

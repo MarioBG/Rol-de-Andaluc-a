@@ -52,7 +52,7 @@ class TagPjMadrid(models.Model):
 
 
 class PjMadrid(models.Model):
-    pic = models.ImageField(upload_to='profile_pics', blank=True, storage=STORAGE)
+    pic = models.ImageField(upload_to='profile_pics', null=True, blank=True, storage=STORAGE)
     name = models.CharField(verbose_name=_("Nombre"), max_length=100)
     position = models.CharField(verbose_name=_("Trabajo"), max_length=200)
     description = models.TextField(verbose_name=_("Descripción"))
