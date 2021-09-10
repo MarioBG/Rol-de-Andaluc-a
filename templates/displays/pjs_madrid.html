@@ -43,17 +43,28 @@
 				<div id="isotope" class="isotope">
                     {% for p in personajes %}
 					<div class="col-md-6 col-sm-6 {% for t in p.tags.all %} {{ t.key }} {% endfor %} isotope-item">
-						<div class="team team-list-square wow fadeIn">
-							<div class="img-square">
-                                <a class="view" data-rel="prettyPhoto" href="{% if p.pic %}{{ p.pic.url }}{% else %}https://i.imgur.com/x4LZC6A.png{% endif %}">
-                                    <img src="{% if p.pic %}{{ p.pic.url }}{% else %}https://i.imgur.com/x4LZC6A.png{% endif %}" alt=""></a>
-							</div>
-							<div class="team-content">
-								<h3>{{ p.name }}</h3>
-								<p>{{ p.position }}</p>
-								<p class="desc">{{ p.description }}</p>
-							</div>
-						</div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="team team-list-square wow fadeIn">
+                                    <div class="column col-md-3 col-sm-3">
+                                        <div class="img-square">
+                                            <a class="view" data-rel="prettyPhoto" href="{% if p.pic %}{{ p.pic.url }}{% else %}https://i.imgur.com/x4LZC6A.png{% endif %}">
+                                                <img src="{% if p.pic %}{{ p.pic.url }}{% else %}https://i.imgur.com/x4LZC6A.png{% endif %}" alt=""></a>
+                                        </div>
+                                    </div>
+                                    <div class="column col-md-3 col-sm-3">
+                                        <div class="team-content">
+                                            <h3>{{ p.name }}</h3>
+                                            <p>{{ p.position }}</p>
+                                            <p class="desc">{{ p.description }}</p>
+                                            <div>
+                                                {% for t in p.tags.all %}<span class="badge badge-pill badge-primary">{{ t.name }}</span>{% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 					</div><!--/ Team 1 end -->
                     {% endfor %}
 				</div><!-- Isotope content end -->
