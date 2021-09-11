@@ -56,6 +56,7 @@ class PjMadrid(models.Model):
     name = models.CharField(verbose_name=_("Nombre"), max_length=100)
     position = models.CharField(verbose_name=_("Trabajo"), max_length=200)
     description = models.TextField(verbose_name=_("Descripción"))
+    jugador = models.CharField(verbose_name=_("Jugador"), max_length=30, null=True, blank=True)
     tags = models.ManyToManyField(to=TagPjMadrid, verbose_name=_("Tags"), related_name="pjs")
     def __str__(self):
         return self.name

@@ -213,7 +213,7 @@ class ItemAdmin(admin.ModelAdmin):
 
     list_display = ('item_actions','id', 'name', 'type', 'magic', 'wearable', 'rarity' )
     list_display_links = []
-    search_fields = ['name', 'effect', 'description']
+    search_fields = ['name', 'effects', 'description']
     list_per_page = 25
     actions = [duplicate_event]
     list_filter = [
