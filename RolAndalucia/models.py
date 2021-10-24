@@ -100,6 +100,14 @@ class Spell(models.Model):
         return self.name+" (Nv"+str(self.level)+", "+self.school+")"
 
 
+class TelegramChat(models.Model):
+    name = models.CharField(verbose_name=_("Nombre del chat"), max_length=280)
+    groupId = models.CharField(verbose_name=_("ID del grupo"), max_length=64, blank=False, null=False)
+
+    def __str__(self):
+        return self.name
+
+
 class Craftable(models.Model):
 
     name = models.CharField(verbose_name=_("Nombre de creación"), max_length=50, blank=False)

@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_list_or_404
+import telegram
+from django.shortcuts import render, redirect, get_list_or_404
 from rest_framework import generics, permissions
 from rest_framework.views import APIView
 
@@ -15,6 +16,7 @@ from RolAndalucia.models import *
 from .serializers import MovilSerializer
 from django.db import connections
 from rest_framework.response import Response
+from django_telegrambot.apps import DjangoTelegramBot
 
 
 def index(request):
@@ -106,6 +108,14 @@ def viewItem(request):
     itemId = request.GET.get('itemId','')
     return render(request, 'displays/item.html', {'item':get_object_or_404(Item, pk = itemId)})
 
+
+def sendMessage(request):
+    message = request.GET.get('text', '')
+    backPath="/"
+    if request.META.get('HTTP_REFERER') is not None:
+        backPath = request.META.get('HTTP_REFERER')
+    DjangoTelegramBot.bots[0].sendMessage(TelegramChat.objects.first().groupId, message, parse_mode=telegram.ParseMode.MARKDOWN)
+    return redirect(backPath)
 
 def viewClass(request):
     classId = request.GET.get('classId','')
