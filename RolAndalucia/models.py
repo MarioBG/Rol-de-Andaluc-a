@@ -109,6 +109,10 @@ class DndAppointment(models.Model):
                         message += "\n*POR CONFIRMAR:*\n"
                         for i in e.reservations.filter(type__exact="IF_NEED"):
                             message += "❔ {}\n".format(i.user.username)
+                    if e.reservations.filter(type__exact="NO"):
+                        message += "\n*NO PUEDEN:*\n"
+                        for i in e.reservations.filter(type__exact="NO"):
+                            message += "❌ {}\n".format(i.user.username)
                     for chat in self.chats.all():
                         DjangoTelegramBot.bots[0].sendMessage(chat.groupId, message, parse_mode=telegram.ParseMode.MARKDOWN)
                     break
@@ -132,7 +136,7 @@ class DndAppointmentDate(models.Model):
 
 
 class DndRsvp(models.Model):
-    CHOICES = [('YES', 'Confirmo asistencia'), ('IF_NEED', 'Solo si es necesario')]
+    CHOICES = [('YES', 'Confirmo asistencia'), ('IF_NEED', 'Solo si es necesario'), ('NO', 'No puedo asistir')]
 
     dndAppointment = models.ForeignKey(to=DndAppointmentDate, related_name="reservations", on_delete=models.CASCADE)
     type = models.CharField(verbose_name=_("Tipo de reserva"), max_length=30, blank=False, choices=CHOICES)
