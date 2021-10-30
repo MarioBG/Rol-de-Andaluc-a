@@ -1,3 +1,4 @@
+import telegram
 from colorfield.fields import ColorField
 from django.db import models
 from django.contrib import admin
@@ -8,6 +9,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.hashers import make_password
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
+from django_telegrambot.apps import DjangoTelegramBot
 from martor.models import MartorField
 import django.core.validators
 from ordered_model.models import OrderedModel
@@ -71,6 +73,73 @@ class CharacterClass(models.Model):
         return self.name
 
 
+class TelegramChat(models.Model):
+    name = models.CharField(verbose_name=_("Nombre del chat"), max_length=280)
+    groupId = models.CharField(verbose_name=_("ID del grupo"), max_length=64, blank=False, null=False)
+
+    def __str__(self):
+        return self.name
+
+
+class DndAppointment(models.Model):
+    CHOICES=[("P", "presencial"), ("O", "online")]
+    pic = models.ImageField(upload_to='session_pics', null=True, blank=True, storage=STORAGE)
+    campaign = models.TextField(verbose_name=_("Campaña"))
+    tipo = models.CharField(verbose_name=_("Tipo de sesión"), choices=CHOICES, max_length=2, null=False)
+    location = models.CharField(verbose_name=_("Ubicación"), max_length=72, null=True)
+    session_name = models.TextField(verbose_name=_("Nombre de sesión"))
+    chats = models.ManyToManyField(verbose_name=_("Chats para anunciar"), to=TelegramChat)
+
+    def getConfirmedAppointment(self):
+        return self.dates.filter(confirmed=True).first()
+
+    def save(self):
+            super(DndAppointment, self).save()
+            message = ""
+            for e in self.dates.all():
+                if e.confirmed == True:
+                    message += "📅*Actualización de planificación*📅\n\nLa sesión \"{}\", de la campaña {}, se ha " \
+                              "confirmado para el {} a las {}.\n\n*ASISTENTES:*\n".format(self.session_name,
+                                                                                        self.campaign,
+                                                                                        e.date.strftime("%d/%m/%Y"),
+                                                                                        e.date.strftime("%H:%M"))
+                    for i in e.reservations.filter(type__exact="YES"):
+                        message += "✅ {}\n".format(i.user.username)
+                    if e.reservations.filter(type__exact="IF_NEED"):
+                        message += "\n*POR CONFIRMAR:*\n"
+                        for i in e.reservations.filter(type__exact="IF_NEED"):
+                            message += "❔ {}\n".format(i.user.username)
+                    for chat in self.chats.all():
+                        DjangoTelegramBot.bots[0].sendMessage(chat.groupId, message, parse_mode=telegram.ParseMode.MARKDOWN)
+                    break
+
+    def __str__(self):
+        return self.session_name
+
+
+class DndAppointmentDate(models.Model):
+    appointment = models.ForeignKey(to=DndAppointment, related_name="dates", on_delete=models.CASCADE)
+    date = models.DateTimeField(verbose_name=_("Fecha y hora"), null=False)
+    confirmed = models.BooleanField(verbose_name=_("Fecha confirmada"), null=False)
+
+    def __str__(self):
+        return self.appointment.session_name+" ("+self.date.strftime("%d/%m/%Y, %H:%M")+")"
+
+
+    def clean(self):
+        if (len(self.appointment.dates.filter(confirmed=True)) > 0 and self.appointment.dates.get(confirmed=True).pk is not self.pk and self.confirmed == True):
+            raise ValidationError({"confirmed": "No puede haber más de una fecha confirmada para cada appointment"})
+
+
+class DndRsvp(models.Model):
+    CHOICES = [('YES', 'Confirmo asistencia'), ('IF_NEED', 'Solo si es necesario')]
+
+    dndAppointment = models.ForeignKey(to=DndAppointmentDate, related_name="reservations", on_delete=models.CASCADE)
+    type = models.CharField(verbose_name=_("Tipo de reserva"), max_length=30, blank=False, choices=CHOICES)
+    user = models.ForeignKey(to=User, related_name="reservations", on_delete=models.CASCADE)
+
+
+
 class Spell(models.Model):
 
     CHOICES=[('Abjuración', 'Abjuración'),('Conjuración', 'Conjuración'),('Adivinación', 'Adivinación'),
@@ -98,14 +167,6 @@ class Spell(models.Model):
 
     def __str__(self):
         return self.name+" (Nv"+str(self.level)+", "+self.school+")"
-
-
-class TelegramChat(models.Model):
-    name = models.CharField(verbose_name=_("Nombre del chat"), max_length=280)
-    groupId = models.CharField(verbose_name=_("ID del grupo"), max_length=64, blank=False, null=False)
-
-    def __str__(self):
-        return self.name
 
 
 class Craftable(models.Model):

@@ -15,6 +15,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from RolAndalucia.models import *
 from .serializers import MovilSerializer
 from django.db import connections
+from django.core.exceptions import ValidationError
 from rest_framework.response import Response
 from django_telegrambot.apps import DjangoTelegramBot
 
@@ -69,6 +70,21 @@ def register(request):
                            'registered':registered})
 
 
+def user_register(request):
+    if request.method == 'POST':
+        user_form = UserRegisterForm(data=request.POST)
+        if user_form.is_valid():
+            try:
+                user = user_form.save()
+                print(user)
+                return HttpResponseRedirect(reverse('index'))
+            except ValidationError as e:
+                print(e)
+    else:
+        user_form = UserRegisterForm()
+    return render(request, 'userAccount/login.html', {'form': user_form})
+
+
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -114,7 +130,9 @@ def sendMessage(request):
     backPath="/"
     if request.META.get('HTTP_REFERER') is not None:
         backPath = request.META.get('HTTP_REFERER')
-    DjangoTelegramBot.bots[0].sendMessage(TelegramChat.objects.first().groupId, message, parse_mode=telegram.ParseMode.MARKDOWN)
+    texto = "✨*Nuevo mensaje*✨\n"+message
+    for chat in TelegramChat.objects.all():
+        DjangoTelegramBot.bots[0].sendMessage(chat.groupId, texto, parse_mode = telegram.ParseMode.MARKDOWN)
     return redirect(backPath)
 
 def viewClass(request):
@@ -143,6 +161,10 @@ def viewPersonaje(request):
 
 def listPersonaje(request):
     return render(request, 'displays/personaje.html', {'personajes':Personaje.objects.all()})
+
+
+def listAppointments(request):
+    return render(request, 'displays/appointments.html', {'appointments':DndAppointment.objects.all()})
 
 
 def listTrabajo(request):

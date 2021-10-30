@@ -66,7 +66,7 @@ IMGUR_ACCESS_TOKEN = '6e8cd6f6aee35114c8ec328ec4c08042be949dec'
 IMGUR_ACCESS_TOKEN_REFRESH = '22948810473f48aae9c317aa3748edd66e8ae002'
 
 USE_TZ = True
-TIMEZONE = 'Europe/Madrid'
+TIME_ZONE = 'Europe/Madrid'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -88,7 +88,7 @@ DJANGO_TELEGRAMBOT = {
                         # NB: if use polling you must provide to run
                         # a management command that starts a worker
 
-    'WEBHOOK_SITE' : 'https://rol-andalucia.herokuapp.com',
+    'WEBHOOK_SITE' : 'https://d1db-85-136-225-85.ngrok.io' if 'DYNO' not in os.environ else 'https://rol-andalucia.herokuapp.com',
     'WEBHOOK_PREFIX' : '/botupdate', # (Optional[str]) # If this value is specified,
                                   # a prefix is added to webhook url
 
@@ -98,7 +98,7 @@ DJANGO_TELEGRAMBOT = {
 
     'BOTS' : [
         {
-           'TOKEN': '2093862068:AAHLmJXBlHdFoKu6vKHHkkqUWFHW5nB33go', #Your bot token.
+           'TOKEN': '2093862068:AAHLmJXBlHdFoKu6vKHHkkqUWFHW5nB33go' if 'DYNO' in os.environ else '2097286022:AAHnxW2cG1I6bdd_vQ2j9e543_arBRbaIis', #Your bot token.
 
            'ALLOWED_UPDATES':(['my_chat_member', 'message']), # List the types of
                                                    #updates you want your bot to receive. For example, specify
@@ -150,7 +150,10 @@ ADMIN_SHORTCUTS = [
             },
             {
                 'url_name': 'admin:logout',
-            },
+            },{
+                'url': '/admin/django-telegrambot',
+                'icon': 'comments'
+            }
             # {
             #     'title': 'Users',
             #     'url_name': 'admin:auth_user_changelist',

@@ -29,7 +29,8 @@
 	<!-- Responsive styles-->
 	<link rel="stylesheet" href="/static/css/responsive.css">
 	<!-- FontAwesome -->
-	<link rel="stylesheet" href="/static/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/static/css/v4-shims.min.css">
+    <link rel="stylesheet" href="/static/css/all.min.css">
 	<!-- Animation -->
 	<link rel="stylesheet" href="/static/css/animate.css">
 	<!-- Prettyphoto -->
@@ -85,7 +86,7 @@
                        		<a href="/">Home</a>
 	                    </li>
 						<li class="dropdown">
-                       		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Listados <i class="fa fa-angle-down"></i></a>
+                       		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Listados <i class="fas fa-angle-down"></i></a>
                        		<div class="dropdown-menu">
 								<ul>
 		                            <li><a href="/admin/RolAndalucia/spell">Hechizos</a></li>
@@ -98,7 +99,7 @@
 	                    	</div>
 	                    </li>
                         <li class="dropdown">
-                       		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Clases <i class="fa fa-angle-down"></i></a>
+                       		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Clases <i class="fas fa-angle-down"></i></a>
                        		<div class="dropdown-menu">
 								<ul>
                                     {% for class in classes %}
@@ -108,14 +109,17 @@
 	                    	</div>
 	                    </li>
             			{% if user.is_superuser %}<li><a href="admin">Panel de control</a></li>{% endif %}
-                        <li><a href="https://1drv.ms/w/s!AhWvlklDDRp-rQq4JqVSBo3mDts2">Libro de juego</a></li>
+                        <li><a href="/quedar">Quedar</a></li>
                         <li class="dropdown">
-                       		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Campañas Wildemount<i class="fa fa-angle-down"></i></a>
+                       		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Diarios y material<i class="fas fa-angle-down"></i></a>
                        		<div class="dropdown-menu">
 								<ul>
+                                    <li><a href="/diario">Rol de Andalucía</a></li>
                                     <li><a href="/wildemount">Wildemount Tales</a></li>
+                                    <li><a href="#">Wildemount Stories</a></li>
                                     <li><a href="/cds">For Whom the Bell Tolls</a></li>
                                     <li><a href="/static/MapaWildemount.htm">Mapa de Wildemount</a></li>
+                                    <li><a href="https://1drv.ms/w/s!AhWvlklDDRp-rQq4JqVSBo3mDts2">Libro de juego</a></li>
 		                        </ul>
 	                    	</div>
 	                    </li>
@@ -124,7 +128,6 @@
                     {% else %}
                         <li><a href="/login">Iniciar sesión</a></li>
                     {% endif %}
-                    <li><a href="/diario">Diario de campaña</a></li>
                     </ul>
 				</nav><!--/ Navigation end -->
 			</div><!--/ Row end -->
@@ -246,7 +249,7 @@
 					<ul class="footer-social unstyled">
 						<li>
 							<a title="Twitter" href="https://www.twitter.com/mariobg3">
-								<span class="icon-pentagon wow bounceIn"><i class="fa fa-twitter"></i></span>
+								<span class="icon-pentagon wow bounceIn"><i class="fab fa-twitter"></i></span>
 							</a>
 							{% comment %}<a title="Facebook" href="#">
 								<span class="icon-pentagon wow bounceIn"><i class="fa fa-facebook"></i></span>

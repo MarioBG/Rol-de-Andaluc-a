@@ -558,6 +558,8 @@ blockquote {
 	line-height: normal;
 }
 
+.spacer { margin:0; padding:0; height:25px; }
+
 .post-title a{
 	color: #323232;
 }

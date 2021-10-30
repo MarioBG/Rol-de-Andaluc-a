@@ -1,12 +1,21 @@
+import telegram
 from django.apps import apps
 from django.contrib import admin
+from django.utils.datetime_safe import datetime
+from django_telegrambot.apps import DjangoTelegramBot
+
 from RolAndalucia import models, views
+from re import match, search
+from RolAndalucia.models import DndAppointment
+from django.db import transaction
 from django.db.models import Q
 from django.utils.html import format_html
 from django.conf.urls import url
 from django.utils.safestring import mark_safe
 from admin_numeric_filter.admin import NumericFilterModelAdmin, SingleNumericFilter, RangeNumericFilter, \
     SliderNumericFilter
+
+from RolAndalucia.models import TelegramChat
 
 
 def duplicate_event(modeladmin, request, queryset):
@@ -18,6 +27,11 @@ def duplicate_event(modeladmin, request, queryset):
 
 class AddressInline(admin.StackedInline):
     model = models.PertenenciaClase
+    extra = 0
+
+
+class AppointmentDateInline(admin.StackedInline):
+    model = models.DndAppointmentDate
     extra = 0
 
 
@@ -170,6 +184,46 @@ class CharacterClassAdmin(NumericFilterModelAdmin):
     class_actions.allow_tags = True
 
 
+class AppointmentAdmin(admin.ModelAdmin):
+
+    def __init__(self, model, admin_site):
+        self.request = None
+        super().__init__(model, admin_site)
+
+    def process_view(self, request, item_id, *args, **kwargs):
+        print("To do") ##TODO Hacer el View de Appointment
+        # return views.viewAppointment(request, item_id)
+
+    def get_queryset(self, request):
+        self.request = request
+        return super().get_queryset(request)
+
+    def save_model(self, request, obj, form, change):
+        with transaction.atomic():
+            super(AppointmentAdmin, self).save_model(request, obj, form, change)
+        dates = list()
+        for e in form.data.keys():
+            if bool(search("dates-\\d+-date_0", e) and e[:-6]+"DELETE" not in form.data):
+                dates.append(datetime.strptime(form.data[e]+" "+form.data[e[:-1]+"1"], "%d/%m/%Y %H:%M:%S"))
+        obj = DndAppointment.objects.get(id=obj.id)
+        if not obj.dates.filter(confirmed=True):
+            if (len(dates) > 0):
+                message="📅*Actualización de planificación*📅\n\nLa sesión \"{}\", de la campaña {}, se ha " \
+                        "actualizado con las siguientes posibles fechas.\n".format(obj.session_name, obj.campaign)
+                for e in dates:
+                    print(e)
+                    message += "📅"+e.strftime("%d/%m/%Y,")+" ⌚"+e.strftime("%H:%M")+"\n"
+                message += "¡Reserva plaza ahora en https://rol-andalucia.herokuapp.com/quedar/!"
+            else:
+                message = "📅*Actualización de planificación*📅\n\nLa sesión \"{}\", de la campaña {}, se ha " \
+                          "creado y ahora está disponible para reservar en https://rol-andalucia.herokuapp.com/quedar/".format(form.cleaned_data.get("session_name"),
+                                                                                     form.cleaned_data.get("campaign"))
+            for chat in obj.chats.all():
+                DjangoTelegramBot.bots[0].sendMessage(chat.groupId, message, parse_mode=telegram.ParseMode.MARKDOWN)
+
+    inlines = [AppointmentDateInline]
+
+
 class CraftableAdmin(NumericFilterModelAdmin):
 
     def __init__(self, model, admin_site):
@@ -256,6 +310,7 @@ admin.site.register(models.Spell, SpellAdmin)
 admin.site.register(models.Item, ItemAdmin)
 admin.site.register(models.CorreoMovil, CorreoMovilAdmin)
 admin.site.register(models.Conversacion, ConversacionAdmin)
+admin.site.register(models.DndAppointment, AppointmentAdmin)
 
 models = apps.get_models()
 for model in models:
