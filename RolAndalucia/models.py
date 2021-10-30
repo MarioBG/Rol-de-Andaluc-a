@@ -1,6 +1,6 @@
 import telegram
 from colorfield.fields import ColorField
-from django.db import models
+from django.db import models, transaction
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -96,26 +96,27 @@ class DndAppointment(models.Model):
     def save(self):
             super(DndAppointment, self).save()
             message = ""
-            for e in self.dates.all():
-                if e.confirmed == True:
-                    message += "📅*Actualización de planificación*📅\n\nLa sesión \"{}\", de la campaña {}, se ha " \
-                              "confirmado para el {} a las {}.\n\n*ASISTENTES:*\n".format(self.session_name,
-                                                                                        self.campaign,
-                                                                                        e.date.strftime("%d/%m/%Y"),
-                                                                                        e.date.strftime("%H:%M"))
-                    for i in e.reservations.filter(type__exact="YES"):
-                        message += "✅ {}\n".format(i.user.username)
-                    if e.reservations.filter(type__exact="IF_NEED"):
-                        message += "\n*POR CONFIRMAR:*\n"
-                        for i in e.reservations.filter(type__exact="IF_NEED"):
-                            message += "❔ {}\n".format(i.user.username)
-                    if e.reservations.filter(type__exact="NO"):
-                        message += "\n*NO PUEDEN:*\n"
-                        for i in e.reservations.filter(type__exact="NO"):
-                            message += "❌ {}\n".format(i.user.username)
-                    for chat in self.chats.all():
-                        DjangoTelegramBot.bots[0].sendMessage(chat.groupId, message, parse_mode=telegram.ParseMode.MARKDOWN)
-                    break
+            with transaction.atomic:
+                for e in self.dates.all():
+                    if e.confirmed == True:
+                        message += "📅*Actualización de planificación*📅\n\nLa sesión \"{}\", de la campaña {}, se ha " \
+                                  "confirmado para el {} a las {}.\n\n*ASISTENTES:*\n".format(self.session_name,
+                                                                                            self.campaign,
+                                                                                            e.date.strftime("%d/%m/%Y"),
+                                                                                            e.date.strftime("%H:%M"))
+                        for i in e.reservations.filter(type__exact="YES"):
+                            message += "✅ {}\n".format(i.user.username)
+                        if e.reservations.filter(type__exact="IF_NEED"):
+                            message += "\n*POR CONFIRMAR:*\n"
+                            for i in e.reservations.filter(type__exact="IF_NEED"):
+                                message += "❔ {}\n".format(i.user.username)
+                        if e.reservations.filter(type__exact="NO"):
+                            message += "\n*NO PUEDEN:*\n"
+                            for i in e.reservations.filter(type__exact="NO"):
+                                message += "❌ {}\n".format(i.user.username)
+                        for chat in self.chats.all():
+                            DjangoTelegramBot.bots[0].sendMessage(chat.groupId, message, parse_mode=telegram.ParseMode.MARKDOWN)
+                        break
 
     def __str__(self):
         return self.session_name

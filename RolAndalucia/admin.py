@@ -202,27 +202,25 @@ class AppointmentAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         with transaction.atomic():
             super(AppointmentAdmin, self).save_model(request, obj, form, change)
-        dates = list()
-        for e in form.data.keys():
-            if bool(search("dates-\\d+-date_0", e) and e[:-6]+"DELETE" not in form.data):
-                dates.append(datetime.strptime(form.data[e]+" "+form.data[e[:-1]+"1"], "%d/%m/%Y %H:%M:%S"))
-        obj = DndAppointment.objects.get(id=obj.id)
-        if not obj.dates.filter(confirmed=True):
-            if (len(dates) > 0):
-                message="📅*Actualización de planificación*📅\n\nLa sesión \"{}\", de la campaña {}, se ha " \
-                        "actualizado con las siguientes posibles fechas.\n".format(obj.session_name, obj.campaign)
-                for e in dates:
-                    print(e)
-                    message += "📅"+e.strftime("%d/%m/%Y,")+" ⌚"+e.strftime("%H:%M")+"\n"
-                message += "¡Reserva plaza ahora en https://rol-andalucia.herokuapp.com/quedar/!"
-            else:
-                message = "📅*Actualización de planificación*📅\n\nLa sesión \"{}\", de la campaña {}, se ha " \
-                          "creado y ahora está disponible para reservar en https://rol-andalucia.herokuapp.com/quedar/".format(form.cleaned_data.get("session_name"),
-                                                                                     form.cleaned_data.get("campaign"))
-            for chat in obj.chats.all():
-                DjangoTelegramBot.bots[0].sendMessage(chat.groupId, message, parse_mode=telegram.ParseMode.MARKDOWN)
-        db.connection.close()
-        db.close_old_connections()
+            dates = list()
+            for e in form.data.keys():
+                if bool(search("dates-\\d+-date_0", e) and e[:-6]+"DELETE" not in form.data):
+                    dates.append(datetime.strptime(form.data[e]+" "+form.data[e[:-1]+"1"], "%d/%m/%Y %H:%M:%S"))
+            obj = DndAppointment.objects.get(id=obj.id)
+            if not obj.dates.filter(confirmed=True):
+                if (len(dates) > 0):
+                    message="📅*Actualización de planificación*📅\n\nLa sesión \"{}\", de la campaña {}, se ha " \
+                            "actualizado con las siguientes posibles fechas.\n".format(obj.session_name, obj.campaign)
+                    for e in dates:
+                        print(e)
+                        message += "📅"+e.strftime("%d/%m/%Y,")+" ⌚"+e.strftime("%H:%M")+"\n"
+                    message += "¡Reserva plaza ahora en https://rol-andalucia.herokuapp.com/quedar/!"
+                else:
+                    message = "📅*Actualización de planificación*📅\n\nLa sesión \"{}\", de la campaña {}, se ha " \
+                              "creado y ahora está disponible para reservar en https://rol-andalucia.herokuapp.com/quedar/".format(form.cleaned_data.get("session_name"),
+                                                                                         form.cleaned_data.get("campaign"))
+                for chat in obj.chats.all():
+                    DjangoTelegramBot.bots[0].sendMessage(chat.groupId, message, parse_mode=telegram.ParseMode.MARKDOWN)
 
     inlines = [AppointmentDateInline]
 

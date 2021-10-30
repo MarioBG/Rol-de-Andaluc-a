@@ -15,7 +15,7 @@ from django import template
 from django.shortcuts import get_object_or_404, get_list_or_404
 from RolAndalucia.models import *
 from .serializers import MovilSerializer
-from django.db import connections
+from django.db import connections, transaction
 from django.core.exceptions import ValidationError
 from rest_framework.response import Response
 from django_telegrambot.apps import DjangoTelegramBot
@@ -171,12 +171,11 @@ def listAppointments(request):
         print ("POST")
         print(request.POST.get("date"))
         print(request.POST.get("accion"))
-        date = DndAppointmentDate.objects.get(id=request.POST.get("date"))
-        DndRsvp.objects.filter(user=request.user, dndAppointment=date).delete()
-        rsvp = DndRsvp.objects.create(dndAppointment=date, type=request.POST.get("accion"), user=request.user)
-        rsvp.save()
-        db.connection.close()
-        db.close_old_connections()
+        with transaction.atomic:
+            date = DndAppointmentDate.objects.get(id=request.POST.get("date"))
+            DndRsvp.objects.filter(user=request.user, dndAppointment=date).delete()
+            rsvp = DndRsvp.objects.create(dndAppointment=date, type=request.POST.get("accion"), user=request.user)
+            rsvp.save()
     return render(request, 'displays/appointments.html', {'appointments':DndAppointment.objects.all()})
 
 
