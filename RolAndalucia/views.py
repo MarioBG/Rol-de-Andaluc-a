@@ -171,11 +171,10 @@ def listAppointments(request):
         print ("POST")
         print(request.POST.get("date"))
         print(request.POST.get("accion"))
-        with transaction.atomic:
-            date = DndAppointmentDate.objects.get(id=request.POST.get("date"))
-            DndRsvp.objects.filter(user=request.user, dndAppointment=date).delete()
-            rsvp = DndRsvp.objects.create(dndAppointment=date, type=request.POST.get("accion"), user=request.user)
-            rsvp.save()
+        date = DndAppointmentDate.objects.get(id=request.POST.get("date"))
+        DndRsvp.objects.filter(user=request.user, dndAppointment=date).delete()
+        rsvp = DndRsvp.objects.create(dndAppointment=date, type=request.POST.get("accion"), user=request.user)
+        rsvp.save()
     return render(request, 'displays/appointments.html', {'appointments':DndAppointment.objects.all()})
 
 

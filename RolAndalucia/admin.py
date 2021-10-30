@@ -214,10 +214,10 @@ class AppointmentAdmin(admin.ModelAdmin):
                     for e in dates:
                         print(e)
                         message += "📅"+e.strftime("%d/%m/%Y,")+" ⌚"+e.strftime("%H:%M")+"\n"
-                    message += "¡Reserva plaza ahora en https://rol-andalucia.herokuapp.com/quedar/!"
+                    message += "¡Reserva plaza ahora en https://rol-andalucia.herokuapp.com/quedar!"
                 else:
                     message = "📅*Actualización de planificación*📅\n\nLa sesión \"{}\", de la campaña {}, se ha " \
-                              "creado y ahora está disponible para reservar en https://rol-andalucia.herokuapp.com/quedar/".format(form.cleaned_data.get("session_name"),
+                              "creado y ahora está disponible para reservar en https://rol-andalucia.herokuapp.com/quedar".format(form.cleaned_data.get("session_name"),
                                                                                          form.cleaned_data.get("campaign"))
                 for chat in obj.chats.all():
                     DjangoTelegramBot.bots[0].sendMessage(chat.groupId, message, parse_mode=telegram.ParseMode.MARKDOWN)
