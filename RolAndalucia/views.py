@@ -1,4 +1,5 @@
 import telegram
+from django import db
 from django.shortcuts import render, redirect, get_list_or_404
 from rest_framework import generics, permissions
 from rest_framework.views import APIView
@@ -174,6 +175,8 @@ def listAppointments(request):
         DndRsvp.objects.filter(user=request.user, dndAppointment=date).delete()
         rsvp = DndRsvp.objects.create(dndAppointment=date, type=request.POST.get("accion"), user=request.user)
         rsvp.save()
+        db.connection.close()
+        db.close_old_connections()
     return render(request, 'displays/appointments.html', {'appointments':DndAppointment.objects.all()})
 
 

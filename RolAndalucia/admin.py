@@ -1,4 +1,5 @@
 import telegram
+from django import db
 from django.apps import apps
 from django.contrib import admin
 from django.utils.datetime_safe import datetime
@@ -220,6 +221,8 @@ class AppointmentAdmin(admin.ModelAdmin):
                                                                                      form.cleaned_data.get("campaign"))
             for chat in obj.chats.all():
                 DjangoTelegramBot.bots[0].sendMessage(chat.groupId, message, parse_mode=telegram.ParseMode.MARKDOWN)
+        db.connection.close()
+        db.close_old_connections()
 
     inlines = [AppointmentDateInline]
 
