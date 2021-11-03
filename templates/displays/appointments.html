@@ -64,22 +64,26 @@
                                                         </div>
                                                         <div class="spacer">&nbsp;</div>
                                                         {% endif %}
-                                                        {% if not e.getConfirmedAppointment %}
-                                                            <form action="/quedar" method="post">
-                                                                {% csrf_token %}
-                                                                <input type="hidden" name="date" value="{{ p.id }}">
-                                                                <button name="accion" value="YES" class="btn btn-primary solid">Asistiré</button>
-                                                            </form>
-                                                            <form action="/quedar" method="post">
-                                                                {% csrf_token %}
-                                                                <input type="hidden" name="date" value="{{ p.id }}">
-                                                                <button name="accion" value="IF_NEED" class="btn btn-primary">Asistiré si es necesario</button>
-                                                            </form>
-                                                            <form action="/quedar" method="post">
-                                                                {% csrf_token %}
-                                                                <input type="hidden" name="date" value="{{ p.id }}">
-                                                                <button name="accion" value="NO" class="btn btn-primary">No puedo asistir</button>
-                                                            </form>
+                                                        {% if user.is_authenticated %}
+                                                            {% if not e.getConfirmedAppointment %}
+                                                                <form action="/quedar" method="post">
+                                                                    {% csrf_token %}
+                                                                    <input type="hidden" name="date" value="{{ p.id }}">
+                                                                    <button name="accion" value="YES" class="btn btn-primary solid">Asistiré</button>
+                                                                </form>
+                                                                <form action="/quedar" method="post">
+                                                                    {% csrf_token %}
+                                                                    <input type="hidden" name="date" value="{{ p.id }}">
+                                                                    <button name="accion" value="IF_NEED" class="btn btn-primary">Asistiré si es necesario</button>
+                                                                </form>
+                                                                <form action="/quedar" method="post">
+                                                                    {% csrf_token %}
+                                                                    <input type="hidden" name="date" value="{{ p.id }}">
+                                                                    <button name="accion" value="NO" class="btn btn-primary">No puedo asistir</button>
+                                                                </form>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            <a href="/login" class="btn btn-primary solid">Iniciar sesión</a>
                                                         {% endif %}
                                                     </div>
                                                 </div>
