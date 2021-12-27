@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "colorfield",
+    "ordered_model",
     'rest_framework',
     'RolAndalucia.apps.RolAndaluciaConfig',
     'martor',

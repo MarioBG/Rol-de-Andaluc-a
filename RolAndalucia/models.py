@@ -336,10 +336,14 @@ class Conversacion(models.Model):
         return self.destinatario+" desde "+str(self.movil)
 
 
-class MensajeMovil(models.Model):
+class MensajeMovil(OrderedModel):
     mio = models.BooleanField(blank=False)
     texto = models.TextField(max_length=2048, blank=False)
     conversacion = models.ForeignKey(to=Conversacion, on_delete=models.CASCADE, null=False, related_name="mensajeMovils")
+    order_with_respect_to = 'conversacion'
+
+    class Meta(OrderedModel.Meta):
+        pass
 
     def __str__(self):
         return self.texto[:24]
