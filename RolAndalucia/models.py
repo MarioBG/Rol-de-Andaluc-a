@@ -284,7 +284,7 @@ class Trabajo(models.Model):
 
 
 class CalendarioJson(models.Model):
-    content = models.CharField(blank=False, max_length=131072)
+    content = models.TextField(blank=False, max_length=131072)
 
 
 class Movil(models.Model):
