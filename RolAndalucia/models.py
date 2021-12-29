@@ -300,7 +300,7 @@ class Movil(models.Model):
 
 class Noticia(models.Model):
     titular = models.CharField(verbose_name=_("Titular"), blank=False, max_length=240)
-    subtitulo = models.TextField(verbose_name=_("Subítulo"), blank=False, max_length=1024)
+    subtitulo = models.TextField(verbose_name=_("Subítulo"), blank=False, max_length=4096)
     movil = models.ForeignKey(to=Movil, on_delete=models.CASCADE, null=False, related_name="noticias")
 
     def __str__(self):
