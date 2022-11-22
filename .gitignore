@@ -15,3 +15,4 @@ RolAndalucia/__pycache__/
 db.sqlite3_rem
 db.json
 db.sqlite3__
+RolAndalucia/.env

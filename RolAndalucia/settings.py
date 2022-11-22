@@ -10,7 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
-import os
+import os, environ
+
+# Set up the environment reading elements
+
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
@@ -20,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'kf3pbtu^18pn1g*dbu@0d9tet$7jzj$m7p3(m%=p#9pq)ifs4$'
+SECRET_KEY = env("SECRET_KEY")
 if 'DYNO' in os.environ:
     BASEURL = 'https://rol-andalucia.herokuapp.com/'
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -29,13 +34,13 @@ if 'DYNO' in os.environ:
 else:
     DEBUG = True
 
-#DEBUG = True            ###TODO Eliminar esta vaina, que es pa probar
-
 if 'DYNO' in os.environ:
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-ALLOWED_HOSTS = ['localhost', '192.168.0.11', 'https://rol-andalucia.herokuapp.com', '*']
+    ALLOWED_HOSTS = ['localhost', '192.168.0.11', 'https://rol-andalucia.herokuapp.com', '*']
+else:
+    ALLOWED_HOSTS = ['https://rol-andalucia.herokuapp.com']
 VERSION = 2
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
@@ -60,11 +65,11 @@ INSTALLED_APPS = [
     'django_imgur',
 ]
 
-IMGUR_CONSUMER_ID = "0de70c653eaf77c"
-IMGUR_CONSUMER_SECRET = "8cd4547aa98147764bb8e3c8cacc95a11516c6e8"
-IMGUR_USERNAME = "MarioBG3"
-IMGUR_ACCESS_TOKEN = '6e8cd6f6aee35114c8ec328ec4c08042be949dec'
-IMGUR_ACCESS_TOKEN_REFRESH = '22948810473f48aae9c317aa3748edd66e8ae002'
+IMGUR_CONSUMER_ID = env("IMGUR_CONSUMER_ID")
+IMGUR_CONSUMER_SECRET = env("IMGUR_CONSUMER_SECRET")
+IMGUR_USERNAME = env("IMGUR_USERNAME")
+IMGUR_ACCESS_TOKEN = env("IMGUR_ACCESS_TOKEN")
+IMGUR_ACCESS_TOKEN_REFRESH = env("IMGUR_ACCESS_TOKEN_REFRESH")
 
 USE_TZ = True
 TIME_ZONE = 'Europe/Madrid'
@@ -89,7 +94,7 @@ DJANGO_TELEGRAMBOT = {
                         # NB: if use polling you must provide to run
                         # a management command that starts a worker
 
-    'WEBHOOK_SITE' : 'https://d1db-85-136-225-85.ngrok.io' if 'DYNO' not in os.environ else 'https://rol-andalucia.herokuapp.com',
+    'WEBHOOK_SITE' : env("TELEGRAM_LOCAL_IP") if 'DYNO' not in os.environ else env("TELEGRAM_HEROKU_IP"),
     'WEBHOOK_PREFIX' : '/botupdate', # (Optional[str]) # If this value is specified,
                                   # a prefix is added to webhook url
 
@@ -99,7 +104,7 @@ DJANGO_TELEGRAMBOT = {
 
     'BOTS' : [
         {
-           'TOKEN': '2093862068:AAHLmJXBlHdFoKu6vKHHkkqUWFHW5nB33go' if 'DYNO' in os.environ else '2097286022:AAHnxW2cG1I6bdd_vQ2j9e543_arBRbaIis', #Your bot token.
+           'TOKEN': env("TELEGRAM_LOCAL_TOKEN") if 'DYNO' in os.environ else env("TELEGRAM_HEROKU_TOKEN"), #Your bot token.
 
            'ALLOWED_UPDATES':(['my_chat_member', 'message']), # List the types of
                                                    #updates you want your bot to receive. For example, specify
@@ -252,11 +257,11 @@ DATABASES = {
 #     DATABASES = {
 #         'default': {
 #             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#             'NAME': 'd6sqvol90idoce',
-#             'USER': 'wypnnjmxwlgtfw',
-#             'PASSWORD': '26ce190a0bee8b883b17e69c7e1433f8f49e9084343cd34811d08046b8cd1821',
-#             'HOST': 'ec2-54-217-235-87.eu-west-1.compute.amazonaws.com',
-#             'PORT': '5432',
+#             'NAME': env("POSTGRES_NAME"),
+#             'USER': env("POSTGRES_USER"),
+#             'PASSWORD': env("POSTGRES_PASS"),
+#             'HOST': env("POSTGRES_HOST"),
+#             'PORT': env("POSTGRES_PORT"),
 #         }
 #     }
 
@@ -316,8 +321,8 @@ MARTOR_ENABLE_CONFIGS = {
 MARTOR_ENABLE_LABEL = False
 
 # Imgur API Keys
-MARTOR_IMGUR_CLIENT_ID = '0de70c653eaf77c'
-MARTOR_IMGUR_API_KEY = '8cd4547aa98147764bb8e3c8cacc95a11516c6e8'
+MARTOR_IMGUR_CLIENT_ID = env("IMGUR_ID")
+MARTOR_IMGUR_API_KEY = env("IMGUR_APIKEY")
 
 # Safe Mode
 MARTOR_MARKDOWN_SAFE_MODE = True  # default
