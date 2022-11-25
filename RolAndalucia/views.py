@@ -234,6 +234,10 @@ def viewSpell(request):
     return render(request, 'displays/spell.html', {'spell': get_object_or_404(Spell, pk = spellId), })
 
 
+def velitas(request):
+    return render(request, 'displays/velitas.html', {})
+
+
 class movilInfo(APIView):
     queryset = Movil.objects.none()
     serializer_class = MovilSerializer

@@ -42,6 +42,7 @@ urlpatterns = [
     path('doRegister', views.user_register, name='doRegister'),
     path('viewItem', views.viewItem, name='viewItem'),
     path('quedar', views.listAppointments, name='quedar'),
+    path('velitas', views.velitas, name='velitas'),
     path('viewSpell', views.viewSpell, name='viewSpell'),
     path('viewPersonaje', views.viewPersonaje, name='viewPersonaje'),
     path('listPersonaje', views.listPersonaje, name='listPersonaje'),

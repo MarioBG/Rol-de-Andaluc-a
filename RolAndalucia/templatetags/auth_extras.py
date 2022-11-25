@@ -9,6 +9,10 @@ from urllib.parse import urlunparse
 
 register = template.Library()
 
+@register.filter()
+def range(min=5):
+    return range(min)
+
 @register.filter(name='has_group')
 def has_group(user, group_name):
     group = Group.objects.get(name=group_name)
