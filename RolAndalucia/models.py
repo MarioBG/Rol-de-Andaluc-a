@@ -16,6 +16,7 @@ from ordered_model.models import OrderedModel
 from django.core.exceptions import ValidationError
 from mptt.models import MPTTModel
 import mptt
+from django.contrib.gis.db import models as geo_models
 from django.db.models import F
 from treewidget.fields import TreeForeignKey
 from django_imgur.storage import ImgurStorage
@@ -232,6 +233,14 @@ class Score(models.Model):
     address = models.CharField(max_length=32)
     name = models.CharField(max_length=64)
     enabled = models.BooleanField(default=False)
+
+
+class MapArticle(models.Model):
+    title = models.CharField(max_length=512)
+    body = MartorField(verbose_name=_("Habilidades"), default='', blank=True)
+    points = geo_models.MultiPointField()
+    geometries = geo_models.MultiPolygonField()
+
 
 
 class Personaje(models.Model):
