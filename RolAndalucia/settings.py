@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os, environ
+import dj_database_url
 
 # Set up the environment reading elements
 
@@ -62,14 +63,40 @@ INSTALLED_APPS = [
     'RolAndalucia.apps.RolAndaluciaConfig',
     'martor',
     'treewidget',
+    'leaflet',
     'django_imgur',
 ]
+
+# if 'DYNO' in os.environ:
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#             'NAME': env("POSTGRES_NAME"),
+#             'USER': env("POSTGRES_USER"),
+#             'PASSWORD': env("POSTGRES_PASS"),
+#             'HOST': env("POSTGRES_HOST"),
+#             'PORT': env("POSTGRES_PORT"),
+#         }
+#     }
 
 IMGUR_CONSUMER_ID = env("IMGUR_CONSUMER_ID")
 IMGUR_CONSUMER_SECRET = env("IMGUR_CONSUMER_SECRET")
 IMGUR_USERNAME = env("IMGUR_USERNAME")
 IMGUR_ACCESS_TOKEN = env("IMGUR_ACCESS_TOKEN")
 IMGUR_ACCESS_TOKEN_REFRESH = env("IMGUR_ACCESS_TOKEN_REFRESH")
+if 'DYNO' in os.environ:
+    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)
+else:
+    GDAL_LIBRARY_PATH = "C:\\OSGeo4W\\bin\\gdal306.dll"
 
 USE_TZ = True
 TIME_ZONE = 'Europe/Madrid'
@@ -244,26 +271,6 @@ LOGIN_URL = "/login"
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
-
-# if 'DYNO' in os.environ:
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-# else:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#             'NAME': env("POSTGRES_NAME"),
-#             'USER': env("POSTGRES_USER"),
-#             'PASSWORD': env("POSTGRES_PASS"),
-#             'HOST': env("POSTGRES_HOST"),
-#             'PORT': env("POSTGRES_PORT"),
-#         }
-#     }
 
 DATABASE_ROUTERS = ['RolAndalucia.routers.PrimaryRouter']
 
