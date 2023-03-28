@@ -12,7 +12,8 @@ from RolAndalucia.models import DndAppointment
 from django.db import transaction
 from django.db.models import Q
 from django.utils.html import format_html
-from django.conf.urls import url
+from django.urls import re_path
+from leaflet.admin import LeafletGeoAdminMixin, LeafletGeoAdmin
 from django.utils.safestring import mark_safe
 from admin_numeric_filter.admin import NumericFilterModelAdmin, SingleNumericFilter, RangeNumericFilter, \
     SliderNumericFilter
@@ -30,6 +31,9 @@ def duplicate_event(modeladmin, request, queryset):
 class AddressInline(admin.StackedInline):
     model = models.PertenenciaClase
     extra = 0
+
+
+admin.site.register(models.MapArticle, LeafletGeoAdmin)
 
 
 class AppointmentDateInline(admin.StackedInline):

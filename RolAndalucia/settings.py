@@ -39,9 +39,9 @@ if 'DYNO' in os.environ:
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-    ALLOWED_HOSTS = ['localhost', '192.168.0.11', 'https://rol-andalucia.herokuapp.com', '*']
-else:
     ALLOWED_HOSTS = ['https://rol-andalucia.herokuapp.com']
+else:
+    ALLOWED_HOSTS = ['https://rol-andalucia.herokuapp.com', '192.168.0.18', '192.168.0.11', '0.0.0.0']
 VERSION = 2
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
@@ -50,7 +50,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 INSTALLED_APPS = [
     'admin_shortcuts',
-    'django_telegrambot',
+    'django_tgbot',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -71,7 +71,8 @@ INSTALLED_APPS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join('rda_db.sqlite3'),
     }
 }
 # else:
@@ -91,12 +92,9 @@ IMGUR_CONSUMER_SECRET = env("IMGUR_CONSUMER_SECRET")
 IMGUR_USERNAME = env("IMGUR_USERNAME")
 IMGUR_ACCESS_TOKEN = env("IMGUR_ACCESS_TOKEN")
 IMGUR_ACCESS_TOKEN_REFRESH = env("IMGUR_ACCESS_TOKEN_REFRESH")
-if 'DYNO' in os.environ:
-    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
-    db_from_env = dj_database_url.config(conn_max_age=500)
-    DATABASES['default'].update(db_from_env)
-else:
-    GDAL_LIBRARY_PATH = "C:\\OSGeo4W\\bin\\gdal306.dll"
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 USE_TZ = True
 TIME_ZONE = 'Europe/Madrid'
@@ -236,6 +234,16 @@ ADMIN_SHORTCUTS = [
 ADMIN_SHORTCUTS_SETTINGS = {
     'show_on_all_pages': True,
     'open_new_window': False,
+}
+
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (6.0, 45.0),
+    'DEFAULT_ZOOM': 16,
+    'MIN_ZOOM': 3,
+    'MAX_ZOOM': 18,
+    'DEFAULT_PRECISION': 6,
+    'TILES': [('Streets', 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {'attribution': '&copy; Contributors'}),
+              ('Topo', 'http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}', {'attribution': '&copy; Google', 'maxZoom': 16})]
 }
 
 ROOT_URLCONF = 'RolAndalucia.urls'

@@ -7,7 +7,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.hashers import make_password
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django_telegrambot.apps import DjangoTelegramBot
 from martor.models import MartorField
@@ -238,9 +238,20 @@ class Score(models.Model):
 class MapArticle(models.Model):
     title = models.CharField(max_length=512)
     body = MartorField(verbose_name=_("Habilidades"), default='', blank=True)
-    points = geo_models.MultiPointField()
-    geometries = geo_models.MultiPolygonField()
 
+
+class MapGeometry(models.Model):
+    title = models.CharField(max_length=512)
+    body = MartorField(verbose_name=_("Habilidades"), default='', blank=True)
+    geometry = geo_models.PolygonField()
+    map_article = models.ForeignKey(to=MapArticle, on_delete=models.CASCADE)
+
+
+class MapPoint(models.Model):
+    title = models.CharField(max_length=512)
+    body = MartorField(verbose_name=_("Habilidades"), default='', blank=True)
+    point = geo_models.PointField()
+    map_article = models.ForeignKey(to=MapArticle, on_delete=models.CASCADE)
 
 
 class Personaje(models.Model):
