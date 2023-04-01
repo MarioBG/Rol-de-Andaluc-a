@@ -238,6 +238,7 @@ class Score(models.Model):
 class WikiArticle(models.Model):
     CHOICES=[('NO', 'Sin mapa'), ('GLOB', 'Mapa global'), ('DIG', 'Mapa de Digelia')]
     title = models.CharField(max_length=512)
+    redirect = models.CharField(max_length=512, default='', blank=True)
     body = MartorField(verbose_name=_("Cuerpo del artículo"), default='', blank=True)
     tipoMapa = models.CharField(verbose_name=_("Tipo de mapa"), blank=False, max_length=8, choices=CHOICES, default='NO')
 

@@ -1,6 +1,7 @@
 import telegram
 from django import db
 from django.shortcuts import render, redirect, get_list_or_404
+from django.views import defaults
 from rest_framework import generics, permissions
 from rest_framework.views import APIView
 
@@ -28,6 +29,10 @@ def index(request):
 def error404(request):
     return render(request, '404.html')
 
+def render404(request, name):
+    response = render(request, '404.html', {'notfoundelement': name})
+    response.status_code = 404
+    return response
 
 def login(request):
     return render(request, 'userAccount/login.html')
@@ -207,13 +212,27 @@ def viewWiki(request):
     articleId = request.GET.get('articleId','-1')
     try:
         article = WikiArticle.objects.get(id = articleId)
+        while article.redirect is not None and article.redirect != '':
+            article = WikiArticle.objects.get(title__iexact=article.redirect)
     except WikiArticle.DoesNotExist:
         article = None
     return render(request, 'displays/wiki.html', {'article':article, 'articles':WikiArticle.objects.values_list('title')})
 
 
 def searchWiki(request):
-    return searchEntryName(request, 'w')
+    name = request.GET.get('q', '')
+    name = name.replace("_", " ")
+    try:
+        article = WikiArticle.objects.get(title__iexact=name)
+    except WikiArticle.DoesNotExist:
+        return render404(request, name)
+    try:
+        while article.redirect is not None and article.redirect != '':
+            article = WikiArticle.objects.get(title__iexact=article.redirect)
+    except WikiArticle.DoesNotExist:
+        return render404(request, article.redirect)
+    return render(request, 'displays/wiki.html',
+                  {'article': article})
 
 
 def searchEntryName(request, item_type=None):

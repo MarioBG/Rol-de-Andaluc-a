@@ -2477,6 +2477,10 @@ figure.effect-oscar:hover img {
 	color: #fff;
 }
 
+.post-content img{
+	max-width: 100%;
+}
+
 .latest-post-content h4{
 	font-size: 14px;
   	line-height: normal;
