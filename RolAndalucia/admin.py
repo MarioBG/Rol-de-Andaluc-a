@@ -3,7 +3,7 @@ from django import db
 from django.apps import apps
 from django.contrib import admin
 from django.utils.datetime_safe import datetime
-from django_telegrambot.apps import DjangoTelegramBot
+# from django_telegrambot.apps import DjangoTelegramBot
 from ordered_model.admin import OrderedStackedInline, OrderedInlineModelAdminMixin
 
 from RolAndalucia import models, views
@@ -240,8 +240,8 @@ class AppointmentAdmin(admin.ModelAdmin):
                 message = "📅*Actualización de planificación*📅\n\nLa sesión \"{}\", de la campaña {}, se ha " \
                           "creado y ahora está disponible para reservar en https://rol-andalucia.herokuapp.com/quedar".format(
                     obj.session_name, obj.campaign)
-            for chat in obj.chats.all():
-                DjangoTelegramBot.bots[0].sendMessage(chat.groupId, message, parse_mode=telegram.ParseMode.MARKDOWN)
+            # for chat in obj.chats.all():
+            #     DjangoTelegramBot.bots[0].sendMessage(chat.groupId, message, parse_mode=telegram.ParseMode.MARKDOWN)
 
 
     inlines = [AppointmentDateInline]

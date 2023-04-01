@@ -9,7 +9,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.hashers import make_password
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
-from django_telegrambot.apps import DjangoTelegramBot
+# from django_telegrambot.apps import DjangoTelegramBot
 from martor.models import MartorField
 import django.core.validators
 from ordered_model.models import OrderedModel
@@ -114,8 +114,8 @@ class DndAppointment(models.Model):
                         message += "\n*NO PUEDEN:*\n"
                         for i in e.reservations.filter(type__exact="NO"):
                             message += "❌ {}\n".format(i.user.username)
-                    for chat in self.chats.all():
-                        DjangoTelegramBot.bots[0].sendMessage(chat.groupId, message, parse_mode=telegram.ParseMode.MARKDOWN)
+                    # for chat in self.chats.all():
+                    #     DjangoTelegramBot.bots[0].sendMessage(chat.groupId, message, parse_mode=telegram.ParseMode.MARKDOWN)
                     break
 
     def __str__(self):

@@ -18,7 +18,7 @@ from .serializers import MovilSerializer
 from django.db import connections, transaction
 from django.core.exceptions import ValidationError
 from rest_framework.response import Response
-from django_telegrambot.apps import DjangoTelegramBot
+# from django_telegrambot.apps import DjangoTelegramBot
 
 
 def index(request):
@@ -132,8 +132,8 @@ def sendMessage(request):
     if request.META.get('HTTP_REFERER') is not None:
         backPath = request.META.get('HTTP_REFERER')
     texto = "✨*Nuevo mensaje*✨\n"+message
-    for chat in TelegramChat.objects.all():
-        DjangoTelegramBot.bots[0].sendMessage(chat.groupId, texto, parse_mode = telegram.ParseMode.MARKDOWN)
+    # for chat in TelegramChat.objects.all():
+    #     DjangoTelegramBot.bots[0].sendMessage(chat.groupId, texto, parse_mode = telegram.ParseMode.MARKDOWN)
     return redirect(backPath)
 
 def viewClass(request):

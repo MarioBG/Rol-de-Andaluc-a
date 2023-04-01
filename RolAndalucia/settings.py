@@ -71,21 +71,14 @@ INSTALLED_APPS = [
 # if 'DYNO' in os.environ:
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd82n5pq0iq4f7t',
+        'USER': "erjbfezvmjmiai",
+        'PASSWORD': "c66cf3f6f30858a391610bcede8e55cce735f71438a7151a578286033e834976",
+        'HOST': "ec2-52-211-232-23.eu-west-1.compute.amazonaws.com",
+        'PORT': 5432,
     }
 }
-# else:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#             'NAME': env("POSTGRES_NAME"),
-#             'USER': env("POSTGRES_USER"),
-#             'PASSWORD': env("POSTGRES_PASS"),
-#             'HOST': env("POSTGRES_HOST"),
-#             'PORT': env("POSTGRES_PORT"),
-#         }
-#     }
 
 IMGUR_CONSUMER_ID = env("IMGUR_CONSUMER_ID")
 IMGUR_CONSUMER_SECRET = env("IMGUR_CONSUMER_SECRET")

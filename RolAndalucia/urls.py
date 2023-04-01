@@ -62,6 +62,6 @@ urlpatterns = [
     path('viewClass', views.viewClass, name='viewClass'),
     path('martor/', include('martor.urls')),
     url(r'^treewidget/', include('treewidget.urls')),
-    url(r'^', include('django_telegrambot.urls')),
+    # url(r'^', include('django_telegrambot.urls')),
     url(r'^movilInfo/(?P<uid>[-\d]+)/', views.movilInfo.as_view(), name = 'movilInfo'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
