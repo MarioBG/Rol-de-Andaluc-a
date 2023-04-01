@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 
 from .forms import *
 from django.http import Http404,HttpResponse,JsonResponse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.contrib import auth
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
@@ -202,10 +202,37 @@ def viewTrabajo(request):
     craftableId = request.GET.get('trabajoId','')
     return render(request, 'displays/trabajo.html', {'trabajo':get_object_or_404(Trabajo, pk = craftableId)})
 
-def searchEntryName(request):
+
+def viewWiki(request):
+    articleId = request.GET.get('articleId','-1')
+    try:
+        article = WikiArticle.objects.get(id = articleId)
+    except WikiArticle.DoesNotExist:
+        article = None
+    return render(request, 'displays/wiki.html', {'article':article, 'articles':WikiArticle.objects.values_list('title')})
+
+
+def searchWiki(request):
+    return searchEntryName(request, 'w')
+
+
+def searchEntryName(request, item_type=None):
     name = request.GET.get('q','')
     name = name.replace("_"," ")
     motes = name.split(">")
+    if item_type is not None:
+        if item_type=="s":
+            return render(request, 'displays/spell.html', {'spell': get_object_or_404(Spell, name=motes[1])})
+        elif item_type=="i":
+            return render(request, 'displays/item.html', {'item': get_object_or_404(Item, name=motes[1])})
+        elif item_type=="c":
+            return render(request, 'displays/class.html', {'clase': get_object_or_404(CharacterClass, name=motes[1])})
+        elif item_type=="m":
+            return render(request, 'displays/craftable.html',
+                          {'craftable': get_object_or_404(Craftable, name=motes[1])})
+        elif item_type=="w":
+            return render(request, 'displays/wiki.html',
+                          {'article': get_object_or_404(WikiArticle, title__iexact=name)})
     if motes and type(motes)=='list' and len(motes) > 1:
         if motes[0].lower() == "s":
             return render(request, 'displays/spell.html', {'spell': get_object_or_404(Spell, name=motes[1])})
@@ -227,6 +254,8 @@ def searchEntryName(request):
         return render(request, 'displays/craftable.html', {'craftable': craftable})
     elif item is not None:
         return render(request, 'displays/item.html', {'item': item})
+    else:
+        return HttpResponseNotFound()
 
 
 def viewSpell(request):

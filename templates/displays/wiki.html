@@ -1,0 +1,253 @@
+{% extends 'base.html' %}
+{% load auth_extras %}
+{% block content %}
+
+
+	<div id="banner-area">
+		<img src="static/images/banner/banner2.jpg" alt ="" />
+		<div class="parallax-overlay"></div>
+			<!-- Subpage title start -->
+			<div class="banner-title-content">
+	        	<div class="text-center">
+		        	<h2>{% if article %}{{ article.title }}{% else %}Wiki{% endif %}</h2>
+		        	<ul class="breadcrumb">
+                        <li><a href="/">Inicio</a></li>
+                        <li><a href="/wiki"> Wiki</a></li>
+			            {% if article %}<li> {{ article.title }}</li>{% endif %}
+		          	</ul>
+	          	</div>
+          	</div><!-- Subpage title end -->
+	</div><!-- Banner area end -->
+
+	<!-- Main container start -->
+
+	<section id="main-container">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <form action="/searchWiki" method="GET">
+                      <div class="row">
+                        <div class="col-xs-12 col-md-12">
+                          <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Busca un artículo" id="q" name="q"/>
+                            <div class="input-group-btn">
+                              <button class="btn btn-primary" type="submit">
+                                <span class="glyphicon glyphicon-search"></span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <div class="gap-40"></div>
+					<div class="post-content">
+						{{ article.body|markdown_wiki }}
+						<div class="gap-20"></div>
+                        {% if not article and articles %}
+                            <h2>Artículos disponibles</h2>
+                            <ul>
+                            {% for article in articles %}
+                                <li><a href="/searchWiki?q={{ article.0 }}">{{ article.0 }}</a></li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+
+						{% comment %}<div class="row">
+							<div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
+								<span class="feature-icon pull-left" ><i class="fas fa-hand-sparkles"></i></span>
+								<div class="feature-content">
+									<h3>Tiempo de casteo</h3>
+									<p>{{ article.castTime }}</p>
+								</div>
+							</div><!--/ End first featurebox -->
+
+							<div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
+								<span class="feature-icon pull-left" ><i class="fas fa-ruler"></i></span>
+								<div class="feature-content">
+									<h3>Rango</h3>
+									<p>{{ article.range }}</p>
+								</div>
+							</div><!--/ End 2nd featurebox -->
+						</div>
+
+						<div class="gap-20"></div>
+
+						<div class="row">
+
+							<div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
+								<span class="feature-icon pull-left" ><i class="fas fa-clock"></i></span>
+								<div class="feature-content">
+									<h3>Duración</h3>
+									<p>{{ article.duration }}</p>
+								</div>
+							</div><!--/ End 1st featurebox -->
+
+							<div class="feature-box col-sm-6 wow fadeInDown" data-wow-delay=".5s">
+								<span class="feature-icon pull-left" ><i class="fa fa-shield"></i></span>
+								<div class="feature-content">
+									<h3>Salvaciones</h3>
+									<p>{{ article.attack_save }}</p>
+								</div>
+							</div><!--/ End 2nd featurebox -->
+						</div>{% endcomment %}
+
+
+					</div><!--/ post content end -->
+
+				</div><!--/ Content col end -->
+
+				{% comment %}<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+					<div class="sidebar sidebar-right">
+						<!-- category start -->
+						<div class="widget widget-categories">
+							<h3 class="widget-title">Atributos</h3>
+							<ul class="category-list clearfix">
+				              <li><a href="#">Escuela de magia</a><span class="posts-count"> {{ article.school }}</span></li>
+				              <li><a href="#">Nivel</a><span class="posts-count"> {% if article.level == 0 %}Truco{% else %}{{ article.level }}{% endif %}</span></li>
+				              <li><a href="#">Componente verbal</a><span class="posts-count"> {% if article.verbalComponent %}Sí{% else %}No{% endif %}</span></li>
+				              <li><a href="#">Componente somático</a><span class="posts-count"> {% if article.somaticComponent %}Sí{% else %}No{% endif %}</span></li>
+				              <li><a href="#">Componente material</a><span class="posts-count"> {% if article.materialComponent %}Sí{% else %}No{% endif %}</span></li>
+				              {% if article.materialComponent %}<li><a href="#">Requisitos materiales</a><span class="posts-count"> {{ article.materialRequirements|markdown_wiki }}</span></li>{% endif %}
+				              <li><a href="#">Requiere concentración</a><span class="posts-count"> {% if article.concentration %}Sí{% else %}No{% endif %}</span></li>
+				              <li><a href="#">Daño/efecto</a><span class="posts-count"> {{ article.effect|markdown_wiki }}</span></li>
+				            </ul>
+						</div><!-- category end -->
+
+						<!-- tags start -->
+						<div class="widget widget-tags">
+							<h3 class="widget-title">Clases</h3>
+							<ul class="unstyled clearfix">
+				              	{% for class in article.classes.all %}<li><a href="/viewClass?classId={{ class.id }}">{{ class.name }}</a></li>{% endfor %}
+				            </ul>
+						</div><!-- tags end -->
+
+
+					</div><!--/ Sidebar end -->
+				</div><!--/ Sidebar col end -->{% endcomment %}
+			</div><!--/ row end -->
+		</div><!--/ container end -->
+	</section><!--/ Main container end -->
+
+	{% endblock %}
+
+{% block javascript %}
+<script>
+const INITIAL_CONTENT = '<div style="margin:5px 0;">Loading...</div>'
+
+function applyStyles(popper, tooltip) {
+  // Because the tooltip has `position: absolute`,
+  // it no longer affects the parent popper's layout.
+  // We need to explicitly give it a width.
+  popper.style.width = '200px'
+
+  // Setup transition styles on the tooltip itself
+  tooltip.style.transitionDuration = '0.2s'
+  tooltip.style.transitionProperty = 'visibility, opacity, height'
+}
+
+function animateHeight(instance, instanceContent) {
+  const { popper } = instance
+  const { tooltip, content } = instance.popperChildren
+
+  function onTransitionEnd(event) {
+    if (event.target === event.currentTarget) {
+      content.style.opacity = '1'
+      instance.setContent(instanceContent)
+    }
+  }
+
+  // Wait until the height transition has finished before
+  // fading the content in. Since we have `overflow: hidden`
+  // on the tooltip this isn't actually needed, but if you
+  // have an arrow element it will be.
+  if (!instance._transitionEndListener) {
+    instance._transitionEndListener = onTransitionEnd
+  }
+
+  tooltip.addEventListener('transitionend', onTransitionEnd)
+
+  // Store the base height of the tooltip when it has the
+  // initial Loading... content.
+  if (!instance._baseHeight) {
+    instance._baseHeight = tooltip.clientHeight
+  }
+
+  // Here is where we find out the height of the tooltip
+  // when it has the content. We could technically hardcode
+  // 200px as the value, but it's useful to know how to do
+  // this with dynamic content.
+  content.style.opacity = '0'
+
+  // Temporarily set the image as the tooltip's content
+  // so we can find out the final height of the tooltip.
+  instance.setContent(instanceContent)
+  const height = tooltip.clientHeight
+
+  // Apply the height to the parent popper element.
+  popper.style.height = height + 'px'
+
+  // Reset the tooltip's height to the base height.
+  tooltip.style.height = instance._baseHeight + 'px'
+
+  // Cause reflow so we can start the height transition.
+  void tooltip.offsetHeight
+
+  // Start the transition.
+  tooltip.style.height = height + 'px'
+
+  // Remove the Loading... content and wait until the
+  // transition finishes.
+  instance.setContent('')
+}
+
+tippy('.wikilink', {
+  arrow: true,
+  followCursor: 'horizontal',
+  arrowType: 'round',
+  content: INITIAL_CONTENT,
+  animation: 'fade',
+  animateFill: false,
+  theme: 'ajax',
+  async onShow(instance) {
+    if (instance.state.isFetching === true || instance.state.canFetch === false) {
+      return
+    }
+
+    instance.state.isFetching = true
+    instance.state.canFetch = false
+
+    applyStyles(instance.popper, instance.popperChildren.tooltip)
+
+    try {
+      const response = await fetch('https://unsplash.it/200/?random')
+      const blob = await response.blob()
+      const url = URL.createObjectURL(blob)
+
+      // If the tooltip hid before finishing the request, stop further action
+      if (!instance.state.isVisible) {
+        return
+      }
+
+      const img = new Image()
+      img.width = 200
+      img.height = 200
+      img.src = url
+
+      animateHeight(instance, img)
+    } catch (error) {
+      instance.setContent('An error occurred')
+    } finally {
+      instance.state.isFetching = false
+    }
+  },
+  onHidden(instance) {
+    const { tooltip } = instance.popperChildren
+    instance.state.canFetch = true
+    instance.setContent(INITIAL_CONTENT)
+    tooltip.style.height = null
+    tooltip.removeEventListener('transitionend', instance._transitionEndListener)
+    instance._transitionEndListener = null
+  }
+})
+    </script>
+{% endblock %}

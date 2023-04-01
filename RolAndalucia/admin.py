@@ -28,12 +28,25 @@ def duplicate_event(modeladmin, request, queryset):
     duplicate_event.short_description = "Duplicar registro"
 
 
+class MapPointInline(LeafletGeoAdminMixin, admin.StackedInline):
+    model = models.MapPoint
+
+
+class MapGeometryInline(LeafletGeoAdminMixin, admin.StackedInline):
+    model = models.MapGeometry
+
+
+class WikiArticleAdmin(admin.ModelAdmin):
+    inlines = [MapPointInline, MapGeometryInline]
+    search_fields = ['title']
+
+
+admin.site.register(models.WikiArticle, WikiArticleAdmin)
+
+
 class AddressInline(admin.StackedInline):
     model = models.PertenenciaClase
     extra = 0
-
-
-admin.site.register(models.MapArticle, LeafletGeoAdmin)
 
 
 class AppointmentDateInline(admin.StackedInline):

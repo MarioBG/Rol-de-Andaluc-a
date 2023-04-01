@@ -63,13 +63,30 @@ def replace_linebr(value):
 @register.filter('markdown')
 def markdown_format(text):
     md_configs = {
-        'RolAndaluciag.Markdown.mdx_wikilink_plus:WikiLinkPlusExtension': {
-            'base_url': '/searchName?q=',
+        'RolAndalucia.Markdown.mdx_wikilink_plus:WikiLinkPlusExtension': {
+            'configs': {'base_url': '/searchName?q=',
             'url_whitespace': '_',
             'label_case': 'titlecase',
             'html_class': 'wikilink',
-            'build_url': build_url, # A callable
             # all of the above config params are optional
+        }
+
+        },
+    }
+    return mark_safe(markdown.markdown(text, extensions=['extra', 'abbr','RolAndalucia.Markdown.TablesCool:TableExtension','attr_list','def_list','fenced_code','footnotes','RolAndalucia.Markdown.mdx_wikilink_plus:WikiLinkPlusExtension'], extension_configs = md_configs))
+
+
+@register.filter('markdown_wiki')
+def markdownwiki_format(text):
+    md_configs = {
+        'RolAndalucia.Markdown.mdx_wikilink_plus:WikiLinkPlusExtension': {
+            'configs': {'base_url': '/searchWiki?q=',
+            'url_whitespace': '_',
+            'label_case': 'none',
+            'html_class': 'wikilink',
+            'is_wiki': 'T',
+            # all of the above config params are optional
+        }
         },
     }
     return mark_safe(markdown.markdown(text, extensions=['extra', 'abbr','RolAndalucia.Markdown.TablesCool:TableExtension','attr_list','def_list','fenced_code','footnotes','RolAndalucia.Markdown.mdx_wikilink_plus:WikiLinkPlusExtension'], extension_configs = md_configs))

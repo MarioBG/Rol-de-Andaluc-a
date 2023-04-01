@@ -235,23 +235,28 @@ class Score(models.Model):
     enabled = models.BooleanField(default=False)
 
 
-class MapArticle(models.Model):
+class WikiArticle(models.Model):
+    CHOICES=[('NO', 'Sin mapa'), ('GLOB', 'Mapa global'), ('DIG', 'Mapa de Digelia')]
     title = models.CharField(max_length=512)
-    body = MartorField(verbose_name=_("Habilidades"), default='', blank=True)
+    body = MartorField(verbose_name=_("Cuerpo del artículo"), default='', blank=True)
+    tipoMapa = models.CharField(verbose_name=_("Tipo de mapa"), blank=False, max_length=8, choices=CHOICES, default='NO')
+
+    def __str__(self):
+        return self.title
 
 
 class MapGeometry(models.Model):
     title = models.CharField(max_length=512)
     body = MartorField(verbose_name=_("Habilidades"), default='', blank=True)
     geometry = geo_models.PolygonField()
-    map_article = models.ForeignKey(to=MapArticle, on_delete=models.CASCADE)
+    map_article = models.ForeignKey(to=WikiArticle, on_delete=models.CASCADE)
 
 
 class MapPoint(models.Model):
     title = models.CharField(max_length=512)
     body = MartorField(verbose_name=_("Habilidades"), default='', blank=True)
     point = geo_models.PointField()
-    map_article = models.ForeignKey(to=MapArticle, on_delete=models.CASCADE)
+    map_article = models.ForeignKey(to=WikiArticle, on_delete=models.CASCADE)
 
 
 class Personaje(models.Model):

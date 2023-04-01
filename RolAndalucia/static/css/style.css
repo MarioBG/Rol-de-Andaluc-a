@@ -89,6 +89,10 @@ a:hover{
 	color: #000;
 }
 
+a.missingarticle{
+	color: #a45b13;
+}
+
 a.read-more{
 	color: #323232;
 }
@@ -694,6 +698,10 @@ blockquote {
 	border-radius: 0;
 }
 
+.form-control#q{
+	height: 44px;
+}
+
 .form-control:focus{
 	box-shadow: none;
 }
@@ -774,8 +782,10 @@ blockquote {
 }
 
 .navbar-brand img{
-	float: right;
-	padding: 0 15px;
+	position: inherit;
+    float: inherit;
+    max-height: 100%;
+    padding: 0 15px;
 
 }
 

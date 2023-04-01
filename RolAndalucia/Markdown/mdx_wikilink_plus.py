@@ -13,6 +13,7 @@ from __future__ import unicode_literals
 
 from urllib.parse import urlparse
 from urllib.parse import urlunparse
+from RolAndalucia.models import WikiArticle
 
 import markdown
 from markdown.util import etree
@@ -90,6 +91,7 @@ class WikiLinkPlusExtension(markdown.Extension):
             'html_class': ['wikilink', 'CSS hook. Leave blank for none.'],
             'image_class': ['wikilink-image', 'CSS hook. Leave blank for none.'],
             'build_url': [build_url, 'Callable formats URL from label.'],
+            'is_wiki': ['false', 'If set, nonexistant wiki articles will be printed in red'],
         }
         # ~ super(WikiLinkPlusExtension, self).__init__(*args, **kwargs)
         for k, v in configs.items():
@@ -122,6 +124,7 @@ class WikiLinkPlusPattern(markdown.inlinepatterns.Pattern):
         d = m.groupdict()
         tl = d.get('target')
         label = d.get('label')
+        iswiki = self.config["is_wiki"][0] == "T"
         if tl:
             base_url, end_url, url_whitespace, url_case, label_case, html_class, image_class = self._getMeta()
             urlo = urlparse(tl)
@@ -152,8 +155,16 @@ class WikiLinkPlusPattern(markdown.inlinepatterns.Pattern):
                 a = etree.Element('a')
                 a.text = label
                 a.set('href', url)
+                appendedtext = ""
+                if iswiki:
+                    a.set('title', tl)
+                if iswiki and not WikiArticle.objects.filter(title__iexact=tl).exists():
+                    appendedtext = " missingarticle"
+                    a.set('title', a.get('title')+" (no redactado)")
                 if html_class:
-                    a.set('class', html_class)
+                    a.set('class', html_class + appendedtext)
+                else:
+                    a.set('class', appendedtext)
             else:
                 end_url = ''
                 url = self.config['build_url'][0](urlo, base_url, end_url, url_whitespace, url_case)
