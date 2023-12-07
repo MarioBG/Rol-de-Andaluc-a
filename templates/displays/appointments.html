@@ -1,7 +1,33 @@
 {% extends 'base.html' %}
 {% load auth_extras %}
 {% block content %}
+<script>
 
+function sendAsyncRsvp(dateId, mode){
+    badge_class = `badge-${mode=="YES" ? "primary" : (mode=="IF_NEED" ? "warning" : "danger")}`
+    username = "{{ user.username }}".length === 0 ? $("input#my-username").val() : "{{ user.username }}"
+    $.ajax({data:{"date": dateId, "accion": mode, "csrfmiddlewaretoken": '{{ csrf_token }}', "username": username}, type: "POST", url:"/quedar", success:function(result){
+        pills_id = result.appointment_id;
+        pill_id = result.rsvp_id;
+        if ($("#pill-"+pill_id).length) {
+            $("#pill-" + pill_id).removeClass("badge-primary").removeClass("badge-danger").removeClass("badge-warning").addClass(badge_class);
+            $("#pill-s-" + pill_id).removeClass("badge-primary").removeClass("badge-danger").removeClass("badge-warning").addClass(badge_class);
+        }else{
+            $("#pills-"+pills_id).append(
+                "<span id=\"pill-"+pill_id+"\" class=\"badge badge-pill "+badge_class+"\">"+username+"</span>"
+            )
+            $("#pills-small-"+pills_id).append(
+                "<span id=\"pill-s-"+pill_id+"\" class=\"badge badge-pill "+badge_class+"\">"+username+"</span>"
+            )
+        }
+        }, error(jqXHR, textStatus, errorThrown){
+            errorMsg = jqXHR.responseJSON.error
+            if (!errorMsg)
+                errorMsg = jqXHR.statusText;
+            $("#modal-error").text(errorMsg);
+            $("#usernameModal").modal();
+        }});
+}</script>
 
 	<div id="banner-area">
 		<img src="static/images/banner/banner2.jpg" alt ="" />
@@ -22,9 +48,46 @@
 
 	<section id="main-container">
 		<div class="container">
-			<div class="row">
+			<div class="row center">
 				<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="usernameModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">{% if not user.is_authenticated %}Nombre de usuario para reserva{% else %}Información{% endif %} </h5>
+                            {% comment %}<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>{% endcomment %}
+                          </div>
+                          <div class="modal-body">
+                            {% if not user.is_authenticated %}Cambia tu nombre de usuario para reservar con el cuadro de texto que aparece abajo y vuelve a votar<br/>{% endif %}
+                                        {% if not user.is_authenticated %}
+                                            <div class="row">
+                                                <div class="username-input col-md-12">
+                                                    <input class="form-control center-align" name="my-username" id="my-username" onfocus='$("#modal-error").text("")' placeholder="Nombre de usuario para la reserva" type="text" required="">
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <input type="hidden" class="shared-field" name="my-username" value="{{ user.username }}">
+                                        {% endif %}
+                              <div class="row"><div class="col-md-12"><strong id="modal-error" class="text-danger"></strong></div></div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                     {% for e in appointments %}
+                    {% if not e.hidden %}
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="column col-md-12 col-sm-12 align-self-center">
+                                                    <div class="panel panel-success mb-4 shadow-sm">
+                                                        <div class="team-content panel-body">
 					<div class="post">
 						<!-- post image start -->
                         <div class="post-header clearfix">
@@ -32,70 +95,74 @@
 								{{ e.session_name }}
 							</h2>
 						<div class="post-image-wrapper">
-							<img src="{% if e.pic %}{{ e.pic.url }}{% else %}/static/images/rol_andalucia_logo.png{% endif %}" class="img-responsive" alt="">
+							<img src="{% if e.pic %}{{ e.pic.url }}{% else %}/static/images/rol_andalucia_logo.png{% endif %}" class="img-responsive" style="max-height: 200px" alt="">
 							<span class="blog-date"><a href="#"> {{ e.campaign }}</a></span>
 						</div><!-- post image end -->
 							<div class="post-meta">
-								<span class="post-meta-author">Una sesión <span class="text-info"><b>{% if e.tipo == "P" %}presencial{% else %}online{% endif %}</b></span>
+                                <span class="post-meta-author">Una sesión <span class="text-info" style="padding-right: 0px"><b>{% if e.tipo == "P" %}presencial{% else %}online{% endif %}</b></span> en <span class="text-info"><b>{% if e.location != None %}{{ e.location }}{% endif %}</b></span>
 								{% if e.getConfirmedAppointment %}<span class="badge badge-pill badge-primary">confirmada</span>{% endif %}</span>
-								<div class="pull-right">
+								{% comment %}<div class="pull-right">
 									<span class="post-meta-comments"><a href="#"><i class="fa fa-comment-o"></i> 11</a></span>
 									<span class="post-meta-hits"><a href="#"><i class="fa fa-heart-o"></i> 62</a></span>
-								</div>
+								</div>{% endcomment %}
 							</div><!-- post meta end -->
 						</div><!-- post heading end -->
+                    {% comment %}<button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#usernameModal">
+                      Launch demo modal
+                    </button>{% endcomment %}
 
                         <div class="container">
                             <h3>Fechas:</h3>
                             {% if e.dates %}
                             <div class="row">
-                                {% for p in e.dates.all %}
-                                <div class="col-md-6 col-sm-6 {% for t in p.tags.all %} {{ t.key }} {% endfor %} isotope-item">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="column col-md-6 col-sm-6">
-                                                <div class="panel panel-success mb-4 shadow-sm">
+                            <div class="col-md-11 col-sm-11 isotope-item">
+                                                    <div class="panel panel-success mb-4 shadow-sm">
                                                     <div class="team-content panel-body">
-                                                        <h3>{{ p.date }}</h3>
-                                                        {% if p.reservations.count > 0 %}
-                                                        <h4>Asistentes:</h4>
-                                                        <div>
-                                                            {% for t in p.reservations.all %}<span class="badge badge-pill {% if t.type == "YES" %}badge-primary{% elif t.type == "IF_NEED" %}badge-warning{% else %}badge-danger{% endif %}">{{ t.user.username }}</span>{% endfor %}
-                                                        </div>
-                                                        <div class="spacer">&nbsp;</div>
-                                                        {% endif %}
-                                                        {% if user.is_authenticated %}
-                                                            {% if not e.getConfirmedAppointment %}
-                                                                <form action="/quedar" method="post">
-                                                                    {% csrf_token %}
-                                                                    <input type="hidden" name="date" value="{{ p.id }}">
-                                                                    <button name="accion" value="YES" class="btn btn-primary solid">Asistiré</button>
-                                                                </form>
-                                                                <form action="/quedar" method="post">
-                                                                    {% csrf_token %}
-                                                                    <input type="hidden" name="date" value="{{ p.id }}">
-                                                                    <button name="accion" value="IF_NEED" class="btn btn-primary">Asistiré si es necesario</button>
-                                                                </form>
-                                                                <form action="/quedar" method="post">
-                                                                    {% csrf_token %}
-                                                                    <input type="hidden" name="date" value="{{ p.id }}">
-                                                                    <button name="accion" value="NO" class="btn btn-primary">No puedo asistir</button>
-                                                                </form>
-                                                            {% endif %}
-                                                        {% else %}
-                                                            <a href="/login" class="btn btn-primary solid">Iniciar sesión</a>
-                                                        {% endif %}
-                                                    </div>
+                                                    <table style="width: 100%">
+                                {% for p in e.dates.all %}
+                                    <tr {% if forloop.counter|divisibleby:2 %}bgcolor="#e5e5e5" {% endif %}><td>
+                                        <h3>{{ p.date }}</h3></td><td style="min-width: 200px">
+                                            <div class="row">
+                                                <div class="col-md-12 text-center">
+                                                    <ul class="unstyled">
+                                                        <li>
+                                                            <a title="Attend" style="cursor: pointer" onclick="sendAsyncRsvp({{ p.id }}, 'YES');">
+                                                                <span class="icon-pentagon wow bounceIn animated" style="visibility: visible;"><i class="fa fa-thumbs-up"></i></span>
+                                                            </a>
+                                                            <a title="Maybe" style="cursor: pointer" onclick="sendAsyncRsvp({{ p.id }}, 'IF_NEED');">
+                                                                <span class="icon-pentagon wow bounceIn animated" style="visibility: visible;"><i class="fa fa-question"></i></span>
+                                                            </a>
+                                                            <a title="Do not attend" style="cursor: pointer" onclick="sendAsyncRsvp({{ p.id }}, 'NO');">
+                                                                <span class="icon-pentagon wow bounceIn animated" style="visibility: visible;"><i class="fa fa-thumbs-down"></i></span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
                                                 </div>
+                                            </div></td><td class="visible-sm visible-md visible-lg visible-xl" style="text-align: center" {% if not p.reservations.count > 0 %}hidden{% endif %}>
+
+                                                            <h4>Asistentes:</h4>
+                                                            <div id="pills-{{ p.id }}">
+                                                                {% for t in p.reservations.all %}<span id="pill-{{ t.id }}" class="badge badge-pill {% if t.type == "YES" %}badge-primary{% elif t.type == "IF_NEED" %}badge-warning{% else %}badge-danger{% endif %}">{{ t.user }}</span>{% endfor %}
+                                                            </div>
+                                                            <div class="spacer">&nbsp;</div>
+                                                        </td>
+                                    </tr><tr class="visible-xs" {% if forloop.counter|divisibleby:2 %}bgcolor="#e5e5e5" {% endif %}><td style="text-align: center" colspan="3" {% if not p.reservations.count > 0 %}hidden{% endif %}>
+                                                            <h4>Asistentes:</h4>
+                                                            <div id="pills-small-{{ p.id }}">
+                                                                {% for t in p.reservations.all %}<span id="pill-s-{{ t.id }}" class="badge badge-pill {% if t.type == "YES" %}badge-primary{% elif t.type == "IF_NEED" %}badge-warning{% else %}badge-danger{% endif %}">{{ t.user }}</span>{% endfor %}
+                                                            </div>
+                                                            <div class="spacer">&nbsp;</div>
+                                                        </tr>
+                                {% endfor %}</table>
+                                                    </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div><!--/ Team 1 end -->
-                                {% endfor %}
+                                    </div><!--/ Team 1 end -->
                             </div><!--/ Content row end -->
                             {% endif %}
                         </div><!-- Container end -->
 					</div>
+                {% endif %}
+                    </div></div></div></div></div>
                 {% endfor %}
 
 				</div><!--/ Content col end -->
@@ -126,6 +193,19 @@
 {% block javascript %}
 <script>
 const INITIAL_CONTENT = '<div style="margin:5px 0;">Loading...</div>'
+
+function updateFields() {
+    // Get the value of the input field
+    var field4Value = document.getElementById("my-username").value;
+
+    // Select all hidden elements with the shared class
+    var sharedFields = document.getElementsByClassName("shared-field");
+
+    // Update the values of all fields with the shared class
+    for (var i = 0; i < sharedFields.length; i++) {
+        sharedFields[i].value = field4Value;
+    }
+}
 
 function applyStyles(popper, tooltip) {
   // Because the tooltip has `position: absolute`,

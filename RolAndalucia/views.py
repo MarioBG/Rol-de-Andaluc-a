@@ -172,15 +172,19 @@ def listPersonaje(request):
 def listAppointments(request):
     if request.method == "GET":
         print ("GET")
+        return render(request, 'displays/appointments.html', {'appointments': DndAppointment.objects.all()})
     else:
         print ("POST")
         print(request.POST.get("date"))
         print(request.POST.get("accion"))
+        username = request.user.username if request.user.is_authenticated else request.POST.get("username")
+        if not username:
+            return JsonResponse({'error': 'No se especificó un nombre de usuario'}, status=400)
         date = DndAppointmentDate.objects.get(id=request.POST.get("date"))
-        DndRsvp.objects.filter(user=request.user, dndAppointment=date).delete()
-        rsvp = DndRsvp.objects.create(dndAppointment=date, type=request.POST.get("accion"), user=request.user)
+        rsvp = DndRsvp.objects.filter(user=username, dndAppointment=date).first() or DndRsvp.objects.create(dndAppointment=date, user=username)
+        rsvp.type = request.POST.get("accion")
         rsvp.save()
-    return render(request, 'displays/appointments.html', {'appointments':DndAppointment.objects.all()})
+        return JsonResponse({'date': rsvp.dndAppointment.date, 'rsvp_id': rsvp.id, 'rsvp_user':rsvp.user, 'appointment_id':rsvp.dndAppointment.id})
 
 
 def listTrabajo(request):

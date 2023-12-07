@@ -13,7 +13,7 @@ from django.db import transaction
 from django.db.models import Q
 from django.utils.html import format_html
 from django.urls import re_path
-from leaflet.admin import LeafletGeoAdminMixin, LeafletGeoAdmin
+# from leaflet.admin import LeafletGeoAdminMixin, LeafletGeoAdmin
 from django.utils.safestring import mark_safe
 from admin_numeric_filter.admin import NumericFilterModelAdmin, SingleNumericFilter, RangeNumericFilter, \
     SliderNumericFilter
@@ -28,16 +28,16 @@ def duplicate_event(modeladmin, request, queryset):
     duplicate_event.short_description = "Duplicar registro"
 
 
-class MapPointInline(LeafletGeoAdminMixin, admin.StackedInline):
+# class MapPointInline(LeafletGeoAdminMixin, admin.StackedInline):
     model = models.MapPoint
 
 
-class MapGeometryInline(LeafletGeoAdminMixin, admin.StackedInline):
+#class MapGeometryInline(LeafletGeoAdminMixin, admin.StackedInline):
     model = models.MapGeometry
 
 
 class WikiArticleAdmin(admin.ModelAdmin):
-    inlines = [MapPointInline, MapGeometryInline]
+    # inlines = [MapPointInline, MapGeometryInline]
     search_fields = ['title']
 
 
@@ -242,6 +242,7 @@ class AppointmentAdmin(admin.ModelAdmin):
                     obj.session_name, obj.campaign)
             # for chat in obj.chats.all():
             #     DjangoTelegramBot.bots[0].sendMessage(chat.groupId, message, parse_mode=telegram.ParseMode.MARKDOWN)
+            return obj
 
 
     inlines = [AppointmentDateInline]

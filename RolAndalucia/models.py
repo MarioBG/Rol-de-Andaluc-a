@@ -16,7 +16,7 @@ from ordered_model.models import OrderedModel
 from django.core.exceptions import ValidationError
 from mptt.models import MPTTModel
 import mptt
-from django.contrib.gis.db import models as geo_models
+# from django.contrib.gis.db import models as geo_models
 from django.db.models import F
 from treewidget.fields import TreeForeignKey
 from django_imgur.storage import ImgurStorage
@@ -90,6 +90,7 @@ class DndAppointment(models.Model):
     location = models.CharField(verbose_name=_("Ubicación"), max_length=72, null=True)
     session_name = models.TextField(verbose_name=_("Nombre de sesión"))
     chats = models.ManyToManyField(verbose_name=_("Chats para anunciar"), to=TelegramChat)
+    hidden = models.BooleanField(default=False)
 
     def getConfirmedAppointment(self):
         return self.dates.filter(confirmed=True).first()
@@ -141,7 +142,7 @@ class DndRsvp(models.Model):
 
     dndAppointment = models.ForeignKey(to=DndAppointmentDate, related_name="reservations", on_delete=models.CASCADE)
     type = models.CharField(verbose_name=_("Tipo de reserva"), max_length=30, blank=False, choices=CHOICES)
-    user = models.ForeignKey(to=User, related_name="reservations", on_delete=models.CASCADE)
+    user = models.CharField(blank=False, max_length=64)
 
 
 
@@ -241,6 +242,8 @@ class WikiArticle(models.Model):
     redirect = models.CharField(max_length=512, default='', blank=True)
     body = MartorField(verbose_name=_("Cuerpo del artículo"), default='', blank=True)
     tipoMapa = models.CharField(verbose_name=_("Tipo de mapa"), blank=False, max_length=8, choices=CHOICES, default='NO')
+    isCategory = models.BooleanField(verbose_name=_("Es categoría"), default=False)
+    belongsTo = models.ForeignKey(to="WikiArticle", null=True, default=None, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
@@ -249,14 +252,14 @@ class WikiArticle(models.Model):
 class MapGeometry(models.Model):
     title = models.CharField(max_length=512)
     body = MartorField(verbose_name=_("Habilidades"), default='', blank=True)
-    geometry = geo_models.PolygonField()
+    # geometry = geo_models.PolygonField()
     map_article = models.ForeignKey(to=WikiArticle, on_delete=models.CASCADE)
 
 
 class MapPoint(models.Model):
     title = models.CharField(max_length=512)
     body = MartorField(verbose_name=_("Habilidades"), default='', blank=True)
-    point = geo_models.PointField()
+    # point = geo_models.PointField()
     map_article = models.ForeignKey(to=WikiArticle, on_delete=models.CASCADE)
 
 

@@ -64,7 +64,6 @@ INSTALLED_APPS = [
     'RolAndalucia.apps.RolAndaluciaConfig',
     'martor',
     'treewidget',
-    'leaflet',
     'django_imgur',
 ]
 
@@ -92,7 +91,7 @@ IMGUR_CONSUMER_SECRET = env("IMGUR_CONSUMER_SECRET")
 IMGUR_USERNAME = env("IMGUR_USERNAME")
 IMGUR_ACCESS_TOKEN = env("IMGUR_ACCESS_TOKEN")
 IMGUR_ACCESS_TOKEN_REFRESH = env("IMGUR_ACCESS_TOKEN_REFRESH")
-DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+# DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
@@ -266,7 +265,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'RolAndalucia.wsgi.application'
+# WSGI_APPLICATION = 'RolAndalucia.wsgi.application'
 
 STATIC_URL = 'RolAndalucia/static/'
 STATICFILES_DIRS = [
