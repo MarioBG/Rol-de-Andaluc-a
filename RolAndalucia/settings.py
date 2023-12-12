@@ -30,7 +30,7 @@ SECRET_KEY = env("SECRET_KEY")
 if 'DYNO' in os.environ:
     BASEURL = 'https://rol-andalucia.herokuapp.com/'
 # SECURITY WARNING: don't run with debug turned on in production!
-if 'DYNO' in os.environ:
+if 'PRODSERV' in os.environ:
     DEBUG = False
 else:
     DEBUG = True
@@ -70,7 +70,7 @@ INSTALLED_APPS = [
 # if 'DYNO' in os.environ:
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.sqlite3' if 'PRODSERV' not in os.environ else 'django.db.backends.postgresql',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
