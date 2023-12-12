@@ -172,7 +172,16 @@ def listPersonaje(request):
 def listAppointments(request):
     if request.method == "GET":
         print ("GET")
-        return render(request, 'displays/appointments.html', {'appointments': DndAppointment.objects.all()})
+        id=request.GET.get('id', None)
+        appointment = None
+        appointments = DndAppointment.objects.all()
+        if id is not None:
+            try:
+                appointment = DndAppointment.objects.get(id=id)
+                appointments = [appointment]
+            except DndAppointment.DoesNotExist:
+                print(f"Tried to get appointment {id} but it does not exist")
+        return render(request, 'displays/appointments.html', {'appointments': appointments, 'appointment':appointment})
     else:
         print ("POST")
         print(request.POST.get("date"))

@@ -243,7 +243,7 @@ class WikiArticle(models.Model):
     body = MartorField(verbose_name=_("Cuerpo del artículo"), default='', blank=True)
     tipoMapa = models.CharField(verbose_name=_("Tipo de mapa"), blank=False, max_length=8, choices=CHOICES, default='NO')
     isCategory = models.BooleanField(verbose_name=_("Es categoría"), default=False)
-    belongsTo = models.ForeignKey(to="WikiArticle", null=True, default=None, on_delete=models.CASCADE)
+    belongsTo = models.ForeignKey(to="WikiArticle", null=True, blank=True, default=None, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.title
