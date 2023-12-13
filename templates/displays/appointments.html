@@ -113,6 +113,7 @@ function sendAsyncRsvp(dateId, mode){
                     </button>{% endcomment %}
 
                         <div class="container">
+                            <p>{{ e.body|markdown }}</p>
                             <h3>Fechas:</h3>
                             {% if e.dates %}
                             <div class="row">

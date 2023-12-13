@@ -89,6 +89,7 @@ class DndAppointment(models.Model):
     tipo = models.CharField(verbose_name=_("Tipo de sesión"), choices=CHOICES, max_length=2, null=False)
     location = models.CharField(verbose_name=_("Ubicación"), max_length=72, null=True)
     session_name = models.TextField(verbose_name=_("Nombre de sesión"))
+    body = MartorField(verbose_name=_("Descripción de la sesión"), default='', blank=True)
     chats = models.ManyToManyField(verbose_name=_("Chats para anunciar"), to=TelegramChat)
     hidden = models.BooleanField(default=False)
 
