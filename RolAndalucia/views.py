@@ -208,6 +208,10 @@ def viewCds(request):
     return render(request, 'displays/belltolls.html', {'trabajos':Trabajo.objects.all()})
 
 
+def viewCumple(request):
+    return render(request, 'displays/cum2025.html', {'trabajos':Trabajo.objects.all()})
+
+
 def viewPjsMadrid(request):
     return render(request, 'displays/pjs_madrid.html', {'personajes':PjMadrid.objects.all(), 'tags': TagPjMadrid.objects.all()})
 

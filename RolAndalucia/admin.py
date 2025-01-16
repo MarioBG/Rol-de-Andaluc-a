@@ -44,6 +44,16 @@ class WikiArticleAdmin(admin.ModelAdmin):
 admin.site.register(models.WikiArticle, WikiArticleAdmin)
 
 
+class QuestionInline(admin.StackedInline):
+    model = models.Question
+    extra = 0
+
+
+class AnswerInline(admin.StackedInline):
+    model = models.Answer
+    extra = 0
+
+
 class AddressInline(admin.StackedInline):
     model = models.PertenenciaClase
     extra = 0
@@ -119,6 +129,18 @@ class PjMadridAdmin(admin.ModelAdmin):
     list_filter = [
         'tags'
     ]
+
+
+class PollAdmin(admin.ModelAdmin):
+    inlines = [QuestionInline]
+    extra = 0
+
+
+@admin.register(models.Question)
+class QuestionAdmin(admin.ModelAdmin):
+    inlines = [AnswerInline]
+    list_filter = ['poll']
+    extra = 0
 
 
 class ConversacionAdmin(OrderedInlineModelAdminMixin, admin.ModelAdmin):
@@ -335,6 +357,7 @@ admin.site.register(models.Item, ItemAdmin)
 admin.site.register(models.CorreoMovil, CorreoMovilAdmin)
 admin.site.register(models.Conversacion, ConversacionAdmin)
 admin.site.register(models.DndAppointment, AppointmentAdmin)
+admin.site.register(models.Poll, PollAdmin)
 
 models = apps.get_models()
 for model in models:

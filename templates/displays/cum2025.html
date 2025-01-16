@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% block css %}
+    <link rel='stylesheet' href='/static/css/dropdown-abilities.css'>
+    <link rel="stylesheet" href="./static/css/style.css">{% comment %}
+    <style>
+    .row {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display:         flex;
+      flex-wrap: wrap;
+    }
+    .row > [class*='col-'] {
+      display: flex;
+      flex-direction: column;
+    }
+    </style>{% endcomment %}
+{% endblock %}
+{% load auth_extras %}
+{% block content %}
+
+	<div id="banner-area">
+		<img src="static/images/banner/banner2.jpg" alt ="" />
+		<div class="parallax-overlay"></div>
+			<!-- Subpage title start -->
+			<div class="banner-title-content">
+	        	<div class="text-center">
+		        	<h2>Cumpleaños 2025</h2>
+		        	<ul class="breadcrumb">
+                        <li><a href="/">Inicio</a></li>
+                        <li>Cumpleaños 2025</li>
+		          	</ul>
+	          	</div>
+          	</div><!-- Subpage title end -->
+	</div><!-- Banner area end -->
+
+	<!-- Main container start -->
+
+	<section id="main-container">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-8 col-sm-12 col-xs-12">
+					<div class="post-content">
+                        <section id="image-block" class="image-block no-padding">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-6 ts-padding" style="height: 536px; background:url(/static/images/cum/IMG20221228122512.jpg) 50% 50% / cover no-repeat; background-size: contain;">
+                                    </div>
+                                    <div class="col-md-6 ts-padding img-block-right">
+                                        <div class="img-block-head text-center">
+                                            <h3>Cumpleaños 2025</h3>
+                                            <p>Te espero el sábado 23 de febrero para celebrar mi cumpleaños </p>
+                                            <p>Entre esta algarabía, esta noche concreta, se encontraban dos figuras de especial interés, Dolores y Thargar. Llegados con una caravana de comerciantes, pararon en la posada del Barrilete Feliz, donde, tras recoger la llave de sus habitaciones, salieron cada uno por su lado a dar una vuelta, tomar el aire y ver la ciudad. Sin embargo, no tenían forma de saber que, sin quererlo, iban a verse envueltos en una misteriosa desaparición que les llevaría a recorrerse toda Nicodranas en busca de respuestas.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section><!--/ Image block end -->
+                        <section class="ts_counter no-padding">
+                            <div class="container-fluid">
+                                <div class="row facts-wrapper wow fadeInLeft text-center">
+                                    <div class="facts one col-md-4 col-sm-6">
+                                        <span class="facts-icon"><i class="fa fa-map-marker"></i></span>
+                                        <h3>Dónde</h3>
+                                        <div class="facts-num">
+                                            <iframe width=100% height="270" src="https://www.openstreetmap.org/export/embed.html?bbox=-6.917266845703126%2C37.51653405171553%2C-6.343917846679688%2C37.74927215926061&amp;layer=mapnik&amp;marker=37.632994220183065%2C-6.630592346191406"></iframe><br/><small><a href="https://www.openstreetmap.org/?mlat=37.6330&amp;mlon=-6.6306#map=12/37.6330/-6.6306">Ver el mapa más grande</a></small>
+                                        </div>
+                                    </div>
+
+                                    <div class="facts two col-md-4 col-sm-6">
+                                        <span class="facts-icon"><i class="fa fa-calendar"></i></span>
+                                        <h3>Cuándo</h3>
+                                        <div class="facts-num">
+                                            <script src="https://static.elfsight.com/platform/platform.js" async></script>
+                                            <div class="elfsight-app-8a1b49f1-6cab-41ef-801b-6c8b5a473076" data-elfsight-app-lazy></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="facts three col-md-4 col-sm-6">
+                                        <span class="facts-icon"><i class="fa fa-car"></i></span>
+                                        <h3>Cómo</h3>
+                                        <div class="facts-num">
+                                            <span class="counter">4</span>
+                                        </div>
+                                        <h3>plazas disponibles</h3>
+                                        <p>Esto está sujeto a cambio según la gente que traiga coche propio</p>
+                                    </div>
+
+                                </div>
+                            </div><!--/ Container end -->
+                        </section><!--/ Counter end -->
+                        <h2>Cuestionario</h2>
+                        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfYiH5ANxTb-dhi95uCINtuCcrHGVrOiYPXrR3Yi-G1cuOQPw/viewform?embedded=true" width=100% height="840" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
+
+					</div><!--/ post content end -->
+				</div><!--/ Content col end -->
+            </div> <!--/ Row end -->
+		</div><!--/ container end -->
+	</section><!--/ Main container end -->
+	{% endblock %}
+
+{% block javascript %}<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+<script>
+var id=-1
+var abilities={
+    {% for item in abilityDict %}{% for ability in item %}
+            ablId_{{ ability.id }}:{nombre:"{{ ability.nombre }}", descripcion:"{{ ability.descripcion|markdown|escapejs }}", nivel:{{ ability.nivel }}, desbloqueo:"{{ ability.desbloqueo|escapejs }}", isOptional: {{ ability.isOptional|lower }}, expCost:{{ ability.expCost }} },
+        {% endfor %}{% endfor %}
+}
+$('.tree-toggle').click(function () {	$(this).parent().children('ul.tree').toggle(200);
+});
+$(function(){
+$('.tree-toggle').parent().children('ul.tree').toggle(200);
+})
+$('.ability-link').on('click',function (e) {
+    e.preventDefault();
+})
+$('.ability-link').on('click',function (e) {
+    e.preventDefault();
+    if(id != e.target.id) {
+        $("#collapsingPanel").collapse('show')
+        id = e.target.id
+    }else {
+        $("#collapsingPanel").collapse('hide')
+        id=-1
+    }
+    $("#itemName").html(abilities[e.target.id].nombre);
+    $("#itemDescription").html(abilities[e.target.id].descripcion);
+    $("#itemNivel").html(abilities[e.target.id].nivel);
+    if(abilities[e.target.id].isOptional){
+        $("#itemDesbloqueo").html(abilities[e.target.id].desbloqueo);
+        $("#itemUnlockCostGlobal").addClass("in")
+        $("#itemUnlockCost").html(abilities[e.target.id].expCost+"PE");
+    }else{
+        $("#itemDesbloqueo").html("Esta habilidad se desbloquea automáticamente al alcanzar el nivel requerido.");
+        $("#itemUnlockCostGlobal").removeClass("in")
+    }
+})
+</script>
+{% endblock %}

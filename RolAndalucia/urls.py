@@ -49,6 +49,7 @@ urlpatterns = [
     path('listPersonaje', views.listPersonaje, name='listPersonaje'),
     path('wildemount', views.viewWildemount, name='wildemount'),
     path('cds', views.viewCds, name='cds'),
+    path('cum', views.viewCumple, name='cum'),
     path('wiki', views.viewWiki, name='wiki'),
     path('searchWiki', views.searchWiki, name='searchWiki'),
     path('diario', views.viewDiario, name='diario'),

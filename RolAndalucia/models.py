@@ -426,11 +426,50 @@ class Ability(models.Model):
 
 
 class UserProfileInfo(models.Model):
-
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
     def __str__(self):
       return self.user.username
+
+
+class Voter(models.Model):
+    code = models.CharField(verbose_name=_("Identificador"), blank=False, max_length=32)
+    nombre = models.CharField(verbose_name=_("Nombre"), blank=False, max_length=64)
+    def __str__(self):
+      return self.nombre+": "+self.code
+
+
+class Poll(models.Model):
+    title = models.CharField(verbose_name=_("Título"), default=_("Lorem ipsum dolor sit amet"), blank=False, max_length=256)
+    description = MartorField(verbose_name=_("Texto"), default=_("Lorem ipsum dolor sit amet"))
+    image = models.ImageField(upload_to='poll_pics', null=True, blank=True, storage=STORAGE)
+    public = models.BooleanField(verbose_name=_("Encuesta publicada"), default=False)
+    def __str__(self):
+      return self.title
+
+
+class Question(models.Model):
+    text = MartorField(verbose_name=_("Texto"), default=_("Lorem ipsum dolor sit amet"))
+    image = models.ImageField(upload_to='poll_pics', null=True, blank=True, storage=STORAGE)
+    allowedVotes = models.PositiveSmallIntegerField(verbose_name=_("Número de votos"), default=1)
+    poll = models.ForeignKey(to=Poll, on_delete=models.CASCADE)
+    def __str__(self):
+      return self.text
+
+
+class PollParticipation(models.Model):
+    question = models.ForeignKey(to=Question, on_delete=models.CASCADE)
+    voter = models.ForeignKey(to=Voter, on_delete=models.CASCADE)
+    voteNum = models.PositiveSmallIntegerField(verbose_name=_("Número de votos para esta pregunta"))
+
+
+class Answer(models.Model):
+    text = MartorField(verbose_name=_("Texto"), default=_("Lorem ipsum dolor sit amet"))
+    image = models.ImageField(upload_to='poll_pics', null=True, blank=True, storage=STORAGE)
+    votes = models.PositiveSmallIntegerField(verbose_name=_("Número de votos"), default=0)
+    question = models.ForeignKey(to=Question, on_delete=models.CASCADE)
+    def __str__(self):
+      return self.text
 
 
 
